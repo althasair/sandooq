@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>الصندوق الأسود: حين يتكلّم التقرير</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ivory:#F6EFE4; --ivory2:#EFE4D3; --brown:#3A2418; --leather:#7A4A2B;
+  --orange:#E8681A; --orange2:#F3893F; --gold:#C29A5A; --ink:#2A1A11;
+  --night:#120C08; --muted:#8B7563; --green:#2F6B4F; --red:#A23B2A;
+  --h:'Lusail','Noto Kufi Arabic',sans-serif;
+  --b:'Lusail','IBM Plex Sans Arabic',sans-serif;
+  --q:'Amiri',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0d0906;overflow:hidden;font-family:var(--b);color:var(--ink)}
+#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#stage{width:1600px;height:900px;position:relative;transform-origin:center center;background:var(--ivory);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.slide{position:absolute;inset:0;padding:70px 110px 90px;display:none;flex-direction:column;opacity:0;transition:opacity .5s ease}
+.slide.active{display:flex;opacity:1}
+.slide.dark{background:radial-gradient(ellipse at 50% 40%,#2a1b12 0%,var(--night) 70%);color:var(--ivory)}
+.slide.leather{background:linear-gradient(135deg,#4a2e1e,#2c1a10);color:var(--ivory)}
+/* subtle stitched frame */
+.slide::before{content:"";position:absolute;inset:22px;border:1.5px dashed rgba(194,154,90,.35);border-radius:14px;pointer-events:none}
+.kicker{font-family:var(--h);font-size:22px;color:var(--orange);letter-spacing:.5px;margin-bottom:10px;font-weight:600}
+h1{font-family:var(--h);font-weight:800;font-size:64px;line-height:1.35;color:var(--brown)}
+h2{font-family:var(--h);font-weight:800;font-size:46px;line-height:1.4;color:var(--brown);margin-bottom:18px}
+.dark h1,.dark h2,.leather h1,.leather h2,.cover h1,.cover h2{color:var(--ivory)}
+p,li{font-size:27px;line-height:1.85;text-align:justify}
+.muted{color:var(--muted)}
+.dark .muted,.leather .muted{color:#c9b7a3}
+.center{text-align:center;align-items:center;justify-content:center}
+.center p{text-align:center}
+.btn{font-family:var(--h);font-size:21px;font-weight:600;border:none;cursor:pointer;border-radius:40px;padding:12px 30px;background:var(--orange);color:#fff;box-shadow:0 6px 18px rgba(232,104,26,.3);transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-2px);background:#d65a10}
+.btn.ghost{background:transparent;color:var(--orange);border:1.5px solid var(--orange);box-shadow:none}
+.dark .btn.ghost,.leather .btn.ghost{color:var(--orange2);border-color:var(--orange2)}
+.btn.sm{font-size:17px;padding:8px 20px}
+.row{display:flex;gap:30px}
+.card{background:#fff;border-radius:18px;padding:30px 34px;box-shadow:0 10px 30px rgba(58,36,24,.08);border:1px solid #eadcc6}
+.dark .card,.leather .card{background:rgba(255,255,255,.05);border-color:rgba(194,154,90,.3);box-shadow:none}
+.hidden{display:none!important}
+.reveal{animation:rise .6s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.verse{font-family:var(--q);font-size:44px;line-height:2;color:var(--leather);text-align:center}
+.dark .verse,.leather .verse{color:#f1d8b0}
+.big-num{font-family:var(--h);font-weight:800;font-size:150px;color:var(--orange);line-height:1}
+.tag{display:inline-block;font-family:var(--h);font-size:17px;padding:4px 16px;border-radius:30px;background:var(--ivory2);color:var(--leather);font-weight:600}
+.dark .tag,.leather .tag{background:rgba(232,104,26,.18);color:var(--orange2)}
+.note{font-size:16px;color:var(--muted);text-align:center}
+
+/* top bar & nav */
+#topbar{position:absolute;top:0;left:0;right:0;height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;z-index:20;font-family:var(--h);font-size:15px;color:var(--muted);pointer-events:none}
+#topbar>*{pointer-events:auto}
+#seg{color:var(--orange);font-weight:600}
+#clock{display:flex;gap:10px;align-items:center}
+#clock span{font-variant-numeric:tabular-nums;min-width:56px;text-align:center}
+#clock button{background:none;border:1px solid var(--gold);color:var(--gold);border-radius:20px;font-family:var(--h);font-size:13px;padding:2px 12px;cursor:pointer}
+#flightpath{position:absolute;bottom:34px;left:110px;right:110px;height:2px;background:repeating-linear-gradient(to left,var(--gold) 0 8px,transparent 8px 16px);z-index:20;opacity:.7}
+#plane{position:absolute;top:-13px;width:28px;height:28px;transition:right .6s ease;transform:scaleX(-1)}
+#counter{position:absolute;bottom:44px;left:40px;font-family:var(--h);font-size:15px;color:var(--muted);z-index:20}
+.navbtn{position:absolute;bottom:20px;z-index:21;width:44px;height:44px;border-radius:50%;border:1px solid var(--gold);background:rgba(255,255,255,.6);color:var(--leather);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#next{left:40px;bottom:70px} #prev{left:94px;bottom:70px}
+#fs{margin-right:6px}
+
+/* cover */
+.cover{background:linear-gradient(160deg,#3e2719 0%,#1d120b 100%);color:var(--ivory)}
+.cover .box{width:210px;height:150px;border-radius:14px;background:linear-gradient(145deg,#f3893f,#d35a12);box-shadow:0 25px 60px rgba(232,104,26,.35),inset 0 -8px 0 rgba(0,0,0,.15);position:relative;margin:0 auto 40px}
+.cover .box::after{content:"FLIGHT RECORDER";position:absolute;bottom:18px;left:0;right:0;text-align:center;font:600 11px/1 'IBM Plex Sans Arabic',sans-serif;letter-spacing:2px;color:#2a1508}
+.cover .box::before{content:"";position:absolute;top:22px;left:22px;right:22px;height:46px;border-radius:8px;border:2px solid rgba(42,21,8,.4)}
+
+/* boarding pass */
+.pass{display:flex;width:1180px;margin:10px auto 0;border-radius:22px;overflow:hidden;box-shadow:0 20px 50px rgba(58,36,24,.18)}
+.pass .main{flex:1;background:#fff;padding:34px 44px}
+.pass .stub{width:300px;background:var(--orange);color:#fff;padding:34px 30px;border-right:3px dashed var(--ivory);position:relative}
+.pass .lbl{font-size:15px;color:var(--muted);font-family:var(--h)}
+.pass .val{font-family:var(--h);font-weight:800;font-size:28px;color:var(--brown);white-space:nowrap}
+.pass .stub .lbl{color:#ffe3cf}.pass .stub .val{color:#fff}
+.pass .route{display:flex;align-items:center;gap:26px;margin:18px 0 22px}
+.pass .route .val{font-size:34px}
+.pass .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
+/* cockpit */
+#cvr{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px}
+#scene{font-family:var(--h);color:var(--gold);font-size:22px;text-align:center;min-height:34px}
+#sub{width:1150px;min-height:250px;border-radius:18px;background:rgba(0,0,0,.35);border:1px solid rgba(194,154,90,.25);padding:30px 44px;text-align:center;display:flex;flex-direction:column;justify-content:center;gap:10px}
+#sub .who{font-family:var(--h);color:var(--orange2);font-size:20px;font-weight:600}
+#sub .en{font-family:'IBM Plex Sans Arabic',sans-serif;direction:ltr;color:#bfae99;font-size:22px;font-style:italic}
+#sub .ar{font-family:var(--h);font-size:40px;font-weight:600;color:var(--ivory);line-height:1.6}
+#sub .lost{color:#8d7a68;text-decoration:line-through;text-decoration-color:var(--orange)}
+#sub .aside{font-size:19px;color:var(--orange2)}
+#meter{display:flex;gap:5px;height:46px;align-items:flex-end}
+#meter i{display:block;width:8px;background:var(--orange);border-radius:3px;height:6px;transition:height .1s}
+#silence{font-family:var(--h);font-size:64px;color:var(--ivory);opacity:0;transition:opacity 2s}
+
+/* quotes */
+.quote{flex:1;cursor:pointer;text-align:center;min-height:330px;display:flex;flex-direction:column;justify-content:center;gap:18px;transition:transform .2s}
+.quote:hover{transform:translateY(-4px)}
+.quote .who{font-family:var(--h);font-size:24px;font-weight:800}
+
+/* reports vote */
+.report{flex:1;display:flex;flex-direction:column;gap:14px}
+.report p{font-size:22px;line-height:1.9}
+.report .head{display:flex;justify-content:space-between;align-items:center}
+.report .letter{font-family:var(--h);font-weight:800;font-size:38px;color:var(--orange)}
+.vote{display:flex;align-items:center;gap:12px;margin-top:auto}
+.vote .bar{flex:1;height:14px;border-radius:10px;background:var(--ivory2);overflow:hidden}
+.vote .bar i{display:block;height:100%;width:0;background:var(--orange);transition:width .4s}
+.vote .n{font-family:var(--h);font-weight:800;font-size:28px;min-width:40px;text-align:center;color:var(--brown)}
+.vote button{width:38px;height:38px;border-radius:50%;border:1px solid var(--gold);background:#fff;font-size:22px;cursor:pointer;color:var(--leather)}
+.verdict{font-family:var(--h);font-weight:600;font-size:20px;padding:6px 18px;border-radius:30px;align-self:flex-start}
+.verdict.r{background:#e3efe8;color:var(--green)} .verdict.d{background:#f6e2dc;color:var(--red)}
+
+/* plane */
+#planeWrap{display:flex;gap:50px;align-items:center;flex:1}
+#planeSvg{width:640px;height:560px}
+.zone{cursor:pointer}
+.opt{display:block;width:100%;text-align:right;margin-bottom:14px;font-size:24px;padding:16px 26px;border-radius:14px;background:#fff;border:1.5px solid #e2d2bb;font-family:var(--h);color:var(--brown);cursor:pointer;transition:.2s}
+.opt:hover{border-color:var(--orange)}
+.opt.picked{border-color:var(--orange);background:#fff4ea}
+.opt .c{float:left;color:var(--orange);font-weight:800}
+
+/* types */
+.types{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:20px}
+.types .card{cursor:pointer;min-height:330px;display:flex;flex-direction:column;gap:12px}
+.types .t{font-family:var(--h);font-weight:800;font-size:34px}
+.types .q{font-family:var(--h);font-size:24px;color:var(--orange)}
+.types .card p{font-size:22px}
+.types .card .body{display:none}
+.types .card.open .body{display:block;animation:rise .5s both}
+.types .card .hint{color:var(--muted);font-size:18px;margin-top:auto}
+.types .card.open .hint{display:none}
+
+/* model */
+.model{display:flex;gap:0;margin-top:30px;align-items:stretch}
+.model .step{flex:1;padding:34px 30px;position:relative;color:#fff;cursor:pointer;opacity:.35;transition:opacity .4s}
+.model .step.on{opacity:1}
+.model .step:nth-child(1){background:#B9741F;border-radius:0 18px 18px 0}
+.model .step:nth-child(2){background:#9A5426}
+.model .step:nth-child(3){background:#6E3A1E;border-radius:18px 0 0 18px}
+.model .n{font-family:var(--h);font-size:20px;opacity:.85}
+.model .t{font-family:var(--h);font-size:38px;font-weight:800;margin:6px 0 10px}
+.model p{font-size:21px;line-height:1.8;color:#fbefe2}
+.model .st{display:inline-block;margin-top:14px;font-family:var(--h);font-size:17px;background:rgba(255,255,255,.18);padding:4px 14px;border-radius:20px}
+
+/* timer */
+.timer{display:inline-flex;align-items:center;gap:14px;background:#fff;border:1.5px solid var(--gold);border-radius:50px;padding:8px 10px 8px 24px}
+.dark .timer,.leather .timer{background:rgba(255,255,255,.06)}
+.timer .t{font-family:var(--h);font-weight:800;font-size:34px;font-variant-numeric:tabular-nums;color:var(--brown);min-width:110px;text-align:center}
+.dark .timer .t,.leather .timer .t{color:var(--ivory)}
+.timer.done{animation:pulse 1s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 10px rgba(232,104,26,.25)}}
+
+/* station */
+.station{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;flex:1;min-height:0}
+.station .task{align-self:start}
+.station .story{display:flex;flex-direction:column;gap:14px}
+.station .story p{font-size:22px;line-height:1.85}
+.station .task li{font-size:22px;line-height:1.8;margin-bottom:6px}
+.station .task ul{padding-right:26px}
+.forbid{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.forbid span{font-family:var(--h);font-size:19px;padding:5px 16px;border-radius:30px;background:#f6e2dc;color:var(--red);text-decoration:line-through}
+.bars{display:flex;gap:40px;align-items:flex-end;height:250px;margin:10px 20px 0}
+.bars .b{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bars .b i{display:block;width:100%;border-radius:10px 10px 0 0;height:0;transition:height 1s ease}
+.bars .b span{font-family:var(--h);font-size:18px;margin-top:8px;text-align:center;white-space:nowrap}
+.bars .b em{font-style:normal;font-family:var(--h);font-weight:800;font-size:26px;margin-bottom:6px}
+.why{display:flex;flex-direction:column;gap:8px}
+.why div{font-family:var(--h);font-size:20px;padding:8px 18px;border-radius:10px;background:#fff;border:1px solid #e6d6c0}
+.timeline{display:flex;justify-content:space-between;align-items:flex-start;position:relative;margin:30px 10px 10px}
+.timeline::before{content:"";position:absolute;top:18px;right:0;left:0;height:3px;background:var(--gold)}
+.timeline .pt{position:relative;text-align:center;width:30%}
+.timeline .pt i{display:block;width:38px;height:38px;border-radius:50%;background:var(--ivory);border:3px solid var(--gold);margin:0 auto 12px}
+.timeline .pt.hot i{background:var(--orange);border-color:var(--orange)}
+.timeline .pt b{font-family:var(--h);font-size:30px;color:var(--brown)}
+.timeline .pt p{font-size:19px;text-align:center;line-height:1.6}
+table.dec{width:100%;border-collapse:collapse;font-size:19px;margin-top:6px}
+table.dec th{font-family:var(--h);background:var(--brown);color:var(--ivory);padding:10px;font-weight:600}
+table.dec td{border:1px solid #e2d2bb;height:52px;background:#fff}
+.dots{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0}
+.dots i{width:26px;height:26px;border-radius:50%;background:#d9c8b0;display:block;transition:.3s}
+.dots i.e{background:#d6a173}
+.dots i.x{background:var(--red);transform:scale(1.3)}
+
+/* hot seat */
+#qcard{font-family:var(--h);font-size:44px;font-weight:600;color:var(--brown);text-align:center;line-height:1.6;min-height:150px;display:flex;align-items:center;justify-content:center}
+.rules{display:flex;gap:24px;justify-content:center;margin:10px 0 24px}
+.rules div{font-family:var(--h);font-size:22px;padding:12px 26px;border-radius:14px}
+.rules .no{background:#f6e2dc;color:var(--red)} .rules .yes{background:#e3efe8;color:var(--green)}
+
+/* letter */
+.envelope{width:820px;margin:0 auto;background:#fffaf2;border:1px solid #e3d2b8;border-radius:10px;padding:40px 60px;box-shadow:0 18px 40px rgba(58,36,24,.12);position:relative}
+.envelope::after{content:"";position:absolute;top:-24px;left:50%;transform:translateX(-50%);width:54px;height:54px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#e9874a,#a8461a);box-shadow:0 4px 10px rgba(0,0,0,.25)}
+.envelope p{font-family:var(--h);font-size:25px;line-height:2.1;color:var(--leather);text-align:right}
+.envelope p span{display:inline-block;border-bottom:1.5px dotted var(--gold);width:330px}
+
+/* uhud */
+.uhud{display:flex;flex-direction:column;gap:12px;margin-top:6px}
+.uhud .ln{display:flex;align-items:center;gap:26px;opacity:0;transform:translateY(10px);transition:.6s}
+.uhud .ln.on{opacity:1;transform:none}
+.uhud .lab{min-width:240px;font-family:var(--h);font-size:20px;font-weight:600;color:var(--orange2);text-align:left;border-left:2px solid var(--gold);padding-left:20px}
+.uhud .v{font-family:var(--q);font-size:34px;line-height:1.9;color:#f1d8b0}
+
+/* arrivals */
+#board{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;flex:1;align-content:start;overflow:auto;margin-top:16px;padding-left:6px}
+#board .fl{background:#1c130d;border-radius:10px;padding:14px 22px;color:#f7d9a8;font-family:var(--h);font-size:21px;line-height:1.6;display:flex;gap:16px;align-items:center;animation:flip .6s both;border:1px solid #3a2a1d}
+#board .fl b{color:var(--orange2);font-size:16px;white-space:nowrap}
+@keyframes flip{from{transform:rotateX(90deg);opacity:0}to{transform:none;opacity:1}}
+.inrow{display:flex;gap:12px;margin-top:10px}
+.inrow input{flex:1;font-family:var(--h);font-size:20px;padding:12px 20px;border-radius:12px;border:1px solid rgba(194,154,90,.5);background:rgba(255,255,255,.08);color:var(--ivory)}
+.inrow input::placeholder{color:#a8917b}
+body.embed #topbar,body.embed #fs,body.embed #flightpath,body.embed #counter,body.embed .navbtn{display:none!important}
+body.embed #stage{box-shadow:none}
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage">
+
+<div id="topbar"><div id="seg"></div><div id="clock">ساعة الرحلة <span id="clk">60:00</span><button id="clkBtn">ابدئي</button><button id="fs">ملء الشاشة</button></div></div>
+
+<!-- 1 COVER -->
+<section class="slide cover center" data-seg="">
+  <div class="box"></div>
+  <div class="kicker" style="color:var(--orange2)">ورشة تدريبية للقيادة الوسطى</div>
+  <h1 style="font-size:78px">الصندوق الأسود</h1>
+  <h2 style="color:#e9cfa7;font-weight:600;font-size:40px">حين يتكلّم التقرير</h2>
+  <p class="muted" style="font-size:24px;margin-top:6px">التقارير التأملية منهجٌ قياديٌّ لتطوير الأداء</p>
+  <p style="font-family:var(--h);font-size:20px;color:var(--gold);margin-top:46px">مدرسة الشيماء الثانوية للبنات · العام الدراسي 2026–2027</p>
+</section>
+
+<!-- 2 BOARDING -->
+<section class="slide" data-seg="الإقلاع">
+  <div class="kicker">صعود الطائرة</div>
+  <h2>مرحبًا بكِ على متن رحلة التأمل</h2>
+  <div class="pass">
+    <div class="main">
+      <div class="lbl">بطاقة صعود · BOARDING PASS</div>
+      <div class="route">
+        <div><div class="lbl">من</div><div class="val">التقرير الوصفي</div></div>
+        <svg width="70" height="30" viewBox="0 0 70 30"><path d="M68 15H6M6 15l10-8M6 15l10 8" stroke="#E8681A" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+        <div><div class="lbl">إلى</div><div class="val">التقرير التأملي</div></div>
+      </div>
+      <div class="grid">
+        <div><div class="lbl">المسافرة</div><div class="val">قائدة القسم</div></div>
+        <div><div class="lbl">رقم الرحلة</div><div class="val">SH-2027</div></div>
+        <div><div class="lbl">مدة الرحلة</div><div class="val">60 دقيقة</div></div>
+        <div><div class="lbl">المقعد</div><div class="val">قمرة القيادة</div></div>
+        <div><div class="lbl">الأمتعة</div><div class="val">موقفٌ واحد</div></div>
+        <div><div class="lbl">الوجهة</div><div class="val">قرارٌ يُقاس</div></div>
+      </div>
+    </div>
+    <div class="stub">
+      <div class="lbl">تعليمات الرحلة</div>
+      <p style="font-size:20px;line-height:2;margin-top:8px;text-align:right">✈ الهاتف على وضع الطيران<br>✈ الصدق مقعدنا الوحيد<br>✈ لا لوم في هذه الرحلة<br>✈ السؤال أهم من الجواب</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3 COCKPIT -->
+<section class="slide dark" data-seg="الإقلاع" id="cockpitSlide">
+  <div class="kicker" style="text-align:center">من داخل قمرة القيادة</div>
+  <div id="cvr">
+    <div id="scene">أنصتي جيدًا… ماذا يدور في القمرة؟</div>
+    <div id="sub"><div class="ar" style="color:#bfae99;font-size:30px">اضغطي «تشغيل المقطع» وأطفئي أنوار القاعة</div></div>
+    <div id="meter"></div>
+    <div id="silence">… ثم صمت.</div>
+    <div class="row" style="gap:16px">
+      <button class="btn" id="playCvr">▶ تشغيل المقطع</button>
+      <button class="btn ghost" id="stopCvr">إيقاف</button>
+      <button class="btn ghost" id="voiceBtn">الأصوات المنطوقة: تعمل</button>
+    </div>
+  </div>
+  <div class="note" style="color:#8f7a66">إعادة تمثيل صوتي تعليمي مبنيّة على نص مسجّل قمرة القيادة المنشور في تقرير التحقيق الرسمي، وليست التسجيل الأصلي.</div>
+</section>
+
+<!-- 4 TENERIFE REVEAL -->
+<section class="slide dark" data-seg="الإقلاع">
+  <div class="kicker">سؤال قبل الكشف</div>
+  <h2>كان مهندس الطيران يشكّ أن المدرج غير خالٍ…<br>فلماذا لم يُصرّ على اعتراضه؟</h2>
+  <button class="btn" style="align-self:flex-start;margin-top:10px" data-reveal="ten">اكشفي ما حدث</button>
+  <div id="ten" class="hidden" style="margin-top:26px">
+    <div class="row" style="align-items:center;gap:60px">
+      <div style="text-align:center"><div class="big-num">583</div><div style="font-family:var(--h);font-size:24px;color:#e9cfa7">شخصًا فقدوا حياتهم</div><div class="muted" style="font-size:19px;font-family:var(--h)">تينيريفي · 27 مارس 1977</div></div>
+      <div style="flex:1">
+        <p>اصطدمت الطائرتان على المدرج في أكبر كارثة في تاريخ الطيران المدني.</p>
+        <p>كان القائد من أمهر طياري شركته، وكبير مدرّبيها، ووجهَ إعلاناتها. وكشف الصندوق الأسود أن الفريق شكّ… ثم <b style="color:var(--orange2)">سكت هيبةً من القائد</b>. أما جملة «انتظر الإذن» فقد ضاعت في تداخلٍ لاسلكي.</p>
+        <p class="muted" style="font-size:22px">بعدها غيّر الطيران العالمي تدريب أطقمه: أصبح الاعتراض على القائد واجبًا مهنيًا، وأصبح التأمل جماعيًا لا فرديًا.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 BLACK BOX -->
+<section class="slide" data-seg="الإقلاع">
+  <div class="kicker">ماذا يفعل المحققون بعد كل رحلة؟</div>
+  <h2>يقرؤون الصندوق الأسود…<br>لا ليلوموا أحدًا، بل كي لا يتكرر الخطأ</h2>
+  <div class="row" style="align-items:center;margin-top:10px">
+    <div class="card" style="flex:1">
+      <div class="tag">معلومة قد تفاجئكِ</div>
+      <p style="margin-top:12px">الصندوق الأسود ليس أسود؛ لونه <b style="color:var(--orange)">برتقالي ساطع</b> كي يُعثر عليه بين الركام. وكذلك التقرير التأملي: قيمته أن يُظهر ما يختفي في زحام العمل.</p>
+    </div>
+    <div style="flex:1.1">
+      <div class="verse">﴿بَلِ الْإِنْسَانُ عَلَى نَفْسِهِ بَصِيرَةٌ ۝ وَلَوْ أَلْقَى مَعَاذِيرَهُ﴾</div>
+      <p class="center muted" style="font-size:20px;text-align:center">سورة القيامة</p>
+    </div>
+  </div>
+  <p style="font-family:var(--h);font-size:30px;color:var(--leather);text-align:center;margin-top:auto">التقرير التأملي هو <span style="color:var(--orange)">الصندوق الأسود لقسمكِ</span>.</p>
+</section>
+
+<!-- 6 ADAM / IBLIS -->
+<section class="slide" data-seg="تقريران… ورحلة واحدة">
+  <div class="kicker">خطأٌ واحد… وردّان</div>
+  <h2>أيّ الردّين تبرير، وأيّهما تأمّل؟</h2>
+  <div class="row" style="flex:1;align-items:stretch;margin-top:10px">
+    <div class="card quote" data-q="q1">
+      <div class="verse" style="font-size:40px">﴿أَنَا خَيْرٌ مِنْهُ خَلَقْتَنِي مِنْ نَارٍ وَخَلَقْتَهُ مِنْ طِينٍ﴾</div>
+      <div id="q1" class="hidden reveal"><div class="who" style="color:var(--red)">إبليس · تبرير</div><p class="center muted" style="font-size:20px">بحث عن سببٍ يجعله على حق… فأُغلق باب التوبة.</p></div>
+      <div class="muted q-hint" style="font-size:17px">اضغطي لكشف القائل</div>
+    </div>
+    <div class="card quote" data-q="q2">
+      <div class="verse" style="font-size:40px">﴿رَبَّنَا ظَلَمْنَا أَنْفُسَنَا وَإِنْ لَمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ﴾</div>
+      <div id="q2" class="hidden reveal"><div class="who" style="color:var(--green)">آدم وحواء عليهما السلام · تأمّل</div><p class="center muted" style="font-size:20px">اعترفا بالسبب من الداخل… فانفتح باب التوبة.</p></div>
+      <div class="muted q-hint" style="font-size:17px">اضغطي لكشف القائل</div>
+    </div>
+  </div>
+  <p style="font-family:var(--h);font-size:26px;color:var(--leather);text-align:center;margin-top:20px">الخطأ واحد… وردُّ الفعل عليه صنع مصيرين.</p>
+</section>
+
+<!-- 7 TWO REPORTS VOTE -->
+<section class="slide" data-seg="تقريران… ورحلة واحدة">
+  <div class="kicker">تقريران… ورحلة واحدة</div>
+  <h2 style="font-size:38px">نتائج اختبار منتصف الفصل في الرياضيات · الصف الحادي عشر · أيّ التقريرين يقود إلى قرار؟</h2>
+  <div class="row" style="flex:1;align-items:stretch">
+    <div class="card report">
+      <div class="head"><div class="letter">التقرير (أ)</div><div class="verdict d hidden" data-v>وصفي تبريري</div></div>
+      <p>تم تنفيذ اختبار منتصف الفصل الأول، وبلغت نسبة النجاح 78%. وتم تنفيذ حصص علاجية للطالبات المتعثرات، ويُعزى انخفاض النتائج إلى ضعف التأسيس لدى الطالبات وكثرة الغياب.</p>
+      <div class="vote" data-vote="a"><button data-d="-1">−</button><div class="bar"><i></i></div><div class="n">0</div><button data-d="1">+</button></div>
+    </div>
+    <div class="card report">
+      <div class="head"><div class="letter">التقرير (ب)</div><div class="verdict r hidden" data-v>تأملي</div></div>
+      <p>بلغت نسبة النجاح 78%، غير أن تحليل الأسئلة أظهر أن 64% من الأخطاء تركزت في أسئلة التطبيق، وهو ما يتطابق مع ملاحظات الزيارات الصفية التي رصدت اعتماد الحصص على الأمثلة المباشرة. ويدل ذلك على أن الفجوة في الممارسة التدريسية لا في التأسيس وحده. وعليه تم اعتماد مهمة تطبيقية أسبوعية في جميع الشعب، يُقاس أثرها في الاختبار القصير القادم.</p>
+      <div class="vote" data-vote="b"><button data-d="-1">−</button><div class="bar"><i></i></div><div class="n">0</div><button data-d="1">+</button></div>
+    </div>
+  </div>
+  <div class="row" style="justify-content:center;margin-top:18px;gap:14px"><button class="btn" id="showVerdict">اكشفي التصنيف</button></div>
+</section>
+
+<!-- 8 COBRA A -->
+<section class="slide" data-seg="تأثير الكوبرا">
+  <div class="kicker">تأثير الكوبرا · قصة شهيرة في علم الاقتصاد</div>
+  <h2>يُروى أن الأفاعي كثرت في مدينة دلهي زمن الاستعمار البريطاني…<br>فقررت الحكومة: <span style="color:var(--orange)">مكافأة مالية لكل كوبرا ميتة</span></h2>
+  <div class="row" style="margin-top:20px;align-items:stretch">
+    <div class="card" style="flex:1;text-align:center"><div class="big-num" style="font-size:110px">💰</div><p class="center" style="text-align:center">الهدف: تقليل الأفاعي</p></div>
+    <div class="card" style="flex:1;text-align:center"><div class="big-num" style="font-size:110px">📈</div><p class="center" style="text-align:center">التقارير: آلاف الأفاعي قُتلت</p></div>
+    <div class="card" style="flex:1;text-align:center"><div class="big-num" style="font-size:110px">✅</div><p class="center" style="text-align:center">الحكم: خطة ناجحة بالأرقام</p></div>
+  </div>
+  <p style="font-family:var(--h);font-size:34px;color:var(--leather);text-align:center;margin-top:auto">الخطة ناجحة بالأرقام… فماذا حدث بعدها؟</p>
+</section>
+
+<!-- 8 COBRA B -->
+<section class="slide dark" data-seg="تأثير الكوبرا">
+  <div class="kicker">الصدمة</div>
+  <h2>صار الناس <span style="color:var(--orange2)">يربّون الكوبرا</span> في بيوتهم ليقتلوها ويقبضوا المكافأة!</h2>
+  <p>ولما اكتشفت الحكومة ذلك ألغت المكافأة… فأطلق المربّون أفاعيهم التي لم تعد تساوي شيئًا، <b style="color:var(--orange2)">فصارت الكوبرا في المدينة أكثر من قبل.</b></p>
+  <div class="row" style="margin-top:18px">
+    <div class="card" style="flex:1"><div class="tag">حين يصبح المؤشر</div><p style="font-size:23px;margin-top:8px">نسبة النجاح…</p><p class="muted" style="font-size:20px">قد تسهُل الاختبارات وترتفع الدرجات… ولا تتعلم الطالبة.</p></div>
+    <div class="card" style="flex:1"><div class="tag">حين يصبح المؤشر</div><p style="font-size:23px;margin-top:8px">عدد الزيارات الصفية…</p><p class="muted" style="font-size:20px">تكثر الزيارات… ولا يتغير شيء داخل الفصل.</p></div>
+    <div class="card" style="flex:1"><div class="tag">حين يصبح المؤشر</div><p style="font-size:23px;margin-top:8px">ساعات التدريب…</p><p class="muted" style="font-size:20px">يكتمل الحضور… ولا يُطبَّق شيء.</p></div>
+  </div>
+  <p style="font-family:var(--h);font-size:30px;color:#f1d8b0;text-align:center;margin-top:auto">التقرير الوصفي يقول: «تحقق المؤشر»… والتأملي يسأل: <span style="color:var(--orange2)">«هل تحقق الهدف، أم ربّينا كوبرا؟»</span></p>
+</section>
+
+<!-- 9 THREE TYPES -->
+<section class="slide" data-seg="المفهوم">
+  <div class="kicker">ما الذي استنتجناه؟</div>
+  <h2>ثلاثة تقارير… وواحدٌ فقط يقود</h2>
+  <div class="types">
+    <div class="card"><div class="t" style="color:var(--red)">التبريري</div><div class="q">لماذا لستُ المسؤولة؟</div><div class="body"><p>يبحث عن السبب خارج القسم: الطالبة، وولي الأمر، والمنهج. يحمي صاحبته… ويُبقي المشكلة.</p></div><div class="hint">اضغطي للكشف</div></div>
+    <div class="card"><div class="t" style="color:var(--leather)">الوصفي</div><div class="q">ماذا حدث؟</div><div class="body"><p>أرقامٌ وأنشطةٌ منفذة. ضروري بوصفه دليلًا، لكنه يتوقف عند السطح ويترك القرار معلقًا.</p></div><div class="hint">اضغطي للكشف</div></div>
+    <div class="card" style="border:2px solid var(--orange)"><div class="t" style="color:var(--green)">التأملي</div><div class="q">لماذا؟ وماذا يعني؟ وماذا بعد؟</div><div class="body"><p>يربط الدليل بالسبب، ويرى الغائب عن البيانات، ويبدأ بممارسات القسم نفسه، وينتهي بقرارٍ يُقاس.</p></div><div class="hint">اضغطي للكشف</div></div>
+  </div>
+</section>
+
+<!-- 10 MODEL -->
+<section class="slide" data-seg="المفهوم">
+  <div class="kicker">نموذج الصندوق الأسود للتأمل (مستند إلى نموذج رولف)</div>
+  <h2>ثلاثة أسئلة تحوّل التقرير إلى قيادة</h2>
+  <div class="model">
+    <div class="step"><div class="n">السؤال الأول</div><div class="t">ماذا حدث؟</div><p>الوصف المدعوم بالدليل: أرقام، ومشاهدات، ووقائع، بلا أحكام.</p><span class="st">محطة «بيانات الرحلة»</span></div>
+    <div class="step"><div class="n">السؤال الثاني</div><div class="t">لماذا حدث؟</div><p>التحليل: الأسباب الجذرية، والافتراضات الخاطئة، ونصيب ممارساتي أنا.</p><span class="st">محطة «تسجيل القمرة»</span></div>
+    <div class="step"><div class="n">السؤال الثالث</div><div class="t">ماذا بعد؟</div><p>القرار: إجراء، ومسؤولة، ومؤشر، وموعد مراجعة، وأولوية مدرسية.</p><span class="st">محطة «تعديل المسار»</span></div>
+  </div>
+  <p class="note" style="margin-top:20px">اضغطي على كل مرحلة لإظهارها بالتتابع</p>
+</section>
+
+<!-- 11 STATIONS OVERVIEW -->
+<section class="slide leather" data-seg="محطات التحقيق">
+  <div class="kicker" style="color:var(--orange2)">محطات التحقيق</div>
+  <h2>كل مجموعة تحمل «أمتعتها»: موقفًا حقيقيًا من بطاقات الصعود</h2>
+  <div class="row" style="margin-top:20px">
+    <div class="card" style="flex:1"><div class="tag">المحطة الأولى</div><h2 style="font-size:32px;margin:12px 0 6px">بيانات الرحلة</h2><p style="font-size:22px">ماذا حدث؟ الأدلة فقط.</p></div>
+    <div class="card" style="flex:1"><div class="tag">المحطة الثانية</div><h2 style="font-size:32px;margin:12px 0 6px">تسجيل القمرة</h2><p style="font-size:22px">لماذا حدث؟ السبب الجذري.</p></div>
+    <div class="card" style="flex:1"><div class="tag">المحطة الثالثة</div><h2 style="font-size:32px;margin:12px 0 6px">تعديل المسار</h2><p style="font-size:22px">ماذا بعد؟ قرارٌ يُقاس.</p></div>
+  </div>
+  <p style="margin-top:30px;font-size:24px;text-align:center">تدور المجموعات على المحطات الثلاث، ومدة كل محطة 6 دقائق، وتبدأ كل محطة بقصة قصيرة.</p>
+  <div style="margin:auto auto 0"><div class="timer" data-min="20"></div></div>
+</section>
+
+<!-- 12 STATION 1 CHALLENGER -->
+<section class="slide" data-seg="محطات التحقيق">
+  <div class="kicker">المحطة الأولى · بيانات الرحلة</div>
+  <div class="station">
+    <div class="story">
+      <h2 style="font-size:36px;margin:0">المكوك تشالنجر · 28 يناير 1986</h2>
+      <p>حذّر المهندسون من أن الحلقات المطاطية قد تفشل في البرد الشديد. وكانت قد أظهرت تآكلًا جزئيًا في رحلات سابقة… ومرّت تلك الرحلات بسلام.</p>
+      <div class="dots" id="dots"></div>
+      <p class="note" style="text-align:right">رسم توضيحي: كل دائرة رحلة، والملوّن منها مرّ رغم الخلل.</p>
+      <button class="btn sm" style="align-self:flex-start" data-reveal="ch" data-after="challenger">إذا مرّ الخلل مرات دون حادث… هل هو آمن؟</button>
+      <div id="ch" class="hidden reveal"><p><b style="color:var(--red)">انفجر المكوك بعد 73 ثانية</b> من إطلاقه. وسمّت الباحثة ديان فون ذلك <b style="color:var(--orange)">«تطبيع الانحراف»</b>: يتكرر الخلل الصغير حتى يصبح عاديًا لا يلفت انتباه أحد.</p></div>
+    </div>
+    <div class="task card">
+      <div class="tag">مهمة المجموعة</div>
+      <ul style="margin-top:12px">
+        <li>اكتبن ما حدث في الموقف <b>بالأدلة فقط</b>: أرقام، ومشاهدات، وتواريخ.</li>
+        <li>ابحثن عن خللٍ <b>اعتاد عليه القسم</b> حتى لم يعد يُرى.</li>
+        <li>اسألن: ما البيانات <b>الغائبة</b> عن هذا الموقف؟</li>
+      </ul>
+      <p style="font-family:var(--h);font-size:20px;margin-top:10px">كلمات ممنوعة في هذه المحطة:</p>
+      <div class="forbid"><span>أعتقد</span><span>يبدو</span><span>ضعيفة</span><span>ممتازة</span><span>دائمًا</span></div>
+      <div style="margin-top:22px"><div class="timer" data-min="6"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 STATION 2 SEMMELWEIS -->
+<section class="slide" data-seg="محطات التحقيق">
+  <div class="kicker">المحطة الثانية · تسجيل القمرة</div>
+  <div class="station">
+    <div class="story">
+      <h2 style="font-size:36px;margin:0">مستشفى فيينا · 1847</h2>
+      <p>جناحان للولادة، ووفيات الأمهات في جناح الأطباء أعلى بكثير منها في جناح القابلات. ما السبب في رأيكِ؟</p>
+      <div class="bars" id="sbars">
+        <div class="b"><em dir="ltr">≈10%</em><i style="background:var(--red)" data-h="100"></i><span>جناح الأطباء</span></div>
+        <div class="b"><em dir="ltr">≈4%</em><i style="background:var(--gold)" data-h="40"></i><span>جناح القابلات</span></div>
+        <div class="b hidden" id="afterBar"><em dir="ltr">≈1%</em><i style="background:var(--green)" data-h="13"></i><span>الأطباء بعد غسل اليدين</span></div>
+      </div>
+      <button class="btn sm" style="align-self:flex-start" data-reveal="sm" data-after="semmel">اكشفي السبب</button>
+      <div id="sm" class="hidden reveal"><p>كان الأطباء يأتون من تشريح الجثث إلى توليد الأمهات <b>دون غسل أيديهم</b>. فرض زيملفايس غسل اليدين فانهارت الوفيات… ورفضه زملاؤه، لأن الاعتراف يعني أن <b style="color:var(--red)">أيديهم هم</b> كانت السبب.</p></div>
+    </div>
+    <div class="task card">
+      <div class="tag">مهمة المجموعة: لماذا الخماسية</div>
+      <div class="why" style="margin-top:12px">
+        <div>لماذا حدث ذلك؟ ←</div><div style="margin-right:30px">لماذا؟ ←</div><div style="margin-right:60px">لماذا؟ ←</div><div style="margin-right:90px">لماذا؟ ←</div><div style="margin-right:120px;border-color:var(--orange);color:var(--orange)">لماذا؟ ← السبب الجذري</div>
+      </div>
+      <p style="font-size:21px;margin-top:14px">ثم أجبن بصدق: <b>ما الافتراض الذي كنا نعمل به ولم يكن صحيحًا؟ وما نصيب ممارساتنا نحن؟</b></p>
+      <div style="margin-top:14px"><div class="timer" data-min="6"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 STATION 3 KODAK -->
+<section class="slide" data-seg="محطات التحقيق">
+  <div class="kicker">المحطة الثالثة · تعديل المسار</div>
+  <div class="station">
+    <div class="story">
+      <h2 style="font-size:36px;margin:0">الشركة التي اخترعت مستقبلها… ثم دفنته</h2>
+      <div class="timeline">
+        <div class="pt"><i></i><b>1975</b><p>مهندس في كوداك يخترع أول كاميرا رقمية</p></div>
+        <div class="pt"><i></i><b>التسعينيات</b><p>تقارير الأرباح ممتازة… فيُحفظ الاختراع جانبًا</p></div>
+        <div class="pt hot" id="kodakEnd" style="opacity:.15;transition:opacity .8s"><i></i><b>2012</b><p>إعلان الإفلاس… والعالم كله رقمي</p></div>
+      </div>
+      <button class="btn sm" style="align-self:flex-start" data-reveal="kd" data-after="kodak">ماذا حدث بعد ذلك؟</button>
+      <div id="kd" class="hidden reveal"><p>تقارير النجاح قد تكون أخطر من تقارير الفشل؛ لأنها تقول <b>«استمرّي»</b> حين يكون المطلوب <b style="color:var(--orange)">«تغيّري»</b>. التأمل يشمل النجاحات أيضًا.</p></div>
+    </div>
+    <div class="task card">
+      <div class="tag">مهمة المجموعة</div>
+      <p style="font-size:21px;margin-top:10px">حوّلن التأمل إلى <b>قرارٍ واحد</b> محدد:</p>
+      <table class="dec"><tr><th>الإجراء</th><th>المسؤولة</th><th>المؤشر</th><th>موعد المراجعة</th><th>الأولوية المدرسية</th></tr><tr><td></td><td></td><td></td><td></td><td></td></tr></table>
+      <p style="font-size:20px;margin-top:12px">سؤال إضافي: ما الممارسة <b>الناجحة</b> في القسم التي قد تمنعنا من رؤية ما هو أفضل منها؟</p>
+      <div style="margin-top:14px"><div class="timer" data-min="6"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 HOT SEAT -->
+<section class="slide" data-seg="الكرسي الساخن المعكوس">
+  <div class="kicker">الكرسي الساخن المعكوس</div>
+  <h2>منسقة تقرأ تأملها… والقاعة لا تملك إلا الأسئلة</h2>
+  <div class="rules"><div class="no">✕ لا نصيحة</div><div class="no">✕ لا نقد</div><div class="no">✕ لا حكم</div><div class="yes">✓ أسئلة تأملية فقط</div></div>
+  <div class="card" style="flex:1;display:flex;flex-direction:column;justify-content:center">
+    <div id="qcard">اضغطي «سؤال من الصندوق» لإلهام الحاضرات</div>
+  </div>
+  <div class="row" style="justify-content:space-between;align-items:center;margin-top:18px">
+    <button class="btn" id="qBtn">سؤال من الصندوق</button>
+    <div class="timer" data-min="10"></div>
+  </div>
+</section>
+
+<!-- 16 LETTER -->
+<section class="slide" data-seg="رسالة إلى نفسي">
+  <div class="kicker">رسالة مختومة · تُفتح بعد شهر</div>
+  <h2 style="font-size:40px;text-align:center">تعود إليكِ هذه الرسالة مع تقريركِ الشهري القادم</h2>
+  <div class="envelope">
+    <p>عزيزتي <span style="width:260px"></span> بعد شهرٍ من اليوم،</p>
+    <p>الموقف الذي تأملتُه: <span></span></p>
+    <p>السبب الذي اكتشفتُه: <span></span></p>
+    <p>القرار الذي اتخذتُه: <span></span></p>
+    <p>سأعرف أنني نجحت حين: <span></span></p>
+  </div>
+  <div style="margin:auto auto 0"><div class="timer" data-min="10"></div></div>
+</section>
+
+<!-- 17 UHUD -->
+<section class="slide dark" data-seg="الهبوط">
+  <div class="kicker">التقرير التأملي في القرآن الكريم · بعد غزوة أحد</div>
+  <h2 style="font-size:38px">سأل المسلمون: كيف أصابتنا هذه المصيبة؟ فجاء الجواب تقريرًا تأمليًا متكاملًا</h2>
+  <div class="uhud" id="uhud">
+    <div class="ln"><div class="lab">وصف ما حدث</div><div class="v">﴿أَوَلَمَّا أَصَابَتْكُمْ مُصِيبَةٌ قَدْ أَصَبْتُمْ مِثْلَيْهَا قُلْتُمْ أَنَّى هَذَا﴾</div></div>
+    <div class="ln"><div class="lab">السبب من الداخل</div><div class="v">﴿قُلْ هُوَ مِنْ عِنْدِ أَنْفُسِكُمْ﴾</div></div>
+    <div class="ln"><div class="lab">التحليل</div><div class="v">﴿حَتَّى إِذَا فَشِلْتُمْ وَتَنَازَعْتُمْ فِي الْأَمْرِ وَعَصَيْتُمْ﴾</div></div>
+    <div class="ln"><div class="lab">الدافع الخفي</div><div class="v">﴿مِنْكُمْ مَنْ يُرِيدُ الدُّنْيَا وَمِنْكُمْ مَنْ يُرِيدُ الْآخِرَةَ﴾</div></div>
+    <div class="ln"><div class="lab">الإغلاق بالعفو</div><div class="v">﴿وَلَقَدْ عَفَا عَنْكُمْ﴾</div></div>
+  </div>
+  <div class="row" style="justify-content:space-between;align-items:center;margin-top:auto">
+    <button class="btn" id="uhudBtn">أظهري العنصر التالي</button>
+    <p id="uhudMsg" style="font-family:var(--h);font-size:28px;color:var(--orange2);opacity:0;transition:opacity 1s">التأمل القيادي محاسبةٌ بلا إهانة… يبني الفريق ولا يكسره.</p>
+  </div>
+</section>
+
+<!-- 18 ARRIVALS -->
+<section class="slide dark" data-seg="الهبوط">
+  <div class="kicker">بطاقة الهبوط · لوحة الوصول</div>
+  <h2 style="font-size:38px">«في تقريري القادم سأتوقف عن… وسأبدأ بـ…»</h2>
+  <div class="inrow"><input id="arrIn" placeholder="اكتبي عبارة إحدى المنسقات ثم اضغطي «أضيفي إلى اللوحة»"><button class="btn" id="arrBtn">أضيفي إلى اللوحة</button></div>
+  <div id="board"></div>
+  <div style="margin-top:12px;align-self:flex-end"><div class="timer" data-min="5"></div></div>
+</section>
+
+<!-- 19 CLOSE -->
+<section class="slide cover center" data-seg="">
+  <div class="box" style="width:150px;height:108px;margin-bottom:30px"></div>
+  <h1 style="font-size:60px">هبوطٌ آمن</h1>
+  <p style="font-size:28px;color:#e9cfa7;margin-top:10px">رحلتكِ القادمة: التقرير الشهري… بصندوقٍ أسود يتكلّم</p>
+  <p class="muted" style="font-size:22px;margin-top:24px">تُفتح رسائلكنّ المختومة بعد شهر، لنرى معًا: ماذا تغيّر؟</p>
+</section>
+
+<div id="flightpath"><svg id="plane" viewBox="0 0 24 24"><path fill="#E8681A" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z" transform="rotate(90 12 12)"/></svg></div>
+<div id="counter"></div>
+<button class="navbtn" id="next" title="التالي">‹</button>
+<button class="navbtn" id="prev" title="السابق">›</button>
+
+</div></div>
+
+<script>
+/* ---------- scaling ---------- */
+const stage=document.getElementById('stage');
+function fit(){const s=Math.min(innerWidth/1600,innerHeight/900);stage.style.transform='scale('+s+')'}
+addEventListener('resize',fit);fit();
+
+/* ---------- navigation ---------- */
+const EMBED=window.self!==window.top;if(EMBED)document.body.classList.add('embed');
+const slides=[...document.querySelectorAll('.slide')];let cur=0;
+const seg=document.getElementById('seg'),counter=document.getElementById('counter'),plane=document.getElementById('plane');
+const ar=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+function go(i){
+  if(i<0||i>=slides.length)return;
+  if(slides[cur].id==='cockpitSlide'&&i!==cur)stopCvr();
+  slides[cur].classList.remove('active');cur=i;slides[cur].classList.add('active');
+  seg.textContent=slides[cur].dataset.seg||'';
+  counter.textContent=ar(cur+1)+' / '+ar(slides.length);
+  plane.style.right='calc('+(cur/(slides.length-1)*100)+'% - 14px)';
+  if(!EMBED){try{location.hash='s'+(cur+1)}catch(e){}}
+}
+document.getElementById('next').onclick=()=>go(cur+1);
+document.getElementById('prev').onclick=()=>go(cur-1);
+addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT')return;
+  if(EMBED){const k={ArrowLeft:'next',PageDown:'next',' ':'next',ArrowRight:'prev',PageUp:'prev'}[e.key];if(k){e.preventDefault();parent.postMessage({bbkey:k},'*')}return}
+  if(['ArrowLeft','PageDown',' '].includes(e.key)){e.preventDefault();go(cur+1)}
+  if(['ArrowRight','PageUp'].includes(e.key)){e.preventDefault();go(cur-1)}
+});
+const h=parseInt((location.hash||'').replace('#s',''));go(h>0&&h<=slides.length?h-1:0);
+addEventListener('message',e=>{const d=e.data||{};if(typeof d.go==='number')go(d.go-1)});
+document.getElementById('fs').onclick=()=>{try{const p=document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();p&&p.catch&&p.catch(()=>{})}catch(e){}};
+
+/* ---------- audio helpers ---------- */
+let AC=null;function ac(){if(!AC){AC=new (window.AudioContext||window.webkitAudioContext)()}if(AC.state==='suspended')AC.resume();return AC}
+function noiseBuf(c,sec){const b=c.createBuffer(1,c.sampleRate*sec,c.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;return b}
+function chime(){try{const c=ac(),t=c.currentTime;[880,1320,1760].forEach((f,k)=>{const o=c.createOscillator(),g=c.createGain();o.frequency.value=f;o.type='sine';g.gain.setValueAtTime(0,t+k*.18);g.gain.linearRampToValueAtTime(.18,t+k*.18+.02);g.gain.exponentialRampToValueAtTime(.001,t+k*.18+1.2);o.connect(g).connect(c.destination);o.start(t+k*.18);o.stop(t+k*.18+1.3)})}catch(e){}}
+
+/* ---------- workshop clock ---------- */
+let clkLeft=3600,clkRun=false,clkInt=null;const clk=document.getElementById('clk'),clkBtn=document.getElementById('clkBtn');
+const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+clkBtn.onclick=()=>{clkRun=!clkRun;clkBtn.textContent=clkRun?'إيقاف مؤقت':'متابعة';if(clkRun){clkInt=setInterval(()=>{if(clkLeft>0){clkLeft--;clk.textContent=fmt(clkLeft)}else{clearInterval(clkInt)}},1000)}else clearInterval(clkInt)};
+
+/* ---------- timers ---------- */
+document.querySelectorAll('.timer').forEach(el=>{
+  const total=+el.dataset.min*60;let left=total,iv=null;
+  el.innerHTML='<span class="t">'+fmt(left)+'</span><button class="btn sm">ابدئي</button><button class="btn ghost sm">إعادة</button>';
+  const [t,b1,b2]=el.children;
+  b1.onclick=()=>{if(iv){clearInterval(iv);iv=null;b1.textContent='متابعة';return}
+    b1.textContent='إيقاف';iv=setInterval(()=>{left--;t.textContent=fmt(Math.max(left,0));if(left<=0){clearInterval(iv);iv=null;el.classList.add('done');b1.textContent='انتهى';chime()}},1000)};
+  b2.onclick=()=>{clearInterval(iv);iv=null;left=total;t.textContent=fmt(left);el.classList.remove('done');b1.textContent='ابدئي'};
+});
+
+/* ---------- generic reveal ---------- */
+document.querySelectorAll('[data-reveal]').forEach(b=>b.onclick=()=>{
+  const t=document.getElementById(b.dataset.reveal);t.classList.remove('hidden');t.classList.add('reveal');b.classList.add('hidden');
+  const a=b.dataset.after;
+  if(a==='challenger'){const ds=[...document.querySelectorAll('#dots i')];const last=ds[ds.length-1];last.classList.add('x')}
+  if(a==='semmel'){const ab=document.getElementById('afterBar');ab.classList.remove('hidden');setTimeout(()=>{const i=ab.querySelector('i');i.style.height=i.dataset.h+'%'},50)}
+  if(a==='kodak'){document.getElementById('kodakEnd').style.opacity=1}
+});
+
+/* quotes */
+document.querySelectorAll('.quote').forEach(q=>q.onclick=()=>{document.getElementById(q.dataset.q).classList.remove('hidden');q.querySelector('.q-hint').classList.add('hidden')});
+
+/* votes */
+const votes={a:0,b:0};
+function drawVotes(){const tot=Math.max(votes.a+votes.b,1);document.querySelectorAll('.vote').forEach(v=>{const k=v.dataset.vote;v.querySelector('.n').textContent=ar(votes[k]);v.querySelector('.bar i').style.width=(votes[k]/tot*100)+'%'})}
+document.querySelectorAll('.vote button').forEach(b=>b.onclick=()=>{const k=b.closest('.vote').dataset.vote;votes[k]=Math.max(0,votes[k]+ +b.dataset.d);drawVotes()});
+document.getElementById('showVerdict').onclick=()=>document.querySelectorAll('[data-v]').forEach(v=>{v.classList.remove('hidden');v.classList.add('reveal')});
+
+
+
+/* types & model */
+document.querySelectorAll('.types .card').forEach(c=>c.onclick=()=>c.classList.add('open'));
+document.querySelectorAll('.model .step').forEach(s=>s.onclick=()=>s.classList.add('on'));
+
+/* challenger dots */
+(function(){const d=document.getElementById('dots');const e=[2,5,7,9,11,13,14,16,18,20,21,23];for(let i=0;i<25;i++){const x=document.createElement('i');if(e.includes(i))x.classList.add('e');d.appendChild(x)}})();
+
+/* semmel bars initial */
+document.querySelectorAll('#sbars .b:not(.hidden) i').forEach(i=>setTimeout(()=>i.style.height=i.dataset.h+'%',300));
+
+/* hot seat */
+const QS=['ما الدليل الذي بنيتِ عليه هذا الاستنتاج؟','ماذا لو كان السبب عكس ما تظنين تمامًا؟','ما الذي لم تجرّبيه بعد؟','من الطالبات اللواتي لا يظهرن في هذه البيانات؟','ما الافتراض الذي تعملين به ولم تتحققي منه؟','لو قرأت إحدى معلمات قسمكِ هذا التأمل، ماذا ستضيف؟','ما الجزء من المشكلة الذي يعود إلى ممارستكِ أنتِ؟','ما الذي اعتاد عليه قسمكِ حتى لم يعد يُرى؟','كيف ستعرفين بعد شهر أن القرار نجح؟','ما الذي ستتوقفين عنه، لا ما الذي ستضيفينه؟','ما النجاح الذي قد يمنعكِ من رؤية ما هو أفضل؟','من في قسمكِ يشكّ… ولا يقول؟'];
+let qpool=[];document.getElementById('qBtn').onclick=()=>{if(!qpool.length)qpool=[...QS].sort(()=>Math.random()-.5);const q=document.getElementById('qcard');q.classList.remove('reveal');void q.offsetWidth;q.textContent=qpool.pop();q.classList.add('reveal')};
+
+/* uhud */
+let uh=0;document.getElementById('uhudBtn').onclick=e=>{const l=document.querySelectorAll('#uhud .ln');if(uh<l.length){l[uh].classList.add('on');uh++}if(uh>=l.length){document.getElementById('uhudMsg').style.opacity=1;e.target.classList.add('hidden')}};
+
+/* arrivals */
+let fln=101;function addArr(){const i=document.getElementById('arrIn');const v=i.value.trim();if(!v)return;const d=document.createElement('div');d.className='fl';d.innerHTML='<b>SH-'+(fln++)+' · وصلت</b><span></span>';d.querySelector('span').textContent=v;document.getElementById('board').prepend(d);i.value='';i.focus()}
+document.getElementById('arrBtn').onclick=addArr;document.getElementById('arrIn').addEventListener('keydown',e=>{if(e.key==='Enter')addArr()});
+
+/* ---------- COCKPIT VOICE RECORDER RE-ENACTMENT ---------- */
+const meter=document.getElementById('meter');for(let i=0;i<40;i++)meter.appendChild(document.createElement('i'));
+let voiceOn=true;document.getElementById('voiceBtn').onclick=e=>{voiceOn=!voiceOn;e.target.textContent='الأصوات المنطوقة: '+(voiceOn?'تعمل':'متوقفة')};
+let run=0,nodes=[],analyser=null,raf=null,engineF=null,engineG=null;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const sub=document.getElementById('sub'),scene=document.getElementById('scene'),silence=document.getElementById('silence');
+function setSub(who,en,arTxt,extra){sub.innerHTML='';const a=document.createElement('div');a.className='who';a.textContent=who;const b=document.createElement('div');b.className='en';b.textContent=en;const c=document.createElement('div');c.className='ar';c.innerHTML=arTxt;sub.append(a,b,c);if(extra){const d=document.createElement('div');d.className='aside';d.textContent=extra;sub.append(d)}sub.classList.remove('reveal');void sub.offsetWidth;sub.classList.add('reveal')}
+function pickVoice(){const vs=speechSynthesis.getVoices();return vs.find(v=>/en-(US|GB)/i.test(v.lang)&&/natural|online|google/i.test(v.name))||vs.find(v=>/^en/i.test(v.lang))||null}
+function speak(text,pitch,rate,id){return new Promise(res=>{const est=Math.max(1200,text.split(' ').length*420);
+  if(!voiceOn||!('speechSynthesis' in window)){setTimeout(res,est);return}
+  try{const u=new SpeechSynthesisUtterance(text);const v=pickVoice();if(v)u.voice=v;u.lang='en-US';u.pitch=pitch;u.rate=rate;u.volume=1;let done=false;const fin=()=>{if(!done){done=true;res()}};u.onend=fin;u.onerror=fin;setTimeout(fin,est+2500);speechSynthesis.speak(u)}catch(e){setTimeout(res,est)}})}
+function squelch(){const c=ac(),s=c.createBufferSource();s.buffer=noiseBuf(c,.2);const f=c.createBiquadFilter();f.type='bandpass';f.frequency.value=1800;f.Q.value=1.2;const g=c.createGain();g.gain.setValueAtTime(.35,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.18);s.connect(f).connect(g).connect(analyser);s.start();nodes.push(s)}
+function heterodyne(sec){const c=ac(),t=c.currentTime;const o=c.createOscillator();o.type='sawtooth';o.frequency.setValueAtTime(1500,t);o.frequency.linearRampToValueAtTime(2300,t+sec*.5);o.frequency.linearRampToValueAtTime(1700,t+sec);
+  const lfo=c.createOscillator(),lg=c.createGain();lfo.frequency.value=17;lg.gain.value=.08;const g=c.createGain();g.gain.value=.1;lfo.connect(lg).connect(g.gain);
+  const f=c.createBiquadFilter();f.type='bandpass';f.frequency.value=2000;f.Q.value=2;o.connect(f).connect(g).connect(analyser);
+  const n=c.createBufferSource();n.buffer=noiseBuf(c,sec);const ng=c.createGain();ng.gain.value=.12;n.connect(ng).connect(analyser);
+  o.start(t);lfo.start(t);n.start(t);o.stop(t+sec);lfo.stop(t+sec);nodes.push(o,lfo,n)}
+function startEngine(){const c=ac();analyser=c.createAnalyser();analyser.fftSize=128;const master=c.createGain();master.gain.value=.9;analyser.connect(master).connect(c.destination);nodes.push(master);
+  const n=c.createBufferSource();n.buffer=noiseBuf(c,4);n.loop=true;engineF=c.createBiquadFilter();engineF.type='lowpass';engineF.frequency.value=260;engineG=c.createGain();engineG.gain.value=0;engineG.gain.linearRampToValueAtTime(.35,c.currentTime+2);
+  n.connect(engineF).connect(engineG).connect(analyser);n.start();nodes.push(n);
+  [55,82.5,110].forEach((fq,k)=>{const o=c.createOscillator();o.type='sawtooth';o.frequency.value=fq;const lp=c.createBiquadFilter();lp.type='lowpass';lp.frequency.value=180;const g=c.createGain();g.gain.value=.04/(k+1);o.connect(lp).connect(g).connect(engineG);o.start();nodes.push(o)});
+  const hum=c.createOscillator();hum.frequency.value=400;const hg=c.createGain();hg.gain.value=.006;hum.connect(hg).connect(analyser);hum.start();nodes.push(hum);
+  const data=new Uint8Array(analyser.frequencyBinCount);const bars=[...meter.children];
+  (function loop(){analyser.getByteFrequencyData(data);bars.forEach((b,i)=>{b.style.height=(6+data[i%data.length]/255*40)+'px'});raf=requestAnimationFrame(loop)})()}
+function throttle(sec){const c=ac(),t=c.currentTime;engineF.frequency.cancelScheduledValues(t);engineF.frequency.setValueAtTime(engineF.frequency.value,t);engineF.frequency.linearRampToValueAtTime(2400,t+sec);engineG.gain.cancelScheduledValues(t);engineG.gain.setValueAtTime(engineG.gain.value,t);engineG.gain.linearRampToValueAtTime(.9,t+sec);nodes.forEach(n=>{if(n.frequency&&n.type==='sawtooth'&&n.frequency.value<120)n.frequency.linearRampToValueAtTime(n.frequency.value*2.4,t+sec)})}
+function stopCvr(){run++;try{speechSynthesis.cancel()}catch(e){}nodes.forEach(n=>{try{n.stop?n.stop():n.disconnect()}catch(e){}});nodes=[];cancelAnimationFrame(raf);[...meter.children].forEach(b=>b.style.height='6px')}
+document.getElementById('stopCvr').onclick=stopCvr;
+document.getElementById('playCvr').onclick=async()=>{
+  stopCvr();const id=++run;const alive=()=>id===run;silence.style.opacity=0;sub.style.opacity=1;
+  try{speechSynthesis.getVoices()}catch(e){}
+  ac();startEngine();
+  scene.textContent='مطار لوس روديوس · جزيرة تينيريفي · 27 مارس 1977 · ضبابٌ كثيف وطائرتان على المدرج نفسه';
+  sub.innerHTML='<div class="ar" style="color:#bfae99;font-size:28px">قمرة قيادة الطائرة الهولندية · المحركات تدور…</div>';
+  await sleep(4000);if(!alive())return;
+  squelch();setSub('مساعد القائد · الطائرة الهولندية (لاسلكي)','“We are now at take-off.”','«نحن الآن في وضع الإقلاع»','عبارة غامضة: هل هم متوقفون أم بدؤوا الإقلاع فعلًا؟');throttle(14);
+  await speak('We are now at take-off.',1,0.95);if(!alive())return;await sleep(600);
+  squelch();setSub('برج المراقبة','“OK… [stand by for take-off, I will call you]”','«حسنًا…» <span class="lost">انتظروا الإذن بالإقلاع، سأناديكم</span>','تداخل لاسلكي: لم تسمع القمرة الهولندية إلا «حسنًا»');
+  await speak('O K',0.9,0.9);if(!alive())return;heterodyne(2.8);await sleep(3200);if(!alive())return;
+  squelch();setSub('برج المراقبة ← طائرة بان أمريكان','“Report when runway clear.”','«أبلغوا عند إخلاء المدرج»');
+  await speak('Papa Alpha one seven three six, report when runway clear.',0.9,1);if(!alive())return;await sleep(400);
+  squelch();setSub('طائرة بان أمريكان','“OK, will report when we’re clear.”','«حسنًا، سنبلغ حين نُخلي المدرج»','الطائرة الأمريكية ما تزال على المدرج نفسه… في الضباب');
+  await speak("OK, will report when we're clear.",0.75,1);if(!alive())return;await sleep(900);
+  setSub('مهندس الطيران · الطائرة الهولندية','“Is he not clear, then?”','«أَلم يُخلِ المدرج إذن؟»');
+  await speak('Is he not clear, then?',1.25,0.95);if(!alive())return;await sleep(300);
+  setSub('القائد · الطائرة الهولندية','“What do you say?”','«ماذا تقول؟»');
+  await speak('What do you say?',0.7,0.95);if(!alive())return;await sleep(250);
+  setSub('مهندس الطيران · الطائرة الهولندية','“Is he not clear, that Pan American?”','«ألم تُخلِ طائرة بان أمريكان المدرج بعد؟»','سؤالٌ متردد… لم يتحول إلى اعتراض');
+  await speak('Is he not clear, that Pan American?',1.25,0.95);if(!alive())return;await sleep(200);
+  setSub('القائد · الطائرة الهولندية','“Oh, yes.”','«بلى… بالتأكيد!»','بثقةٍ حاسمة… فسكت الجميع');
+  await speak('Oh, yes!',0.6,0.85);if(!alive())return;
+  await sleep(5200);if(!alive())return;
+  stopCvr();sub.style.opacity=0;scene.textContent='';await sleep(900);silence.style.opacity=1;
+};
+</script>
+</body>
+</html>
