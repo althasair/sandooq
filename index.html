@@ -133,6 +133,12 @@ button{font-family:var(--h);cursor:pointer}
 .phWin .c{font-size:90px}
 .phWin h3{font-family:var(--h);font-size:24px;color:var(--brown);line-height:1.7}
 .phWin p{font-family:var(--h);font-size:17px;color:var(--leather);margin-top:8px}
+.exRow{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px;flex-shrink:0;animation:rise .6s both}
+.exBox{border-radius:14px;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-family:var(--h)}
+.exBox.red{background:var(--redL);border:1px solid #ecc7bc}.exBox.green{background:var(--greenL);border:1px solid #bfd9c9}
+.exBox b{font-size:17px}.exBox.red b{color:var(--red)}.exBox.green b{color:var(--green)}
+.exBox .v{font-family:'Amiri',serif;font-size:22px;color:var(--leather);font-weight:700}
+.exBox .ar{font-size:18px;color:var(--brown)}
 /* overlays */
 .ov{position:absolute;inset:0;background:rgba(20,12,8,.6);display:flex;align-items:center;justify-content:center;z-index:50}
 .ovBox{background:var(--ivory);border-radius:20px;padding:34px 40px;width:620px;max-height:80%;overflow:auto}
@@ -226,10 +232,13 @@ const Q = [
    {t:'رمادي معدني',r:'رمادي؟ 🙈 لا يا {n}… الجاية لكِ'},
    {t:'أحمر',r:'دافية يا {n} 🔥 بس هو برتقالي'}]},
  {id:'q04',tag:'تأمّل سريع',type:'text',text:'ما الذي قد يُسكت معلمة في قسمكِ عن قول ما تشكّ فيه؟',ph:'جملة واحدة…'},
- {id:'q05',tag:'خطأٌ واحد… وردّان',type:'mcq',text:'<span class="verse">﴿أَنَا خَيْرٌ مِنْهُ﴾</span> ردٌّ على الخطأ من نوع:',opts:[
-   {t:'تأمّلي',r:'أفا يا {n} 😳 هذا أشهر تبرير في التاريخ!'},
-   {t:'تبريري',ok:1},
-   {t:'وصفي',r:'قريبة يا {n}… بس هو يدافع عن نفسه، ما يصف 😉'}]},
+ {id:'q05',tag:'خطأٌ واحد… وردّان',type:'mcq',text:'أيّ الردّين تبرير، وأيّهما تأمّل؟ وماذا ترتّب على كلٍّ منهما؟',opts:[
+   {t:'كلاهما تبرير… وكلاهما خرج من الجنة',r:'قريبة يا {n} 😅 خرجا من الجنة صح… بس آدم تاب الله عليه واجتباه'},
+   {t:'«أنا خير منه» تبرير ← الطرد · «ظلمنا أنفسنا» تأمّل ← التوبة والاجتباء',ok:1},
+   {t:'«أنا خير منه» تأمّل ← الرفعة · «ظلمنا أنفسنا» تبرير ← الخروج',r:'يا {n} قلبتيها 😳 «أنا خير منه» أشهر تبرير في التاريخ!'},
+   {t:'كلاهما تأمّل… وكلاهما نال العفو',r:'يا {n} لو تأمّل إبليس ما طُرد 🙈'}],
+  ex:[{w:'إبليس · تبرير',v:'﴿أَنَا خَيْرٌ مِنْهُ﴾',then:'أصرّ… فطُرد',v2:'﴿فَاخْرُجْ مِنْهَا فَإِنَّكَ رَجِيمٌ﴾',c:'red'},
+      {w:'آدم وحواء عليهما السلام · تأمّل',v:'﴿رَبَّنَا ظَلَمْنَا أَنْفُسَنَا﴾',then:'اعترفا… فتاب الله عليهما',v2:'﴿ثُمَّ اجْتَبَاهُ رَبُّهُ فَتَابَ عَلَيْهِ وَهَدَى﴾',c:'green'}]},
  {id:'q06',tag:'تقريران… ورحلة واحدة',type:'mcq',text:'أيّ التقريرين يقود إلى قرار؟',opts:[
    {t:'التقرير (أ)',r:'يا {n} التقرير (أ) يرمي الكرة على التأسيس 🏐😅'},
    {t:'التقرير (ب)',ok:1}]},
@@ -408,8 +417,8 @@ function Phone(root){
 /* =====================================================================
    SCREEN VIEW (العرض + الأسئلة في مسار واحد)
    ===================================================================== */
-const SL={1:'الغلاف',2:'صعود الطائرة',3:'مقطع القمرة',4:'كارثة تينيريفي',5:'الصندوق الأسود',6:'خطأ واحد وردّان',7:'تقريران ورحلة واحدة',8:'تأثير الكوبرا',9:'صدمة الكوبرا',10:'ثلاثة تقارير',11:'نموذج الأسئلة الثلاثة',12:'محطات التحقيق',13:'المحطة الأولى · تشالنجر',14:'المحطة الثانية · زيملفايس',15:'المحطة الثالثة · كوداك',16:'الكرسي الساخن المعكوس',17:'رسالة إلى نفسي',18:'غزوة أحد',20:'هبوط آمن'};
-const FLOW=[{s:1},{lobby:1},{s:2},{q:'q01'},{s:3},{q:'q02'},{s:4},{q:'q03'},{s:5},{q:'q04'},{q:'q05'},{s:6},{s:7},{q:'q06'},{q:'q07'},{q:'q08'},{q:'q09'},{board:1},{s:8},{q:'q10'},{s:9},{q:'q11'},{s:10},{s:11},{s:12},{s:13},{q:'q12'},{q:'q13'},{s:14},{q:'q14'},{s:15},{q:'q15'},{board:1},{s:16},{s:17},{q:'q16'},{q:'q17'},{s:18},{q:'q18'},{q:'q19'},{board:1},{winner:1},{s:20}];
+const SL={1:'الغلاف',2:'صعود الطائرة',3:'مقطع القمرة',4:'كارثة تينيريفي',5:'الصندوق الأسود',6:'خطأ واحد وردّان',7:'تقريران ورحلة واحدة',8:'تأثير الكوبرا',9:'صدمة الكوبرا',10:'ثلاثة تقارير',11:'نموذج الأسئلة الثلاثة',12:'محطات التحقيق',13:'المحطة الأولى · تشالنجر',14:'المحطة الثانية · زيملفايس',15:'المحطة الثالثة · كوداك',16:'الكرسي الساخن المعكوس',17:'رسالة إلى نفسي',18:'غزوة أحد',20:'هبوط آمن',21:'وقفة تأمل · لماذا يخشى المرؤوس؟',22:'وقفة تأمل · تسلّل التبرير',23:'وقفة تأمل · معادلة الجملة التأملية',24:'وقفة تأمل · حماية المؤشرات',25:'وقفة تأمل · كسر تطبيع الانحراف',26:'وقفة تأمل · حين يكون السبب أنا',27:'وقفة تأمل · التأمل في النجاح',28:'وقفة تأمل · الوقاية'};
+const FLOW=[{s:1},{lobby:1},{s:2},{q:'q01'},{s:3},{q:'q02'},{s:4},{q:'q03'},{s:5},{q:'q04'},{s:21},{s:6},{q:'q05'},{s:22},{s:7},{q:'q06'},{q:'q07'},{q:'q08'},{q:'q09'},{s:23},{board:1},{s:8},{q:'q10'},{s:9},{q:'q11'},{s:24},{s:10},{s:11},{s:12},{s:13},{q:'q12'},{q:'q13'},{s:25},{s:14},{q:'q14'},{s:26},{s:15},{q:'q15'},{s:27},{board:1},{s:16},{s:17},{q:'q16'},{q:'q17'},{s:28},{s:18},{q:'q18'},{q:'q19'},{board:1},{winner:1},{s:20}];
 function Screen(){
   const stage=$('#stage');
   stage.innerHTML='<div id="deckWrap" style="position:absolute;top:0;left:0;right:0;bottom:78px;background:#0d0906"><iframe id="deck" src="deck.html" style="width:100%;height:100%;border:0;display:block" allow="autoplay; fullscreen"></iframe></div><div id="ui" style="position:absolute;inset:0;display:flex;flex-direction:column;pointer-events:none"></div>';
@@ -489,6 +498,7 @@ function Screen(){
       const groups=q.opts.map(()=>[]);names.forEach(n=>{const i=+A[n].v;if(groups[i])groups[i].push(n)});
       h+=`<div class="opts${rev?' compact':''}">${q.opts.map((o,i)=>`<div class="orow${rev?(o.ok?' ok':' no'):''}"><div class="L">${rev&&o.ok?'✓':LET[i]}</div><div><div class="t"><span>${esc(o.t)}</span><em>${ar(groups[i].length)}</em></div><div class="bar"><i style="width:${groups[i].length/total*100}%"></i></div><div class="chips">${groups[i].map(n=>`<span class="chip" ${seen.has(q.id+n+i)?'style="animation:none"':''}>${esc(n)}</span>`).join('')}</div></div></div>`).join('')}</div>`;
       groups.forEach((g,i)=>g.forEach(n=>seen.add(q.id+n+i)));
+      if(rev&&q.ex)h+=`<div class="exRow">${q.ex.map(e=>`<div class="exBox ${e.c}"><b>${esc(e.w)}</b><span class="v">${e.v}</span><span class="ar">← ${esc(e.then)}</span><span class="v">${e.v2}</span></div>`).join('')}</div>`;
       h+=rev?reactions(q,A):answeredStrip(A);
     }else{
       const sorted=names.sort((a,b)=>A[a].t-A[b].t);
