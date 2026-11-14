@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>الصندوق الأسود · منصة التفاعل</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{--ivory:#F6EFE4;--ivory2:#EFE4D3;--brown:#3A2418;--leather:#7A4A2B;--orange:#E8681A;--orange2:#F3893F;--gold:#C29A5A;--ink:#2A1A11;--muted:#8B7563;--green:#2F6B4F;--greenL:#E3EFE8;--red:#A23B2A;--redL:#F6E2DC;
+--h:'Lusail','Noto Kufi Arabic',sans-serif;--b:'Lusail','IBM Plex Sans Arabic',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:var(--b);color:var(--ink);background:var(--ivory)}
+button{font-family:var(--h);cursor:pointer}
+.hidden{display:none!important}
+.nw{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+@keyframes flip{from{transform:rotateX(90deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes floatUp{0%{transform:translateY(0) scale(.6);opacity:0}10%{opacity:1}100%{transform:translateY(-110vh) scale(1.3) rotate(25deg);opacity:0}}
+@keyframes shake{0%,100%{transform:none}25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+@keyframes fly{0%{transform:translateX(-30px)}50%{transform:translateX(30px) translateY(-6px)}100%{transform:translateX(-30px)}}
+.fx{position:fixed;bottom:-60px;font-size:44px;pointer-events:none;z-index:999;animation:floatUp 3.2s ease-out forwards}
+
+/* ================= SCREEN ================= */
+#screenView{position:fixed;inset:0;background:#0d0906;display:flex;align-items:center;justify-content:center}
+#stage{width:1600px;height:900px;flex-shrink:0;position:relative;background:var(--ivory);transform-origin:center;overflow:hidden;display:flex;flex-direction:column}
+#stage::before{content:"";position:absolute;inset:14px;border:1.5px dashed rgba(194,154,90,.35);border-radius:14px;pointer-events:none}
+.sHead{height:96px;background:linear-gradient(135deg,#4a2e1e,#2c1a10);color:var(--ivory);display:flex;align-items:center;justify-content:space-between;padding:0 50px;flex-shrink:0}
+.brand{display:flex;align-items:center;gap:18px}
+.brand .bx{width:54px;height:40px;border-radius:8px;background:linear-gradient(145deg,#f3893f,#d35a12);box-shadow:0 6px 18px rgba(232,104,26,.4)}
+.brand b{font-family:var(--h);font-size:26px;font-weight:800}
+.brand span{display:block;font-size:15px;color:#d9c2a3;font-family:var(--h)}
+.hMid{font-family:var(--h);font-size:22px;color:var(--gold)}
+.hLeft{display:flex;align-items:center;gap:16px;font-family:var(--h)}
+.pill{font-family:var(--h);font-size:17px;padding:6px 18px;border-radius:30px;background:rgba(255,255,255,.1);color:var(--ivory);white-space:nowrap}
+.pill.open{background:var(--green);color:#fff}.pill.closed{background:var(--gold);color:#2a1508}.pill.reveal{background:var(--orange);color:#fff}
+.sBody{flex:1;padding:34px 60px 10px;display:flex;flex-direction:column;min-height:0;position:relative}
+.qTag{font-family:var(--h);font-size:20px;color:var(--orange);font-weight:600;margin-bottom:6px}
+.qText{font-family:var(--h);font-size:42px;font-weight:800;color:var(--brown);line-height:1.5;margin-bottom:22px}
+.qText .verse{font-family:'Amiri',serif;color:var(--leather);font-weight:700}
+.sFoot{height:78px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 50px;border-top:1px solid #e6d6c0;background:#fbf6ee}
+.hb{font-size:18px;font-weight:600;border:none;border-radius:40px;padding:10px 24px;background:var(--orange);color:#fff;transition:.15s}
+.hb:hover{transform:translateY(-2px)}
+.hb.g{background:transparent;color:var(--leather);border:1.5px solid var(--gold)}
+.hb.on{background:var(--brown);color:#fff}
+.hb:disabled{opacity:.35;transform:none;cursor:default}
+.fGroup{display:flex;gap:10px;align-items:center}
+.counter{font-family:var(--h);font-size:20px;color:var(--leather)}
+.counter b{color:var(--orange);font-size:26px}
+
+/* lobby */
+.lobby{display:grid;grid-template-columns:380px 1fr;gap:50px;flex:1;min-height:0}
+.qrBox{background:#fff;border-radius:22px;padding:26px;text-align:center;box-shadow:0 14px 34px rgba(58,36,24,.1);align-self:start}
+.qrBox #qr{display:flex;justify-content:center;margin:12px 0}
+.qrBox p{font-family:var(--h);font-size:18px;color:var(--leather)}
+.qrBox small{display:block;font-size:13px;color:var(--muted);direction:ltr;word-break:break-all;margin-top:6px}
+.board{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;align-content:start}
+.seat{display:flex;align-items:center;gap:14px;background:#1c130d;border:1px solid #3a2a1d;border-radius:12px;padding:12px 20px;color:#7d6a58;font-family:var(--h);font-size:21px;transition:.4s;min-width:0}
+.seat i{font-style:normal;font-size:15px;color:#6b5a4a;white-space:nowrap;margin-right:auto}
+.seat.in{color:#f7d9a8;animation:flip .6s both}
+.seat.in i{color:var(--orange2)}
+.seat .dot{width:12px;height:12px;border-radius:50%;background:#4a3a2c;flex-shrink:0}
+.seat.in .dot{background:#4cc38a;box-shadow:0 0 10px #4cc38a}
+
+/* mcq live */
+.opts{display:flex;flex-direction:column;gap:14px;flex:1;min-height:0}
+.orow{display:grid;grid-template-columns:56px 1fr;gap:18px;align-items:center;background:#fff;border:1.5px solid #e6d6c0;border-radius:18px;padding:14px 22px;transition:.5s}
+.orow .L{width:52px;height:52px;border-radius:14px;background:var(--ivory2);color:var(--leather);font-family:var(--h);font-weight:800;font-size:26px;display:flex;align-items:center;justify-content:center}
+.orow .t{font-family:var(--h);font-size:25px;font-weight:600;color:var(--brown);display:flex;justify-content:space-between;gap:20px}
+.orow .t em{font-style:normal;color:var(--orange);font-weight:800;white-space:nowrap}
+.orow .bar{height:8px;border-radius:8px;background:var(--ivory2);margin:8px 0;overflow:hidden}
+.orow .bar i{display:block;height:100%;width:0;background:var(--orange2);transition:width .5s}
+.chips{display:flex;flex-wrap:wrap;gap:8px;min-height:6px}
+.chip{font-family:var(--h);font-size:16px;padding:4px 14px;border-radius:30px;background:var(--ivory);border:1px solid #e3d2b8;color:var(--leather);white-space:nowrap;animation:pop .4s both}
+.orow.ok{border-color:var(--green);background:var(--greenL)}
+.orow.ok .L{background:var(--green);color:#fff}
+.orow.ok .bar i{background:var(--green)}
+.orow.no{opacity:.45}
+.opts.compact{flex:0 0 auto;flex-direction:row;gap:12px}.opts.compact .orow{flex:1;padding:8px 14px;grid-template-columns:38px 1fr;gap:10px}.opts.compact .chips{display:none}.opts.compact .orow .t{font-size:17px}.opts.compact .orow .L{width:36px;height:36px;font-size:18px;border-radius:10px}.opts.compact .orow .bar{margin:4px 0 0}
+
+/* text wall */
+.wall{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-content:start;overflow:auto;flex:1;padding:4px}
+.acard{background:#fff;border:1px solid #e6d6c0;border-radius:16px;padding:14px 20px;animation:pop .45s both;display:flex;flex-direction:column;gap:6px;min-width:0}
+.acard .n{font-family:var(--h);font-size:17px;color:var(--orange);font-weight:600}
+.acard .v{font-size:21px;line-height:1.7;color:var(--brown)}
+.acard .pr{font-family:var(--h);font-size:16px;color:var(--green);border-top:1px dashed #e3d2b8;padding-top:6px;animation:rise .5s both}
+
+/* reactions */
+.reacts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;align-content:start;overflow:auto;flex:1;min-height:0}
+.rcard{border-radius:14px;padding:9px 16px;font-family:var(--h);font-size:17px;line-height:1.6;animation:pop .5s both;display:flex;gap:12px;align-items:center}
+.rcard.ok{background:var(--greenL);color:var(--green);border:1px solid #bfd9c9}
+.rcard.no{background:#fff4ea;color:var(--leather);border:1px solid #f0d2b6}
+.rcard.na{background:#f1ebe2;color:var(--muted);border:1px solid #e3d8c8}
+.rcard .e{font-size:26px;flex-shrink:0}
+.answered{font-family:var(--h);font-size:16px;color:var(--muted);margin-top:auto;padding-top:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.answered .a{padding:3px 12px;border-radius:20px;background:#efe6d8;white-space:nowrap}
+.answered .a.y{background:#4cc38a22;color:var(--green)}
+.idleHint{margin:auto;text-align:center;font-family:var(--h);color:var(--muted);font-size:24px}
+.idleHint .pl{font-size:60px;display:inline-block;animation:fly 3s ease-in-out infinite}
+
+/* overlays */
+.ov{position:absolute;inset:0;background:rgba(20,12,8,.6);display:flex;align-items:center;justify-content:center;z-index:50}
+.ovBox{background:var(--ivory);border-radius:20px;padding:34px 40px;width:620px;max-height:80%;overflow:auto}
+.ovBox h3{font-family:var(--h);font-size:28px;color:var(--brown);margin-bottom:14px}
+.ovBox input{width:100%;font-family:var(--h);font-size:22px;padding:12px 18px;border-radius:12px;border:1.5px solid var(--gold);margin:10px 0}
+.qlist button{display:block;width:100%;text-align:right;font-size:18px;padding:10px 16px;margin-bottom:6px;border-radius:10px;border:1px solid #e3d2b8;background:#fff;color:var(--brown)}
+.qlist button.cur{border-color:var(--orange);background:#fff4ea}
+
+/* demo phone frame */
+#demoPhone{position:fixed;left:18px;top:50%;transform:translateY(-50%);width:360px;height:min(740px,calc(100vh - 30px));border-radius:42px;background:#111;padding:12px;box-shadow:0 30px 70px rgba(0,0,0,.6);z-index:200}
+#demoPhone .scr{width:100%;height:100%;border-radius:32px;overflow:hidden;position:relative;background:var(--ivory)}
+#demoTag{position:fixed;left:18px;top:10px;z-index:201;font-family:var(--h);font-size:13px;color:#e9cfa7;background:#2c1a10;border-radius:20px;padding:4px 14px}
+#demoToggle{position:fixed;left:18px;bottom:10px;z-index:201}
+body.demo-on #screenView{left:396px}
+
+/* ================= PHONE ================= */
+.ph{height:100%;display:flex;flex-direction:column;background:var(--ivory);overflow:hidden;position:relative}
+.phTop{background:linear-gradient(135deg,#4a2e1e,#2c1a10);color:var(--ivory);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-shrink:0}
+.phTop b{font-family:var(--h);font-size:17px}
+.phTop small{display:block;font-size:12px;color:#d9c2a3;font-family:var(--h)}
+.phTop button{background:none;border:1px solid rgba(194,154,90,.6);color:#e9cfa7;border-radius:20px;font-size:11px;padding:4px 10px;white-space:nowrap}
+.phBody{flex:1;overflow:auto;padding:20px 18px;display:flex;flex-direction:column}
+.phTitle{font-family:var(--h);font-size:22px;font-weight:800;color:var(--brown);line-height:1.5;margin-bottom:6px}
+.phSub{font-size:14px;color:var(--muted);margin-bottom:16px;line-height:1.7}
+.names{display:grid;grid-template-columns:1fr;gap:8px}
+.nm{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#fff;border:1.5px solid #e6d6c0;border-radius:14px;padding:12px 16px;font-family:var(--h);font-size:17px;color:var(--brown);text-align:right}
+.nm small{font-size:12px;color:var(--muted);white-space:nowrap}
+.nm.sel{border-color:var(--orange);background:#fff4ea}
+.pBtn{font-size:18px;font-weight:600;border:none;border-radius:16px;padding:14px;background:var(--orange);color:#fff;width:100%;margin-top:14px}
+.pBtn:disabled{opacity:.4}
+.wait{margin:auto;text-align:center;font-family:var(--h);color:var(--leather)}
+.wait .pl{font-size:56px;display:inline-block;animation:fly 3s ease-in-out infinite}
+.wait p{font-size:18px;margin-top:10px;line-height:1.8}
+.wait small{display:block;color:var(--muted);font-size:14px;margin-top:6px}
+.pOpt{display:block;width:100%;text-align:right;background:#fff;border:1.5px solid #e6d6c0;border-radius:14px;padding:14px 16px;font-size:17px;color:var(--brown);margin-bottom:10px;line-height:1.6;transition:.15s}
+.pOpt b{color:var(--orange);margin-left:8px}
+.pOpt.sel{border-color:var(--orange);background:#fff4ea;box-shadow:0 4px 12px rgba(232,104,26,.15)}
+.pOpt:disabled{color:var(--brown)}
+textarea.pIn{width:100%;font-family:var(--h);font-size:17px;line-height:1.7;padding:12px 14px;border-radius:14px;border:1.5px solid var(--gold);background:#fff;resize:none;height:110px}
+.cnt{font-size:12px;color:var(--muted);text-align:left;margin-top:4px}
+.sent{font-family:var(--h);font-size:14px;color:var(--green);text-align:center;margin-top:12px;animation:rise .4s both}
+.react{margin:auto;text-align:center;padding:10px;animation:pop .6s both}
+.react .e{font-size:76px}
+.react h3{font-family:var(--h);font-size:22px;line-height:1.7;margin:10px 0;color:var(--brown)}
+.react .ans{font-family:var(--h);font-size:15px;color:var(--green);background:var(--greenL);border-radius:12px;padding:10px 14px;margin-top:8px;line-height:1.7}
+.react.no .e{animation:shake .5s 2}
+.phFoot{font-size:11px;color:var(--muted);text-align:center;padding:8px;font-family:var(--h);flex-shrink:0}
+.toast{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);background:var(--brown);color:#fff;font-family:var(--h);font-size:14px;padding:8px 18px;border-radius:20px;z-index:20;white-space:nowrap;animation:rise .3s both}
+</style>
+</head>
+<body>
+
+<div id="screenView" class="hidden"><div id="stage"></div></div>
+<div id="phoneView" class="hidden" style="position:fixed;inset:0"></div>
+
+<script>
+/* =====================================================================
+   الإعداد: ضعي هنا رابط تطبيق Google Apps Script بعد النشر (Web app URL).
+   إذا تُرك فارغًا تعمل المنصة في «الوضع التجريبي» بمشاركات افتراضيات.
+   ===================================================================== */
+const API_URL = 'https://script.google.com/macros/s/AKfycbzBti9yPtnDO_VMbUR1dFwwF15EwbLps94AZ2B012lWreM_BHZ2ZROOK8FmaeKwHRI5Uw/exec';
+
+const PEOPLE = [
+  {n:'شيخة الرميحي', r:'مديرة المدرسة'},
+  {n:'وداد الكربي', r:'النائبة الإدارية'},
+  {n:'خولة المطوع', r:'العلوم الشرعية'},
+  {n:'نجوى أبو ناهية', r:'اللغة العربية'},
+  {n:'هيا الدوسري', r:'اللغة الإنجليزية'},
+  {n:'فاطمة النعيمي', r:'العلوم الاجتماعية'},
+  {n:'أريج أبو حاشية', r:'الفيزياء'},
+  {n:'انتصار أحمد جامع', r:'الكيمياء'},
+  {n:'سحر الرشيد', r:'الرياضيات'},
+  {n:'يسرا عبده كمال', r:'الأحياء'},
+  {n:'فاتن عبدالرحمن', r:'تكنولوجيا المعلومات'},
+  {n:'شيخة القحطاني', r:'التربية البدنية'},
+  {n:'إيمان يوسف', r:'المشاريع'},
+  {n:'أحلام الخليفي', r:'شؤون الطالبات'}
+];
+
+/* ------------------- الأسئلة ------------------- */
+const Q = [
+ {id:'q01',tag:'قبل الإقلاع',type:'text',text:'بجملة قصيرة: التقرير الشهري بالنسبة لكِ يشبه…؟',ph:'مثلًا: واجب منزلي ثقيل 😅'},
+ {id:'q02',tag:'بعد مقطع القمرة',type:'mcq',text:'لماذا لم يُصرّ مهندس الطيران على اعتراضه رغم أنه كان يشك؟',opts:[
+   {t:'لم يكن الأمر من تخصصه',r:'يا {n} المهندس متخصص وفاهم… بس الهيبة غلبت 😅'},
+   {t:'هيبة القائد وخبرته أسكتته',ok:1},
+   {t:'كان مشغولًا بأجهزته',r:'مشغول؟ 😂 لا يا {n}، كان منتبه وسأل… بس سكت!'},
+   {t:'ظنّ أن برج المراقبة سيتدخل',r:'قريبة يا {n} 🛬 بس السر كان داخل القمرة نفسها'}]},
+ {id:'q03',tag:'سؤال خاطف',type:'mcq',text:'ما لون «الصندوق الأسود» في الطائرة؟',opts:[
+   {t:'أسود طبعًا!',r:'يا {n} صدّقتِ الاسم؟ 😂 الأسماء تخدع… مثل بعض التقارير'},
+   {t:'برتقالي ساطع',ok:1},
+   {t:'رمادي معدني',r:'رمادي؟ 🙈 لا يا {n}… الجاية لكِ'},
+   {t:'أحمر',r:'دافية يا {n} 🔥 بس هو برتقالي'}]},
+ {id:'q04',tag:'تأمّل سريع',type:'text',text:'ما الذي قد يُسكت معلمة في قسمكِ عن قول ما تشكّ فيه؟',ph:'جملة واحدة…'},
+ {id:'q05',tag:'خطأٌ واحد… وردّان',type:'mcq',text:'<span class="verse">﴿أَنَا خَيْرٌ مِنْهُ﴾</span> ردٌّ على الخطأ من نوع:',opts:[
+   {t:'تأمّلي',r:'أفا يا {n} 😳 هذا أشهر تبرير في التاريخ!'},
+   {t:'تبريري',ok:1},
+   {t:'وصفي',r:'قريبة يا {n}… بس هو يدافع عن نفسه، ما يصف 😉'}]},
+ {id:'q06',tag:'تقريران… ورحلة واحدة',type:'mcq',text:'أيّ التقريرين يقود إلى قرار؟',opts:[
+   {t:'التقرير (أ)',r:'يا {n} التقرير (أ) يرمي الكرة على التأسيس 🏐😅'},
+   {t:'التقرير (ب)',ok:1}]},
+ {id:'q07',tag:'صنّفي العبارة',type:'mcq',text:'«يُعزى انخفاض النتائج إلى ضعف التأسيس لدى الطالبات»',opts:[
+   {t:'وصفية',r:'يا {n} فيها «يُعزى»… يعني تبرير متنكّر 🕵️‍♀️'},
+   {t:'تبريرية',ok:1},
+   {t:'تأملية',r:'جبتي العيد يا {n} 😂 التأمل يبدأ من ممارساتنا مو من الطالبات'}]},
+ {id:'q08',tag:'صنّفي العبارة',type:'mcq',text:'«تم تنفيذ 12 زيارة صفية خلال الشهر»',opts:[
+   {t:'وصفية',ok:1},
+   {t:'تأملية',r:'يا {n} عدّ الزيارات مو تأمل 😅 وش طلع منها؟'},
+   {t:'تبريرية',r:'لا يا {n} 🙈 ما فيها دفاع… بس أرقام'}]},
+ {id:'q09',tag:'صنّفي العبارة',type:'mcq',text:'«أظهرت الزيارات ضعفًا مشتركًا في التغذية الراجعة لدى ثلاث معلمات، وعليه تم اعتماد مجتمع تعلم أسبوعي يُقاس أثره بعد أسبوعين»',opts:[
+   {t:'وصفية',r:'يا {n} فيها سبب وقرار ومؤشر… هذي ما تكون وصفية 😉'},
+   {t:'تبريرية',r:'تبرير؟ 😂 لا يا {n}، هذي قائدة شايلة المسؤولية'},
+   {t:'تأملية',ok:1}]},
+ {id:'q10',tag:'تأثير الكوبرا 🐍',type:'mcq',text:'دفعت الحكومة مكافأة لكل كوبرا ميتة… فماذا حدث بعد فترة؟',opts:[
+   {t:'قلّت الكوبرا في المدينة',r:'أفا يا {n}! صدّقتِ الأرقام؟ الكوبرا تربّت في البيوت 🐍😂'},
+   {t:'هاجرت الكوبرا إلى مدينة أخرى',r:'هاجرت؟ 😂 لا يا {n}، تكاثرت عند الناس!'},
+   {t:'ربّى الناس الكوبرا للمكافأة… فزادت',ok:1},
+   {t:'لم يتغير شيء',r:'تغيّر يا {n}… وللأسوأ 🙈'}]},
+ {id:'q11',tag:'وين الكوبرا في قسمكِ؟',type:'text',text:'مؤشر نقيسه في المدرسة… قد ينقلب على هدفه. ما هو؟',ph:'مثلًا: عدد الزيارات الصفية…'},
+ {id:'q12',tag:'المحطة الأولى · تشالنجر',type:'mcq',text:'خللٌ تكرر عشر مرات ومرّ بلا حادث… فهو:',opts:[
+   {t:'آمن، والتجربة أثبتت ذلك',r:'يا {n} هذا بالضبط اللي قالوه قبل الانفجار 😬'},
+   {t:'صار عاديًا… فلم نعد نراه',ok:1},
+   {t:'مقبول إداريًا',r:'«اخلعي قبعة المهندس» يا {n}؟ 😅 لا لا'}]},
+ {id:'q13',tag:'تطبيع الانحراف',type:'text',text:'ما الخلل الذي اعتاد عليه قسمكِ حتى لم يعد يُرى؟',ph:'جملة واحدة… بصراحة القائدة 😉'},
+ {id:'q14',tag:'المحطة الثانية · زيملفايس',type:'mcq',text:'لماذا رفض الأطباء فكرة غسل اليدين رغم انخفاض الوفيات؟',opts:[
+   {t:'لأنها مكلفة',r:'مكلفة؟ 😂 يا {n} كانت ماء وجير بس!'},
+   {t:'لأن الاعتراف يعني أنهم سبب الوفيات',ok:1},
+   {t:'لأنها لم تثبت نجاحها',r:'ثبتت يا {n}… بس الكبرياء ما يقرأ الأرقام 🙈'}]},
+ {id:'q15',tag:'المحطة الثالثة · كوداك',type:'mcq',text:'ما الذي أوقع كوداك في الإفلاس؟',opts:[
+   {t:'منافسة شركات أقوى منها',r:'يا {n} هي اللي اخترعت الكاميرا الرقمية 😳'},
+   {t:'تقارير نجاحٍ قالت «استمرّي»',ok:1},
+   {t:'ضعف موظفيها',r:'لا يا {n} 🙈 موظفوها اخترعوا المستقبل… والإدارة دفنته'}]},
+ {id:'q16',tag:'الصندوق الأسود',type:'mcq',text:'الصندوق الأسود يُفتح بعد الحادثة… أما التقرير التأملي فيُفتح:',opts:[
+   {t:'عند تدنّي النتائج',r:'يا {n} كذا ننتظر الطائرة تطيح ✈️💥😅'},
+   {t:'كل شهر… حتى والأمور تمام',ok:1},
+   {t:'عندما تطلبه الإدارة',r:'هههه يا {n} 😂 الصندوق مو للإدارة… لقسمكِ أنتِ'}]},
+ {id:'q17',tag:'خطة وقائية',type:'text',text:'مؤشر إنذار مبكر واحد ستراقبينه في قسمكِ:',ph:'مثلًا: تراجع طالبة في اختبارين قصيرين متتاليين'},
+ {id:'q18',tag:'بعد غزوة أحد',type:'mcq',text:'<span class="verse">﴿قُلْ هُوَ مِنْ عِنْدِ أَنْفُسِكُمْ﴾</span> تمثّل في التقرير التأملي:',opts:[
+   {t:'وصف ما حدث',r:'قريبة يا {n} 🌿 بس الآية تحدد السبب'},
+   {t:'البحث عن السبب من الداخل',ok:1},
+   {t:'القرار التطويري',r:'يا {n} القرار يجي بعدين… الآية تشير للسبب 😉'}]},
+ {id:'q19',tag:'بطاقة الهبوط 🛬',type:'text',text:'في تقريري القادم سأتوقف عن… وسأبدأ بـ…',ph:'سأتوقف عن… وسأبدأ بـ…'}
+];
+
+const PRAISE=['كفو يا {n}! قائدة قمرة من الطراز الأول ✈️','الله عليكِ يا {n}! صندوقكِ الأسود يتكلّم 🔥','هبوطٌ آمن يا {n} 👏','أحسنتِ يا {n}! نظرة قائدة 👑','يا سلام يا {n}… إجابة تستاهل تصفيق 👏👏','ما شاء الله يا {n}! التأمل لابق عليكِ ✨','{n} في القمرة… اطمئني يا طائرة 😎'];
+const OOPS=['جبتي العيد يا {n} 😂 بس عادي… حتى الطيارين يغلطون!','هذا مو بسؤالكِ يا {n} 🙈 الجاية لكِ إن شاء الله','قريبة يا {n}… بس الطائرة ما هبطت 🛬','الإقلاع حلو يا {n}… بس المدرج غلط 😅','تبررين ولا تتأملين يا {n}؟ 😏 نمزح… الجاية لكِ'];
+const TEXTP=['جملة من ذهب يا {n} ✨','كلام قائدة يا {n} 👏','سجّلناها في الصندوق الأسود يا {n} 📦','أحسنتِ يا {n}… هذا التأمل اللي نبيه ❤️','الله عليكِ يا {n}! صدق وعمق 🌟'];
+const NOANS=['يا {n}… الطائرة أقلعت وأنتِ في السوق الحرة 🛍️😂','{n} على وضع الطيران؟ ✈️😴 الجاية لا تفوتك!','يا {n} فاتكِ الإقلاع… نحجز لكِ الرحلة الجاية 😄'];
+
+const SAMPLE_TXT={
+ q01:['قائمة إنجازات نكتبها ونرتاح','صورة جماعية للقسم','واجب منزلي ثقيل 😅','مرآة… بس أحيانًا مغبّشة','أرشيف ما أحد يقرؤه','بطاقة هوية القسم'],
+ q04:['الخوف من أن يُفهم كلامها اعتراضًا','قلة الخبرة مقارنة بالأقدم','إن رأيها ما يأخذ مكانه','المجاملة وحب السلامة','ضغط الوقت والحصص'],
+ q11:['عدد الزيارات الصفية','نسبة النجاح','عدد الأنشطة المنفذة','عدد ساعات التدريب','نسبة تسليم التحضير في الموعد'],
+ q13:['تأخر رصد الدرجات','زيارات تنتهي دائمًا بـ«جيد»','اجتماعات قسم بلا قرارات','نفس الحصص العلاجية كل سنة','تكرار الأخطاء نفسها في الاختبارات'],
+ q17:['تراجع طالبة في اختبارين متتاليين','تأخر معلمة في التسليم مرتين','انخفاض مشاركة الطالبات في الحصة','غياب متكرر يوم الاختبار','تراجع نتائج شعبة كاملة'],
+ q19:['سأتوقف عن سرد الأنشطة وسأبدأ بالسؤال لماذا','سأتوقف عن لوم التأسيس وسأبدأ بممارساتنا','سأتوقف عن الأرقام وحدها وسأبدأ بالدلالات','سأتوقف عن الكتابة وحدي وسأبدأ بإشراك معلماتي']
+};
+
+/* ------------------- helpers ------------------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ar=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const LET=['أ','ب','ج','د'];
+function hash(s){let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))|0;return Math.abs(h)}
+const pick=(arr,key)=>arr[hash(key)%arr.length];
+const short=n=>{const f=n.split(' ')[0];return PEOPLE.filter(p=>p.n.split(' ')[0]===f).length>1?n:f};
+const fill=(t,n)=>t.replace(/\{n\}/g,short(n));
+const qById=id=>Q.find(q=>q.id===id);
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){return null}}
+function verdict(q,name,a){ // {cls,text,emoji}
+  if(!a) return {cls:'na',e:'😴',t:fill(pick(NOANS,name+q.id),name)};
+  if(q.type==='text') return {cls:'ok',e:'❤️',t:fill(pick(TEXTP,name+q.id),name)};
+  const o=q.opts[+a.v]; if(!o) return {cls:'na',e:'🤔',t:name};
+  if(o.ok) return {cls:'ok',e:'👏',t:fill(pick(PRAISE,name+q.id),name)};
+  return {cls:'no',e:'😂',t:fill(o.r&&hash(name+q.id)%2===0?o.r:pick(OOPS,name+q.id),name)};
+}
+function burst(list,count=26,target=document.body){for(let i=0;i<count;i++){const s=document.createElement('span');s.className='fx';s.textContent=list[i%list.length];s.style.left=(Math.random()*95)+'%';s.style.animationDelay=(Math.random()*1.2)+'s';s.style.fontSize=(28+Math.random()*30)+'px';target.appendChild(s);setTimeout(()=>s.remove(),4800)}}
+
+/* ------------------- sound ------------------- */
+let AC=null,soundOn=true;
+function ac(){if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();return AC}
+function applause(sec=2.4){if(!soundOn)return;try{const c=ac();const t0=c.currentTime;for(let i=0;i<sec*55;i++){const t=t0+Math.random()*sec;const b=c.createBuffer(1,c.sampleRate*.04,c.sampleRate),d=b.getChannelData(0);for(let k=0;k<d.length;k++)d[k]=(Math.random()*2-1)*Math.pow(1-k/d.length,3);const s=c.createBufferSource();s.buffer=b;const f=c.createBiquadFilter();f.type='bandpass';f.frequency.value=900+Math.random()*1600;f.Q.value=.8;const g=c.createGain();g.gain.value=.25*(1-(t-t0)/sec*.6);s.connect(f).connect(g).connect(c.destination);s.start(t)}}catch(e){}}
+function chime(){if(!soundOn)return;try{const c=ac(),t=c.currentTime;[784,1047,1319,1568].forEach((f,k)=>{const o=c.createOscillator(),g=c.createGain();o.frequency.value=f;g.gain.setValueAtTime(0,t+k*.12);g.gain.linearRampToValueAtTime(.14,t+k*.12+.02);g.gain.exponentialRampToValueAtTime(.001,t+k*.12+1);o.connect(g).connect(c.destination);o.start(t+k*.12);o.stop(t+k*.12+1.1)})}catch(e){}}
+function boing(){if(!soundOn)return;try{const c=ac(),t=c.currentTime,o=c.createOscillator(),g=c.createGain();o.type='triangle';o.frequency.setValueAtTime(520,t);o.frequency.exponentialRampToValueAtTime(140,t+.5);g.gain.setValueAtTime(.2,t);g.gain.exponentialRampToValueAtTime(.001,t+.6);o.connect(g).connect(c.destination);o.start(t);o.stop(t+.6)}catch(e){}}
+function ding(){if(!soundOn)return;try{const c=ac(),t=c.currentTime,o=c.createOscillator(),g=c.createGain();o.frequency.value=1320;g.gain.setValueAtTime(.08,t);g.gain.exponentialRampToValueAtTime(.001,t+.35);o.connect(g).connect(c.destination);o.start(t);o.stop(t+.4)}catch(e){}}
+
+/* ------------------- backend ------------------- */
+const DEMO=!API_URL;
+const Local={st:{qi:-1,ph:'idle',qid:''},att:{},A:{},
+  handle(p){
+    if(p.a==='join'){if(!this.att[p.n])this.att[p.n]=Date.now()}
+    if(p.a==='ans'){if(this.st.ph!=='open'||p.q!==this.st.qid)return {ok:false,err:'closed',...this.snap()};(this.A[p.q]=this.A[p.q]||{})[p.n]={v:p.v,t:Date.now()}}
+    if(p.a==='set'){this.st={qi:+p.qi,ph:p.ph,qid:p.qid||''}}
+    if(p.a==='reset'){this.st={qi:-1,ph:'idle',qid:''};this.att={};this.A={}}
+    return {ok:true,...this.snap()}},
+  snap(){return {st:{...this.st},att:Object.keys(this.att),ans:{...(this.A[this.st.qid]||{})}}}
+};
+async function api(p){
+  if(DEMO) return JSON.parse(JSON.stringify(Local.handle(p)));
+  const r=await fetch(API_URL+'?'+new URLSearchParams(p).toString());
+  return r.json();
+}
+
+/* =====================================================================
+   PHONE VIEW
+   ===================================================================== */
+function Phone(root){
+  let me=ls('bb_name')||'', snap=null, myAns=null, draft='', lastKey='', busy=false, chosen='';
+  function shell(body){root.innerHTML=`<div class="ph"><div class="phTop"><div><b>✈️ الصندوق الأسود</b><small>${me?esc(me):'رحلة التأمل SH-2027'}</small></div>${me?'<button id="chg">تغيير الاسم</button>':''}</div><div class="phBody">${body}</div><div class="phFoot">مدرسة الشيماء الثانوية للبنات</div></div>`;const c=root.querySelector('#chg');if(c)c.onclick=()=>{if(!confirmBox())return;me='';ls('bb_name',null);render(true)}}
+  function confirmBox(){return true}
+  function toast(t){const d=document.createElement('div');d.className='toast';d.textContent=t;root.querySelector('.ph').appendChild(d);setTimeout(()=>d.remove(),1800)}
+  function login(){
+    shell(`<div class="phTitle">أهلًا بكِ على متن رحلة التأمل ✈️</div><div class="phSub">اختاري اسمكِ لتسجيل حضوركِ في الورشة.</div><div class="names">${PEOPLE.map(p=>`<button class="nm${chosen===p.n?' sel':''}" data-n="${esc(p.n)}"><span class="nw">${esc(p.n)}</span><small>${esc(p.r)}</small></button>`).join('')}</div><button class="pBtn" id="go" ${chosen?'':'disabled'}>سجّلي حضوري</button>`);
+    root.querySelectorAll('.nm').forEach(b=>b.onclick=()=>{chosen=b.dataset.n;login()});
+    root.querySelector('#go').onclick=async()=>{me=chosen;ls('bb_name',me);try{snap=await api({a:'join',n:me})}catch(e){}lastKey='';render(true);burst(['✈️','💛','👋'],10,root.querySelector('.ph'))};
+  }
+  function render(force){
+    if(!me){login();return}
+    if(!snap){shell(`<div class="wait"><div class="pl">✈️</div><p>جارٍ الاتصال بقمرة القيادة…</p></div>`);return}
+    const st=snap.st, q=qById(st.qid);
+    const key=st.qid+'|'+st.ph+'|'+(myAns?myAns.v:'');
+    if(!force&&key===lastKey)return; lastKey=key;
+    if(st.qi<0||!q||st.ph==='idle'){
+      shell(`<div class="wait"><div class="pl">✈️</div><p>تم تسجيل حضوركِ يا ${esc(short(me))} 💛</p><small>بانتظار السؤال القادم من قمرة القيادة…</small></div>`);return}
+    if(st.ph==='open'){
+      let body=`<div class="phSub" style="margin:0;color:var(--orange);font-family:var(--h)">${esc(q.tag)}</div><div class="phTitle">${q.text}</div>`;
+      if(q.type==='mcq'){
+        body+=q.opts.map((o,i)=>`<button class="pOpt${myAns&&+myAns.v===i?' sel':''}" data-i="${i}"><b>${LET[i]}</b>${esc(o.t)}</button>`).join('');
+        if(myAns)body+=`<div class="sent">✓ وصلت إجابتكِ… يمكنكِ تغييرها ما دام السؤال مفتوحًا</div>`;
+        shell(body);
+        root.querySelectorAll('.pOpt').forEach(b=>b.onclick=async()=>{if(busy)return;busy=true;myAns={v:b.dataset.i};lastKey='';render(true);try{const r=await api({a:'ans',n:me,q:q.id,v:b.dataset.i});if(r&&r.ok===false)toast('أُغلق السؤال 🙈');else snap=r}catch(e){toast('تعذّر الإرسال… حاولي مرة أخرى')}busy=false});
+      }else{
+        const val=draft||(myAns?myAns.v:'');
+        body+=`<textarea class="pIn" maxlength="120" placeholder="${esc(q.ph||'جملة واحدة…')}">${esc(val)}</textarea><div class="cnt"><span id="cc">${ar(val.length)}</span> / ١٢٠</div><button class="pBtn" id="snd">${myAns?'تعديل الإجابة':'أرسلي إجابتي'}</button>`;
+        if(myAns)body+=`<div class="sent">✓ وصلت إجابتكِ وظهرت على الشاشة</div>`;
+        shell(body);
+        const ta=root.querySelector('textarea');ta.oninput=()=>{draft=ta.value;root.querySelector('#cc').textContent=ar(ta.value.length)};
+        root.querySelector('#snd').onclick=async()=>{const v=ta.value.trim();if(!v){toast('اكتبي جملتكِ أولًا ✍️');return}if(busy)return;busy=true;try{const r=await api({a:'ans',n:me,q:q.id,v});if(r&&r.ok===false)toast('أُغلق السؤال 🙈');else{snap=r;myAns={v};draft='';lastKey='';render(true)}}catch(e){toast('تعذّر الإرسال… حاولي مرة أخرى')}busy=false};
+      }
+      return;
+    }
+    if(st.ph==='closed'){shell(`<div class="wait"><div class="pl">🥁</div><p>أُغلقت الإجابات…</p><small>استعدّي للكشف على الشاشة!</small></div>`);return}
+    if(st.ph==='reveal'){
+      const v=verdict(q,me,myAns);
+      let extra='';
+      if(q.type==='mcq'){const c=q.opts.findIndex(o=>o.ok);extra=`<div class="ans">الإجابة الصحيحة: ${LET[c]}) ${esc(q.opts[c].t)}</div>`}
+      shell(`<div class="react ${v.cls}"><div class="e">${v.e}</div><h3>${esc(v.t)}</h3>${extra}</div>`);
+      const ph=root.querySelector('.ph');
+      if(v.cls==='ok'){burst(['❤️','👏','✨','💛'],18,ph);try{navigator.vibrate&&navigator.vibrate([60,40,60])}catch(e){}}
+      else if(v.cls==='no'){burst(['😂','🙈','😅'],8,ph)}
+    }
+  }
+  async function poll(){
+    if(!me){if(!root.querySelector('.names'))login();return}
+    try{const r=await api({a:'state'});snap=r;const a=r.ans&&r.ans[me];if(a)myAns=a;else if(r.st.ph==='open'&&!busy)myAns=null;
+      if(r.st.qid!==Phone._q){Phone._q=r.st.qid;draft='';myAns=a||null}
+      if(r.att&&me&&!r.att.includes(me))api({a:'join',n:me});
+      render(false)}catch(e){}
+  }
+  render(true);poll();setInterval(poll,DEMO?900:2500);
+}
+
+/* =====================================================================
+   SCREEN VIEW (presenter)
+   ===================================================================== */
+function Screen(){
+  const stage=$('#stage');
+  let snap={st:{qi:-1,ph:'idle',qid:''},att:[],ans:{}}, seen=new Set(), lastReveal='', pin=ls('bb_pin')||'', lastQ='?';
+  function fit(){const v=$('#screenView');const s=Math.min(v.clientWidth/1600,v.clientHeight/900);stage.style.transform='scale('+s+')'}
+  addEventListener('resize',fit);fit();Screen.fit=fit;
+  const joinUrl=location.href.split('#')[0]+'#join';
+  function head(){const st=snap.st;const ph={idle:'',open:'الإجابات مفتوحة',closed:'أُغلقت الإجابات',reveal:'الكشف'}[st.ph]||'';
+    return `<div class="sHead"><div class="brand"><div class="bx"></div><div><b>الصندوق الأسود</b><span>منصة التفاعل · ورشة القيادة الوسطى</span></div></div><div class="hMid">${st.qi<0?'صعود الطائرة':'السؤال '+ar(st.qi+1)+' من '+ar(Q.length)}</div><div class="hLeft">${ph?`<span class="pill ${st.ph}">${ph}</span>`:''}<span class="pill">على متن الرحلة: ${ar(snap.att.length)} / ${ar(PEOPLE.length)}</span></div></div>`}
+  function foot(){const st=snap.st,first=st.qi<0;
+    return `<div class="sFoot"><div class="fGroup">
+      <button class="hb g" id="bPrev" ${st.qi<0?'disabled':''}>› السابق</button>
+      <button class="hb ${st.ph==='open'?'on':''}" id="bOpen" ${first?'disabled':''}>افتحي الإجابات</button>
+      <button class="hb ${st.ph==='closed'?'on':''}" id="bClose" ${first||st.ph!=='open'?'disabled':''}>أغلقي</button>
+      <button class="hb ${st.ph==='reveal'?'on':''}" id="bRev" ${first?'disabled':''}>اكشفي النتيجة 🎉</button>
+      <button class="hb g" id="bNext" ${st.qi>=Q.length-1?'disabled':''}>${first?'ابدئي الأسئلة':'التالي'} ‹</button>
+    </div><div class="fGroup">
+      ${!first&&st.ph!=='idle'?`<span class="counter">أجابت <b>${ar(Object.keys(snap.ans).length)}</b> من ${ar(snap.att.length)}</span>`:''}
+      <button class="hb g" id="bList">☰ الأسئلة</button><button class="hb g" id="bQR">QR</button><button class="hb g" id="bSnd">${soundOn?'🔊':'🔇'}</button><button class="hb g" id="bFs">⛶</button>
+    </div></div>`}
+  function lobby(){
+    return `<div class="sBody"><div class="qTag">صعود الطائرة · تسجيل الحضور</div><div class="qText" style="font-size:38px">امسحي الرمز بجوالكِ… واختاري اسمكِ ✈️</div>
+      <div class="lobby"><div class="qrBox"><p>رمز الدخول إلى المنصة</p><div id="qr"></div><small>${esc(joinUrl)}</small>${DEMO?'<p style="font-size:14px;color:var(--orange);margin-top:8px">الوضع التجريبي: جرّبي من الجوال التجريبي على اليسار</p>':''}</div>
+      <div class="board">${PEOPLE.map(p=>{const on=snap.att.includes(p.n);const old=on&&seen.has('seat'+p.n);if(on)seen.add('seat'+p.n);return `<div class="seat${on?' in':''}" ${old?'style="animation:none"':''}><span class="dot"></span><span class="nw">${esc(p.n)}</span><i>${on?'صعدت ✈️':esc(p.r)}</i></div>`}).join('')}</div></div></div>`}
+  function answeredStrip(){return `<div class="answered">${snap.att.map(n=>`<span class="a${snap.ans[n]?' y':''}">${snap.ans[n]?'✓ ':''}${esc(short(n))}</span>`).join('')}</div>`}
+  function qView(){
+    const st=snap.st,q=Q[st.qi];let h=`<div class="sBody"><div class="qTag">${esc(q.tag)}</div><div class="qText">${q.text}</div>`;
+    if(st.ph==='idle'){h+=`<div class="idleHint"><div class="pl">✈️</div><div>السؤال جاهز للإقلاع… اضغطي «افتحي الإجابات»</div></div></div>`;return h}
+    const names=Object.keys(snap.ans), total=names.length||1;
+    if(q.type==='mcq'){
+      const groups=q.opts.map(()=>[]);names.forEach(n=>{const i=+snap.ans[n].v;if(groups[i])groups[i].push(n)});
+      const rev=st.ph==='reveal';
+      h+=`<div class="opts${rev?' compact':''}">${q.opts.map((o,i)=>`<div class="orow${rev?(o.ok?' ok':' no'):''}"><div class="L">${rev&&o.ok?'✓':LET[i]}</div><div><div class="t"><span>${esc(o.t)}</span><em>${ar(groups[i].length)}</em></div><div class="bar"><i style="width:${groups[i].length/total*100}%"></i></div><div class="chips">${groups[i].map(n=>`<span class="chip" ${seen.has(q.id+n+i)?'style="animation:none"':''}>${esc(n)}</span>`).join('')}</div></div></div>`).join('')}</div>`;
+      groups.forEach((g,i)=>g.forEach(n=>seen.add(q.id+n+i)));
+      if(rev)h+=reactions(q);else h+=answeredStrip();
+    }else{
+      const rev=st.ph==='reveal';
+      const sorted=names.sort((a,b)=>snap.ans[a].t-snap.ans[b].t);
+      h+=`<div class="wall">${sorted.map(n=>{const k=q.id+n+snap.ans[n].v;const anim=seen.has(k)?'style="animation:none"':'';seen.add(k);return `<div class="acard" ${anim}><div class="n nw">${esc(n)} قالت:</div><div class="v">${esc(snap.ans[n].v)}</div>${rev?`<div class="pr">${esc(verdict(q,n,snap.ans[n]).t)}</div>`:''}</div>`}).join('')||'<div class="idleHint" style="grid-column:1/-1">بانتظار أول إجابة… ✍️</div>'}</div>`;
+      if(!rev)h+=answeredStrip();
+      else{const miss=snap.att.filter(n=>!snap.ans[n]);if(miss.length)h+=`<div class="reacts" style="flex-shrink:0">${miss.map(n=>{const v=verdict(q,n,null);return `<div class="rcard na"><span class="e">${v.e}</span><span>${esc(v.t)}</span></div>`}).join('')}</div>`}
+    }
+    return h+'</div>';
+  }
+  function reactions(q){
+    const order=[...snap.att].sort((a,b)=>{const r=n=>{const v=verdict(q,n,snap.ans[n]).cls;return v==='ok'?0:v==='no'?1:2};return r(a)-r(b)});
+    return `<div class="reacts">${order.map((n,i)=>{const v=verdict(q,n,snap.ans[n]);return `<div class="rcard ${v.cls}" style="animation-delay:${i*.08}s"><span class="e">${v.e}</span><span>${esc(v.t)}</span></div>`}).join('')}</div>`;
+  }
+  let overlay='';
+  function draw(){
+    stage.innerHTML=head()+(snap.st.qi<0?lobby():qView())+foot()+overlay;
+    if(snap.st.qi<0&&window.QRCode){try{new QRCode($('#qr'),{text:joinUrl,width:270,height:270,colorDark:'#3A2418',colorLight:'#ffffff'})}catch(e){}}
+    bind();
+  }
+  function bind(){
+    const st=snap.st,q=Q[st.qi];
+    const on=(id,f)=>{const b=$('#'+id);if(b)b.onclick=f};
+    on('bPrev',()=>set(st.qi-1,'idle'));
+    on('bNext',()=>set(st.qi+1,'idle'));
+    on('bOpen',()=>set(st.qi,'open'));
+    on('bClose',()=>set(st.qi,'closed'));
+    on('bRev',()=>set(st.qi,'reveal'));
+    on('bSnd',()=>{soundOn=!soundOn;draw()});
+    on('bFs',()=>{try{const p=document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();p&&p.catch&&p.catch(()=>{})}catch(e){}});
+    on('bQR',()=>set(-1,'idle'));
+    on('bList',()=>{overlay=`<div class="ov" id="ov"><div class="ovBox"><h3>الانتقال إلى سؤال</h3><div class="qlist">${Q.map((x,i)=>`<button data-i="${i}" class="${i===st.qi?'cur':''}">${ar(i+1)}. ${esc(x.tag)} · ${x.text.replace(/<[^>]+>/g,'').slice(0,60)}</button>`).join('')}</div><button class="hb g" id="ovX" style="margin-top:10px">إغلاق</button><button class="hb g" id="ovR" style="margin-top:10px;margin-right:8px;color:var(--red);border-color:var(--red)">بدء جلسة جديدة (مسح الإجابات)</button></div></div>`;draw();
+      stage.querySelectorAll('.qlist button').forEach(b=>b.onclick=()=>{overlay='';set(+b.dataset.i,'idle')});
+      $('#ovX').onclick=()=>{overlay='';draw()};
+      $('#ovR').onclick=async()=>{overlay='';try{snap=await api({a:'reset',pin});seen.clear();lastReveal='';draw()}catch(e){}if(DEMO)Sim.restart()}});
+  }
+  async function set(qi,ph){
+    qi=Math.max(-1,Math.min(Q.length-1,qi));
+    try{const r=await api({a:'set',pin,qi,ph,qid:qi>=0?Q[qi].id:''});
+      if(r.ok===false&&r.err==='pin'){askPin();return}
+      apply(r);if(DEMO)Sim.onPhase(r.st)}catch(e){}
+  }
+  function askPin(){overlay=`<div class="ov"><div class="ovBox"><h3>رمز قائدة الرحلة 🔐</h3><p style="font-size:18px">أدخلي الرمز الذي وضعتِه في ملف الخادم (HOST_PIN).</p><input id="pinIn" type="password"><button class="hb" id="pinOk">دخول</button></div></div>`;draw();$('#pinOk').onclick=()=>{pin=$('#pinIn').value.trim();ls('bb_pin',pin);overlay='';draw()}}
+  function apply(r){
+    if(!r||!r.st)return;
+    const prevPh=snap.st.ph,prevQ=snap.st.qid;
+    const newNames=r.att.filter(n=>!snap.att.includes(n));
+    const newAns=Object.keys(r.ans).filter(n=>!snap.ans[n]);
+    snap=r;
+    if(overlay)return;
+    draw();
+    if(r.st.qi<0&&newNames.length)ding();
+    if(r.st.ph==='open'&&newAns.length&&prevQ===r.st.qid)ding();
+    const rk=r.st.qid+'reveal';
+    if(r.st.ph==='reveal'&&lastReveal!==rk){lastReveal=rk;applause();setTimeout(chime,300);burst(['❤️','👏','🎉','✨','✈️','💛'],34,$('#screenView'))}
+    if(r.st.ph!=='reveal'&&lastReveal===rk)lastReveal='';
+  }
+  async function poll(){try{const r=await api({a:'state'});const sig=JSON.stringify(r);if(sig!==Screen._sig){Screen._sig=sig;apply(r)}}catch(e){}}
+  draw();poll();setInterval(poll,DEMO?700:1500);
+  addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(e.key==='ArrowLeft')set(snap.st.qi+1,'idle');if(e.key==='ArrowRight')set(snap.st.qi-1,'idle')});
+  if(!DEMO&&!pin)askPin();
+}
+
+/* =====================================================================
+   DEMO SIMULATION (يعمل فقط في الوضع التجريبي)
+   ===================================================================== */
+const Sim={timers:[],
+  clear(){this.timers.forEach(clearTimeout);this.timers=[]},
+  later(ms,f){this.timers.push(setTimeout(f,ms))},
+  bots(){const mine=ls('bb_name');return PEOPLE.map(p=>p.n).filter(n=>n!==mine).slice(0,11)},
+  restart(){this.clear();this.bots().forEach((n,i)=>this.later(1500+i*900+Math.random()*600,()=>Local.handle({a:'join',n})))},
+  onPhase(st){this.clear();
+    if(st.ph!=='open')return;const q=qById(st.qid);
+    this.bots().forEach(n=>{if(!Local.att[n])return;if(Math.random()<.12)return;
+      this.later(1200+Math.random()*7000,()=>{let v;
+        if(q.type==='mcq'){const c=q.opts.findIndex(o=>o.ok);v=Math.random()<.68?c:Math.floor(Math.random()*q.opts.length)}
+        else{const s=SAMPLE_TXT[q.id]||['…'];v=s[Math.floor(Math.random()*s.length)]}
+        Local.handle({a:'ans',n,q:q.id,v:String(v)})})})}
+};
+
+/* ------------------- router ------------------- */
+(function(){
+  const h=location.hash.replace('#','');
+  const screen = h==='screen' || (DEMO && h!=='join');
+  if(screen){
+    $('#screenView').classList.remove('hidden');Screen();
+    if(DEMO){
+      const f=document.createElement('div');f.id='demoPhone';f.innerHTML='<div class="scr" id="phRoot"></div>';document.body.appendChild(f);
+      const t=document.createElement('div');t.id='demoTag';t.textContent='جوال تجريبي · جرّبي كأنكِ منسقة';document.body.appendChild(t);
+      const b=document.createElement('button');b.id='demoToggle';b.className='hb g';b.style.cssText+='background:#2c1a10;color:#e9cfa7;font-size:13px;padding:6px 14px';b.textContent='إخفاء الجوال';document.body.classList.add('demo-on');Screen.fit&&Screen.fit();b.onclick=()=>{const hid=f.classList.toggle('hidden');document.body.classList.toggle('demo-on',!hid);Screen.fit&&Screen.fit();t.classList.toggle('hidden',hid);b.textContent=hid?'إظهار الجوال':'إخفاء الجوال'};document.body.appendChild(b);
+      Phone($('#phRoot'));Sim.restart();
+    }
+  }else{
+    $('#phoneView').classList.remove('hidden');Phone($('#phoneView'));
+  }
+})();
+</script>
+</body>
+</html>
