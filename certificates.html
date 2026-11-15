@@ -41,7 +41,7 @@ body{background:#e9e2d6;font-family:var(--m);color:var(--brown)}
 .text .hl{display:block;font-size:19pt;font-weight:700;color:var(--orange);margin-bottom:2mm}
 .text{font-size:15pt;line-height:1.95;color:#4a3426;max-width:225mm;margin-top:8mm;text-align:justify;text-align-last:center}
 .verse{font-family:'RuqaaInk','Amiri',serif;font-palette:--ink;font-weight:700;font-size:30pt;line-height:1.5;color:#5A2A0C;margin-top:6mm}
-.sigs{margin-top:auto;width:100%;display:flex;justify-content:space-between;align-items:flex-end;padding:0 22mm}
+.sigs{margin-top:auto;width:100%;display:flex;justify-content:center;align-items:flex-end}
 .sig{width:72mm;text-align:center;position:relative}
 .sig .t{font-size:10.5pt;color:var(--muted)}
 .sig .n{font-size:13pt;font-weight:600;color:var(--brown);position:relative;z-index:2}
@@ -114,7 +114,7 @@ const CERTS=[
   verse:'﴿وَلَا تَقْفُ مَا لَيْسَ لَكَ بِهِ عِلْمٌ﴾'},
  {title:'شهادة تميّز',lead:'تتقدّم إدارة المدرسة بخالص الشكر والتقدير إلى',name:'أ. أريج أبو حاشية',role:'منسقة الفيزياء',
   text:'قائدةٌ تأمّلية تستحق التقدير؛ فالقائدة الحقيقية هي التي تقارن بصدق وتتعلّم من الأمس، وتحرص على أن يتأمّل فريقها معها.',
-  verse:'﴿إِنَّ اللَّهَ لَا يُضِيعُ أَجْرَ مَنْ أَحْسَنَ عَمَلًا﴾'},
+  verse:'﴿إِنَّا لَا نُضِيعُ أَجْرَ مَنْ أَحْسَنَ عَمَلًا﴾'},
  {title:'شهادة فخر واعتزاز',lead:'تتقدّم إدارة المدرسة بخالص الشكر والتقدير إلى',name:'فريق قسم العلوم الشرعية',role:'بقيادة أ. خولة المطوع',
   text:'فريقٌ متأمّلٌ يستحق التقدير؛ فالقيادة الحقيقية هي التي تجعل القيم واقعًا يُعاش، وتحرص على بناء الإنسان قبل كل شيء.',
   verse:'﴿وَلْتَكُنْ مِنْكُمْ أُمَّةٌ يَدْعُونَ إِلَى الْخَيْرِ﴾'},
@@ -156,7 +156,6 @@ document.getElementById('wrap').innerHTML=CERTS.map(c=>`
     <div class="verse">${c.verse}</div>
     <div class="sigs">
       <div class="sig mid"><img src="${SIG}" alt=""><div class="n">أ. آسيا الذبياني</div><div class="t">نائب المديرة للشؤون الأكاديمية</div></div>
-      <div class="sig"><div class="ln"></div><div class="n">أ. شيخة الرميحي</div><div class="t">مديرة المدرسة</div></div>
     </div>
   </div>
 </div>`).join('');
