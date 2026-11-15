@@ -222,6 +222,14 @@ textarea.pIn{width:100%;font-family:var(--h);font-size:17px;line-height:1.7;padd
 .route .rLine em{position:absolute;top:-12px;font-style:normal;font-size:20px;transform:scaleX(-1);transition:right .8s}
 .route .rInfo{background:rgba(44,26,16,.85);color:#f1d8b0;border-radius:20px;padding:2px 12px;white-space:nowrap}
 .route .rInfo b{color:var(--orange2)}
+
+.lionWrap{background:radial-gradient(ellipse at 50% 35%,#8a3b12 0%,#2a120a 75%)}
+.lion{font-size:150px;line-height:1;animation:lionIn 1.4s cubic-bezier(.3,1.5,.5,1) both, lionBeat 1.6s 1.4s ease-in-out infinite;filter:drop-shadow(0 10px 30px rgba(255,170,60,.6))}
+.crownL{font-size:64px;line-height:1;margin-bottom:-22px;position:relative;z-index:2;animation:crownD 1.2s .9s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes lionIn{0%{transform:scale(0) rotate(-20deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes lionBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes crownD{0%{transform:translateY(-200px);opacity:0}100%{transform:none;opacity:1}}
+.lionWrap .thName{font-size:104px!important}
 </style>
 </head>
 <body>
@@ -322,15 +330,20 @@ function verdict(q,name,a){ // {cls,text,emoji}
   if(o.ok) return {cls:'ok',e:'👏',t:fill(pick(PRAISE,name+q.id),name)};
   return {cls:'no',e:'😂',t:fill(o.r&&hash(name+q.id)%2===0?o.r:pick(OOPS,name+q.id),name)};
 }
-function scoreQ(q,A){const out={};const names=Object.keys(A||{});if(q.type==='text'&&q.key){names.filter(n=>q.key.test(A[n].v)).sort((a,b)=>A[a].t-A[b].t).forEach((n,i)=>out[n]=10+(i===0?5:0));return out}
-  if(q.type==='text'){names.forEach(n=>out[n]=5);return out}
-  const c=q.opts.findIndex(o=>o.ok);names.filter(n=>+A[n].v===c).sort((a,b)=>A[a].t-A[b].t).forEach((n,i)=>out[n]=10+(i===0?5:0));return out}
+function scoreQ(q,A){const out={};const names=Object.keys(A||{});const byT=(a,b)=>A[a].t-A[b].t;
+  const rk={};
+  if(q.type==='text'&&!q.key){names.sort(byT).forEach((n,i)=>{out[n]=5+Math.max(0,3-i);rk[n]=i});}
+  else{const ok=q.type==='text'?n=>q.key.test(A[n].v):(c=>n=>+A[n].v===c)(q.opts.findIndex(o=>o.ok));
+    names.filter(ok).sort(byT).forEach((n,i)=>{out[n]=10+Math.max(1,10-i);rk[n]=i});}
+  try{const R=JSON.parse(localStorage.getItem('bb_rank')||'{}');R[q.id]=rk;localStorage.setItem('bb_rank',JSON.stringify(R))}catch(e){}
+  return out}
 function jget(k){try{return JSON.parse(ls(k)||'{}')}catch(e){return {}}}
 function burst(list,count=26,target=document.body){for(let i=0;i<count;i++){const s=document.createElement('span');s.className='fx';s.textContent=list[i%list.length];s.style.left=(Math.random()*95)+'%';s.style.animationDelay=(Math.random()*1.2)+'s';s.style.fontSize=(28+Math.random()*30)+'px';target.appendChild(s);setTimeout(()=>s.remove(),4800)}}
 
 /* ------------------- sound ------------------- */
 let AC=null,soundOn=true;
 function ac(){if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();return AC}
+function whistle(){if(!soundOn)return;try{const c=ac();[0,.32].forEach((d,j)=>{const t=c.currentTime+d,o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.setValueAtTime(1500+j*300,t);o.frequency.exponentialRampToValueAtTime(2900,t+.12);o.frequency.exponentialRampToValueAtTime(1800+j*500,t+.28);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.12,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+.3);o.connect(g).connect(c.destination);o.start(t);o.stop(t+.32)})}catch(e){}}
 function applause(sec=2.4){if(!soundOn)return;try{const c=ac();const t0=c.currentTime;for(let i=0;i<sec*55;i++){const t=t0+Math.random()*sec;const b=c.createBuffer(1,c.sampleRate*.04,c.sampleRate),d=b.getChannelData(0);for(let k=0;k<d.length;k++)d[k]=(Math.random()*2-1)*Math.pow(1-k/d.length,3);const s=c.createBufferSource();s.buffer=b;const f=c.createBiquadFilter();f.type='bandpass';f.frequency.value=900+Math.random()*1600;f.Q.value=.8;const g=c.createGain();g.gain.value=.25*(1-(t-t0)/sec*.6);s.connect(f).connect(g).connect(c.destination);s.start(t)}}catch(e){}}
 function chime(){if(!soundOn)return;try{const c=ac(),t=c.currentTime;[784,1047,1319,1568].forEach((f,k)=>{const o=c.createOscillator(),g=c.createGain();o.frequency.value=f;g.gain.setValueAtTime(0,t+k*.12);g.gain.linearRampToValueAtTime(.14,t+k*.12+.02);g.gain.exponentialRampToValueAtTime(.001,t+k*.12+1);o.connect(g).connect(c.destination);o.start(t+k*.12);o.stop(t+k*.12+1.1)})}catch(e){}}
 function boing(){if(!soundOn)return;try{const c=ac(),t=c.currentTime,o=c.createOscillator(),g=c.createGain();o.type='triangle';o.frequency.setValueAtTime(520,t);o.frequency.exponentialRampToValueAtTime(140,t+.5);g.gain.setValueAtTime(.2,t);g.gain.exponentialRampToValueAtTime(.001,t+.6);o.connect(g).connect(c.destination);o.start(t);o.stop(t+.6)}catch(e){}}
@@ -405,7 +418,7 @@ function Phone(root){
       if(q.keyText)extra=`<div class="ans">الإجابة: ${esc(q.keyText)}</div>`;
       const sc=scoreQ(q,snap.ans||{});const my=jget('bb_my');my[q.id]=sc[me]||0;ls('bb_my',JSON.stringify(my));
       const tot=Object.values(my).reduce((a,b)=>a+b,0),got=sc[me]||0;
-      const ptsTxt=`<div class="myPts">${got?`+${ar(got)} نقطة في هذا السؤال${got===15?' ⚡ أسرع إجابة صحيحة!':''}<br>`:''}رصيدكِ في الرحلة: <b>${ar(tot)}</b> نقطة ✈️</div>`;
+      const ptsTxt=`<div class="myPts">${got?`+${ar(got)} نقطة في هذا السؤال${got===20?' ⚡ أسرع إجابة صحيحة!':''}<br>`:''}رصيدكِ في الرحلة: <b>${ar(tot)}</b> نقطة ✈️</div>`;
       shell(`<div class="react ${v.cls}"><div class="e">${v.e}</div><h3>${esc(v.t)}</h3>${extra}${ptsTxt}</div>`);
       const ph=root.querySelector('.ph');
       if(v.cls==='ok'){burst(['❤️','👏','✨','💛'],18,ph);try{navigator.vibrate&&navigator.vibrate([60,40,60])}catch(e){}}
@@ -436,9 +449,10 @@ const THX={
  intisar:{n:'أ. انتصار أحمد جامع',r:'منسقة الكيمياء',t:'انتقلت من عرض النتائج إلى تفسيرها؛ فربطت التحصيل بنوع الأسئلة ومستويات العمق المعرفي، وقرأت ورقة الاختبار قراءةً نوعية، ولم تكتفِ بوصف الفروق داخل الشعبة الواحدة، بل فسّرت أسبابها: الفجوات السابقة، والغياب، والاعتماد على الدروس الخصوصية… ثم صمّمت لطالباتها خطوات تفكيك المسألة: ضعي خطًّا، ثم دوّني، ثم خطّطي، ثم حُلّي.'},
  faten:{n:'أ. فاتن عبدالرحمن',r:'منسقة تكنولوجيا المعلومات',t:'قرأت التفاوت بين المسارين العلمي والتكنولوجي قراءةً واقعية، فربطته بطبيعة المادة التراكمية في البرمجة والتحليل المنطقي لا بالطالبات وحدهن، وربطت استقرار التحصيل بممارساتٍ صفية حقيقية كالتقييم المستمر والحصص الإثرائية… فقرأت النتيجة في سياقها الكامل قبل أن تحكم عليها.'},
  areej:{n:'أ. أريج أبو حاشية',r:'منسقة الفيزياء',pre:'وكما حوّلت قطر الأزمة إلى فرصة… حوّل قسمٌ عندنا القيمة السالبة إلى قفزة',t:'قارنت نتائج عامها بالعام السابق بصدق، فكشفت أن القيمة المضافة للحادي عشر كانت سالبة، فصارت موجبة بمقدار 11.28%، وارتفع المتوسط من 85.51% إلى 88.72%. وربطت التحصيل بمهارات الفيزياء وطبيعة الأسئلة، وحدّدت الإجراء الأعلى أثرًا: حصص رفع الكفاءة في أسبوع التوأمة… وعقدت مع فريقها اجتماعًا للمراجعة الذاتية.'},
- khawla:{k:'شكرٌ وتقدير · فريقٌ يصنع القيم',n:'فريق قسم العلوم الشرعية',r:'بقيادة أ. خولة المطوع',t:'بادر الفريق إلى جعل القيم واقعًا تعيشه الطالبات لا شعارًا يُكتب، فأسهم إسهامًا كبيرًا في تعزيز القيم في المدرسة، حتى تجلّت في أبهى صورها… فشكرًا لفريقٍ أدرك أن بناء الإنسان يبدأ من قيمه.',pre:'وقطر لم تصمد بالغذاء وحده… بل بالقيم: الهوية، والانتماء، والتماسك'}
+ khawla:{k:'شكرٌ وتقدير · فريقٌ يصنع القيم',n:'فريق قسم العلوم الشرعية',r:'بقيادة أ. خولة المطوع',t:'بادر الفريق إلى جعل القيم واقعًا تعيشه الطالبات لا شعارًا يُكتب، فأسهم إسهامًا كبيرًا في تعزيز القيم في المدرسة، حتى تجلّت في أبهى صورها… فشكرًا لفريقٍ أدرك أن بناء الإنسان يبدأ من قيمه.',pre:'وقطر لم تصمد بالغذاء وحده… بل بالقيم: الهوية، والانتماء، والتماسك'},
+ wadad:{special:1,k:'تحيةٌ خاصة · نصفي المهني الثاني',n:'أ. وداد الكربي',r:'النائبة الإدارية',pre:'أول عامٍ لها في الشيماء… وكأنها منّا منذ سنين',t:'في شهرين ونصف فقط، منذ سبتمبر، تأمّلت وطوّرت نفسها، فصنعت إنجازاتٍ واضحة في الميدان وفي مدرسة الشيماء. قائدةٌ تأمّلية بحق، وشريكةُ النجاح… ونصفي المهني الثاني.'}
 };
-const FLOW=[{s:1},{lobby:1},{s:2},{s:53},{s:29},{s:30},{q:'q01'},{s:5},{s:48},{s:31},{q:'q02'},{s:32},{s:33},{s:3},{s:4},{q:'q03'},{s:47},{q:'q04'},{s:21},{s:34},{s:52},{s:49},{s:35},{q:'q05'},{s:36},{s:37},{thx:'yusra'},{thx:'haya'},{thx:'sahar'},{s:38},{board:1},{s:8},{q:'q06'},{s:9},{thx:'sheikha'},{s:54},{q:'q07'},{s:55},{s:39},{s:40},{s:41},{s:42},{s:50},{s:43},{q:'q08'},{s:44},{thx:'najwa'},{thx:'intisar'},{thx:'faten'},{s:51},{s:45},{q:'q09'},{s:46},{thx:'areej'},{thx:'fatima'},{thx:'khawla'},{s:18},{s:28},{q:'q10'},{q:'q11'},{board:1},{winner:1},{s:20}];
+const FLOW=[{s:1},{lobby:1},{s:2},{s:53},{s:29},{s:30},{q:'q01'},{s:5},{s:48},{s:31},{q:'q02'},{s:32},{s:33},{s:3},{s:4},{q:'q03'},{s:47},{q:'q04'},{s:21},{s:34},{s:52},{s:49},{s:35},{q:'q05'},{s:36},{s:37},{thx:'yusra'},{thx:'haya'},{thx:'sahar'},{s:38},{board:1},{s:8},{q:'q06'},{s:9},{thx:'sheikha'},{s:54},{q:'q07'},{s:55},{s:39},{s:40},{s:41},{s:42},{s:50},{s:43},{q:'q08'},{s:44},{thx:'najwa'},{thx:'intisar'},{thx:'faten'},{s:51},{s:45},{q:'q09'},{s:46},{thx:'areej'},{thx:'fatima'},{thx:'khawla'},{thx:'wadad'},{s:18},{s:28},{q:'q10'},{q:'q11'},{board:1},{winner:1},{s:20}];
 function Screen(){
   const stage=$('#stage');
   stage.innerHTML='<div id="deckWrap" style="position:absolute;top:0;left:0;right:0;bottom:78px;background:#0d0906"><iframe id="deck" src="deck.html" style="width:100%;height:100%;border:0;display:block" allow="autoplay; fullscreen"></iframe></div><div id="ui" style="position:absolute;inset:0;display:flex;flex-direction:column;pointer-events:none"></div>';
@@ -494,17 +508,20 @@ function Screen(){
     const rows=names.map((n,i)=>{const p=T[n]||0;if(p!==prev){rank=i+1;prev=p}
       const g=p>0&&rank<=3?' g'+rank:'';
       return `<div class="brow${g}" style="animation-delay:${i*.05}s"><div class="rk">${p>0&&rank<=3?med[rank-1]:ar(rank)}</div><div class="nm2 nw">${esc(n)}</div><div class="bar2"><i data-w="${p/max*100}"></i></div><div class="pt">${ar(p)}<small>نقطة</small>${L[n]?`<span class="dl">+${ar(L[n])}</span>`:''}</div></div>`}).join('');
-    return `<div class="sBody"><div class="bTitle"><h2>🏆 لوحة النقاط · رحلة التأمل</h2><span>10 نقاط لكل إجابة صحيحة · 5 نقاط إضافية لأسرع إجابة صحيحة ⚡ · 5 نقاط لكل جملة مكتوبة</span></div><div class="blist">${rows||'<div class="idleHint">لم تُكشف أي نتيجة بعد ✈️</div>'}</div></div>`}
+    return `<div class="sBody"><div class="bTitle"><h2>🏆 لوحة النقاط · رحلة التأمل</h2><span>🎯 الدقة: 10 نقاط لكل إجابة صحيحة · ⚡ السرعة: حتى 10 نقاط إضافية حسب ترتيب الإجابة · ✍️ الإنجاز: 5 نقاط لكل جملة مكتوبة</span></div><div class="blist">${rows||'<div class="idleHint">لم تُكشف أي نتيجة بعد ✈️</div>'}</div></div>`}
   function pickWinner(){
-    const {T,S}=totals();const fast={},cor={};Object.values(S).forEach(m=>Object.entries(m).forEach(([n,p])=>{if(p===15)fast[n]=(fast[n]||0)+1;if(p>=10)cor[n]=(cor[n]||0)+1}));
+    const {T,S}=totals();const cor={},rs={};Object.values(S).forEach(m=>Object.entries(m).forEach(([n,p])=>{if(p>=10)cor[n]=(cor[n]||0)+1}));
+    const R=jget('bb_rank');Object.values(R).forEach(m=>Object.entries(m).forEach(([n,r])=>{rs[n]=(rs[n]||0)+r}));
     const pool=[...new Set([...snap.att,...Object.keys(T)])];if(!pool.length)return null;
-    const key=n=>[T[n]||0,fast[n]||0,cor[n]||0];
+    const key=n=>[T[n]||0,cor[n]||0,-(rs[n]||0)];
     pool.sort((a,b)=>{const A=key(a),B=key(b);for(let i=0;i<3;i++)if(B[i]!==A[i])return B[i]-A[i];return 0});
     const top=key(pool[0]);const tied=pool.filter(n=>key(n).join()===top.join());
-    let note='';if(tied.length>1){note='تعادل بين '+tied.map(short).join(' و')+' في النقاط والسرعة… فاختارت القرعة 🎲'}
-    else{const second=pool[1];if(second&&(T[second]||0)===top[0])note='تعادل في النقاط… وحسمته سرعة الإجابات ⚡'}
-    return {n:tied[Math.floor(Math.random()*tied.length)],p:top[0],note,contenders:pool.slice(0,Math.max(4,tied.length))}}
-  function thxView(k){const T=THX[k];return `<div class="thxWrap"><div class="glow"></div><div class="stars">✨🌟✨</div><div class="k">${esc(T.k||'شكرٌ وتقدير · قائدةٌ تتأمّل')}</div>${T.pre?`<div class="pre">${esc(T.pre)}</div>`:''}<div class="thName">${esc(T.n)}</div><div class="rl">${esc(T.r)}</div><div class="tx">${esc(T.t)}</div></div>`}
+    let note='';const second=pool[1];
+    if(tied.length>1)note='تساوت النقاط والدقة والسرعة… فحسمتها القرعة 🎲';
+    else if(second&&(T[second]||0)===top[0])note=(cor[second]||0)===top[1]?'تعادل في النقاط والدقة… وحسمته سرعة الإجابات ⚡':'تعادل في النقاط… وحسمته دقة الإجابات 🎯';
+    const win=tied[Math.floor(Math.random()*tied.length)];const sec=pool.find(n=>n!==win);
+    return {n:win,p:top[0],note,second:sec?{n:sec,p:T[sec]||0}:null,contenders:pool.slice(0,Math.max(4,tied.length))}}
+  function thxView(k){const T=THX[k];return `<div class="thxWrap${T.special?' lionWrap':''}">${T.special?'<div class="crownL">👑</div><div class="lion">🦁</div>':''}<div class="glow"></div><div class="stars">✨🌟✨</div><div class="k">${esc(T.k||'شكرٌ وتقدير · قائدةٌ تتأمّل')}</div>${T.pre?`<div class="pre">${esc(T.pre)}</div>`:''}<div class="thName">${esc(T.n)}</div><div class="rl">${esc(T.r)}</div><div class="tx">${esc(T.t)}</div></div>`}
   function winnerView(){const W=jget('bb_winner');
     if(W.n)return `<div class="winWrap done"><div class="k">🏆 فائزة رحلة التأمل</div><div class="crown">👑</div><div class="slot">${esc(W.n)}</div><div class="sub">قائدة القمرة الأولى · ${ar(W.p)} نقطة</div><div class="tie">${esc(W.note||'')}</div><button class="hb g" id="winAgain" style="margin-top:24px;color:#e9cfa7;border-color:#7a5a3a">إعادة الكشف</button></div>`;
     return `<div class="winWrap" id="winWrap"><div class="k">🏆 لحظة الحسم</div><div class="crown">👑</div><div class="slot" id="slot">من ستكون فائزة الرحلة؟</div><div class="sub" id="wsub"></div><div class="tie" id="wtie"></div><button class="hb winBtn" id="winGo">🥁 اكشفي الفائزة</button></div>`}
@@ -515,7 +532,7 @@ function Screen(){
     await new Promise(res=>{(function spin(){slot.textContent=names[i++%names.length];delay*=1.07;if(delay<420)setTimeout(spin,delay);else res()})()});
     slot.textContent=w.n;const ww=$('#winWrap');ww.classList.add('done');$('#wsub').textContent='قائدة القمرة الأولى · '+ar(w.p)+' نقطة';$('#wtie').textContent=w.note;
     fanfare();setTimeout(()=>applause(3),500);burst(['👑','🏆','🎉','✨','❤️','⭐'],60,$('#screenView'));
-    ls('bb_winner',JSON.stringify({n:w.n,p:w.p,note:w.note}));
+    ls('bb_winner',JSON.stringify({n:w.n,p:w.p,note:w.note}));if(w.second)ls('bb_second',JSON.stringify(w.second));
     const idx=PEOPLE.findIndex(p=>p.n===w.n);
     try{await api({a:'set',pin,qi:100+(idx<0?0:idx),ph:'win',qid:''})}catch(e){}
   }
@@ -563,7 +580,7 @@ function Screen(){
     on('bList',()=>{overlay=`<div class="ov" style="pointer-events:auto"><div class="ovBox" style="width:760px"><h3>مسار الورشة</h3><div class="qlist">${FLOW.map((x,i)=>{const t=x.s?'🖥️ '+SL[x.s]:x.lobby?'✈️ تسجيل الحضور':x.board?'🏆 لوحة النقاط':x.winner?'👑 كشف الفائزة':x.thx?'🌟 شكر: '+THX[x.thx].n:'💬 '+qById(x.q).tag+' · '+qById(x.q).text.replace(/<[^>]+>/g,'').slice(0,50);return `<button data-i="${i}" class="${i===step?'cur':''}">${ar(i+1)}. ${esc(t)}</button>`}).join('')}</div><button class="hb g" id="ovX" style="margin-top:10px">إغلاق</button><button class="hb g" id="ovR" style="margin-top:10px;margin-right:8px;color:var(--red);border-color:var(--red)">بدء جلسة جديدة (مسح الحضور والإجابات)</button></div></div>`;draw();
       ui.querySelectorAll('.qlist button').forEach(b=>b.onclick=()=>{overlay='';go(+b.dataset.i)});
       $('#ovX').onclick=()=>{overlay='';draw()};
-      $('#ovR').onclick=async()=>{overlay='';try{const r=await api({a:'reset',pin});if(r.ok===false&&r.err==='pin'){askPin();return}snap=r;seen.clear();lastReveal='';ls('bb_scores',null);ls('bb_last',null);ls('bb_winner',null);go(0)}catch(e){}if(DEMO)Sim.restart()}});
+      $('#ovR').onclick=async()=>{overlay='';try{const r=await api({a:'reset',pin});if(r.ok===false&&r.err==='pin'){askPin();return}snap=r;seen.clear();lastReveal='';ls('bb_scores',null);ls('bb_last',null);ls('bb_winner',null);ls('bb_rank',null);ls('bb_second',null);go(0)}catch(e){}if(DEMO)Sim.restart()}});
   }
   function nav(d){if(cur().s){try{deck.contentWindow.postMessage({nav:d},'*');return}catch(e){}}go(step+d)}
   async function go(i){
@@ -572,7 +589,7 @@ function Screen(){
     draw();if(f.board){applause(2);setTimeout(chime,400);burst(['🏆','⭐','✨','👏'],24,$('#screenView'))}
     const q=curQ();
     if(f.winner&&jget('bb_winner').n)return;
-    if(f.thx){applause(2.6);setTimeout(chime,300);burst(['✨','🌟','👏','💛','🎉'],40,$('#screenView'))}
+    if(f.thx){if(THX[f.thx].special){applause(5);whistle();setTimeout(whistle,900);setTimeout(()=>applause(4),2500);setTimeout(whistle,2800);let k=0;const iv=setInterval(()=>{burst(['❤️','💖','💛','🧡','💕','👏'],18,$('#screenView'));if(++k>6)clearInterval(iv)},700)}else{applause(2.6);setTimeout(chime,300);burst(['✨','🌟','👏','💛','🎉'],40,$('#screenView'))}}
     const done=q&&jget('bb_scores')[q.id];
     if(q&&!done)startTimer(q);
     try{const r=await api({a:'set',pin,qi:q?Q.indexOf(q):-1,ph:q?(done?'reveal':'open'):'idle',qid:q?q.id:''});if(r.ok===false&&r.err==='pin'){askPin();return}apply(r);if(DEMO)Sim.onPhase(r.st)}catch(e){}
