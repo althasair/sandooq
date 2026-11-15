@@ -266,8 +266,8 @@ const Q = [
  {id:'q01',tag:'سؤال الإقلاع',type:'text',key:/برتقال|orange/i,keyText:'برتقالي ساطع… كي يُعثر عليه بين الحطام',text:'ما هو لون «الصندوق الأسود» في الطائرة؟',ph:'اكتبي اللون…',
    okr:['عينكِ قائدة يا {n}! برتقالي فعلًا 🧡','ما شاء الله يا {n}… ما انخدعتِ بالاسم 😎','كفو يا {n}! الأسماء ما تخدعكِ 👏'],
    nor:['يا {n} صدّقتِ الاسم؟ 😂 الأسماء تخدع… مثل بعض التقارير','قريبة يا {n}… بس هو برتقالي 🧡 ولا يهمكِ','يا {n} لو كان أسود ما لقوه بين الحطام 🙈']},
- {id:'q02',tag:'📦 الصندوق الأول',type:'text',text:'ماذا ترتّب على التبرير؟ وماذا ترتّب على التأمّل؟',ph:'ترتّب على التبرير… وعلى التأمل…'},
- {id:'q03',tag:'بعد مقطع القمرة',type:'mcq',text:'لماذا لم يُصرّ مهندس الطيران على اعتراضه رغم أنه كان يشك؟',opts:[
+ {id:'q02',tag:'📦 الصندوق الأول',type:'text',text:'إلى أين قاد التبريرُ إبليس؟ وإلى أين قاد التأمّلُ آدم؟',ph:'قاد التبريرُ إبليسَ إلى… وقاد التأمّلُ آدمَ إلى…'},
+ {id:'q03',tag:'بعد مقطع القمرة',type:'mcq',text:'لماذا سكت مهندس الطيران رغم أنه كان يشكّ؟',opts:[
    {t:'لم يكن الأمر من تخصصه',r:'يا {n} المهندس متخصص وفاهم… بس الهيبة غلبت 😅'},
    {t:'هيبة القائد وخبرته أسكتته',ok:1},
    {t:'كان مشغولًا بأجهزته',r:'مشغول؟ 😂 لا يا {n}، كان منتبه وسأل… بس سكت!'},
@@ -450,7 +450,7 @@ function Phone(root){
 /* =====================================================================
    SCREEN VIEW (العرض + الأسئلة في مسار واحد)
    ===================================================================== */
-const SL={1:'الغلاف',2:'صعود الطائرة',3:'مقطع القمرة',4:'كارثة تينيريفي',5:'الصندوق البرتقالي',8:'تأثير الكوبرا',9:'صدمة الكوبرا',18:'غزوة أحد',20:'هبوط آمن',21:'وقفة تأمل · لماذا يخشى المرؤوس؟',28:'وقفة تأمل · الوقاية',29:'قانون القمرة',30:'لماذا الصندوق الأسود؟',31:'📦 آدم وإبليس',32:'وقفة تأمل · ماذا ترتّب؟',33:'وقفة تأمل · التأمل والتوبة',34:'وقفة تأمل · طائرتان والخطأ نفسه',35:'📦 كينيدي',36:'قائد اعترف وقائد برّر',37:'وقفة تأمل · أعترف أم أبرّر؟',38:'وقفة تأمل · قائدتان لا تتأمّلان',39:'وقفة تأمل · أمنية',40:'وقفة تأمل · هل التأمل عبء؟',41:'وقفة تأمل · المنسقة مرآة فريقها',42:'وقفة تأمل · أمانة ووقت',43:'📦 نهر هدسون',44:'وقفة تأمل · التأمل العادل',45:'📦 قطر 2017',46:'وقفة تأمل · تقرير دولة',47:'لماذا سكت المهندس؟',48:'📦 فتح الصندوق الأول',49:'📦 فتح الصندوق الثاني',50:'📦 فتح الصندوق الثالث',51:'📦 فتح الصندوق الرابع',52:'وقفة تأمل · الكلام الآمن في قسمكِ',53:'🎯 أهداف الورشة',54:'🐍 مؤشرات انقلبت على هدفها',55:'🐍 كوبرا المدرسة'};
+const SL={1:'الغلاف',2:'صعود الطائرة',3:'مقطع القمرة',4:'كارثة تينيريفي',5:'الصندوق البرتقالي',8:'تأثير الكوبرا',9:'صدمة الكوبرا',18:'غزوة أحد',20:'هبوط آمن',21:'وقفة تأمل · لماذا يخشى المرؤوس؟',28:'وقفة تأمل · الوقاية',29:'قانون القمرة',30:'لماذا الصندوق الأسود؟',31:'📦 آدم وإبليس',32:'📦 آدم وإبليس · النتيجة',33:'وقفة تأمل · التأمل والتوبة',34:'وقفة تأمل · طائرتان والخطأ نفسه',35:'📦 كينيدي',36:'قائد اعترف وقائد برّر',37:'وقفة تأمل · أعترف أم أبرّر؟',38:'وقفة تأمل · قائدتان لا تتأمّلان',39:'وقفة تأمل · أمنية',40:'وقفة تأمل · هل التأمل عبء؟',41:'وقفة تأمل · المنسقة مرآة فريقها',42:'وقفة تأمل · أمانة ووقت',43:'📦 نهر هدسون',44:'وقفة تأمل · التأمل العادل',45:'📦 قطر 2017',46:'وقفة تأمل · تقرير دولة',47:'لماذا سكت المهندس؟',48:'📦 فتح الصندوق الأول',49:'📦 فتح الصندوق الثاني',50:'📦 فتح الصندوق الثالث',51:'📦 فتح الصندوق الرابع',52:'وقفة تأمل · الكلام الآمن في قسمكِ',53:'🎯 أهداف الورشة',54:'🐍 مؤشرات انقلبت على هدفها',55:'🐍 كوبرا المدرسة'};
 const THX={
  yusra:{n:'أ. يسرا عبده كمال',r:'منسقة الأحياء',t:'قائدةٌ تكاشف نفسها وقسمها بشجاعة، وتدوّن أخطاء القسم بوضوحٍ تأمّلي، ثم تضع خطواتٍ منهجية تتابعها وتتأمل أثرها في القراءات اللاحقة… فلا يتكرر الخطأ مرتين.'},
  haya:{n:'أ. هيا الدوسري',r:'منسقة اللغة الإنجليزية',t:'تعرف من أين تؤكل الكتف؛ قراءاتها تحليليةٌ تأمّلية، تقف عند أسباب التدني بشجاعة لا تخشى في الله لومة لائم، وتحاور نفسها بصدق، وتضع خطوات تحسينٍ صغيرة بأسلوب «كايزن» تنقل الطالبات نقلاتٍ حقيقية… وهذا من أسرار تفوّق قسم اللغة الإنجليزية في التحصيل الأكاديمي.'},
@@ -477,7 +477,7 @@ function Screen(){
     el.querySelector('.num span').textContent=left>0?ar(n):'⏰';el.querySelector('small').textContent=left>0?'ثانية':'انتهى الوقت';
     el.querySelector('.fg').setAttribute('stroke-dashoffset',String(276.5*(1-left/QSEC)));
     el.classList.toggle('low',left>0&&left<=5);el.classList.toggle('end',left<=0);
-    if(left<=0&&!tRang){tRang=true;cabinChime()}}
+    if(left<=0&&!tRang){tRang=true;cabinChime();const qq=curQ();setTimeout(()=>{if(curQ()===qq&&qst().ph!=='reveal')setPh('reveal')},1000)}}
   setInterval(tick,200);
   function startTimer(q){tQ=q.id;QSEC=q.sec||20;tEnd=Date.now()+QSEC*1000;tRang=false}
   function stopTimer(){tEnd=0;tQ=''}
@@ -594,7 +594,7 @@ function Screen(){
       $('#ovX').onclick=()=>{overlay='';draw()};
       $('#ovR').onclick=async()=>{overlay='';try{const r=await api({a:'reset',pin});if(r.ok===false&&r.err==='pin'){askPin();return}snap=r;seen.clear();lastReveal='';ls('bb_scores',null);ls('bb_last',null);ls('bb_winner',null);ls('bb_rank',null);ls('bb_second',null);go(0)}catch(e){}if(DEMO)Sim.restart()}});
   }
-  function nav(d){if(cur().s){try{deck.contentWindow.postMessage({nav:d},'*');return}catch(e){}}go(step+d)}
+  function nav(d){if(d>0&&cur().q&&qst().ph!=='reveal'){setPh('reveal');return}if(cur().s){try{deck.contentWindow.postMessage({nav:d},'*');return}catch(e){}}go(step+d)}
   async function go(i){
     if(i<0||i>=FLOW.length)return;const back=i<step;step=i;stopTimer();try{sessionStorage.setItem('bb_step',String(i))}catch(e){}
     const f=FLOW[i];if(f.s){try{deck.contentWindow.postMessage({go:f.s,all:back},'*')}catch(e){}}
@@ -632,7 +632,7 @@ function Screen(){
   async function poll(){if(cur().s||cur().board||cur().winner||cur().thx)return;try{const r=await api({a:'state'});const sig=JSON.stringify(r);if(sig!==Screen._sig){Screen._sig=sig;apply(r)}}catch(e){}}
   deck.addEventListener('load',()=>{const f=cur();try{deck.contentWindow.postMessage({go:f.s||1},'*')}catch(e){}});
   addEventListener('message',e=>{const d=e.data||{};if(d.bbkey==='next')go(step+1);if(d.bbkey==='prev')go(step-1)});
-  addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if(['ArrowLeft','PageDown'].includes(e.key)){e.preventDefault();nav(1)}if(['ArrowRight','PageUp'].includes(e.key)){e.preventDefault();nav(-1)}});
+  addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if(['ArrowLeft','PageDown','ArrowDown',' ','Enter'].includes(e.key)){e.preventDefault();nav(1)}if(['ArrowRight','PageUp','ArrowUp'].includes(e.key)){e.preventDefault();nav(-1)}});
   draw();setInterval(poll,DEMO?700:1500);
   if(!DEMO&&!pin)askPin();else go(step);
 }
