@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>بطاقة صعود · ورشة الصندوق الأسود</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ivory:#F6EFE4;--ivory2:#EFE4D3;--brown:#3A2418;--leather:#7A4A2B;--orange:#E8681A;--orange2:#F3893F;--gold:#C29A5A;--muted:#8B7563;
+--h:'Lusail','Noto Kufi Arabic',sans-serif;--b:'Lusail','IBM Plex Sans Arabic',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;font-family:var(--b);color:var(--brown);background:radial-gradient(ellipse at 50% 0%,#4a2e1e 0%,#1d120b 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 14px;overflow-x:hidden}
+.top{color:#e9cfa7;font-family:var(--h);text-align:center;margin-bottom:18px}
+.top small{display:block;color:var(--orange2);font-size:14px;letter-spacing:.5px}
+.top b{font-size:22px}
+.pass{display:flex;border-radius:24px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.5);position:relative}
+@keyframes in{from{opacity:0;transform:translateY(40px) rotate(-2deg)}to{opacity:1;transform:none}}
+.main{flex:1;background:var(--ivory);padding:26px 34px 22px;position:relative;min-width:0}
+.main::after{content:"";position:absolute;inset:12px;border:1.2px dashed rgba(194,154,90,.45);border-radius:14px;pointer-events:none}
+.brand{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand .air{display:flex;align-items:center;gap:12px}
+.brand .bx{width:42px;height:30px;border-radius:7px;background:linear-gradient(145deg,#f3893f,#d35a12);box-shadow:0 5px 14px rgba(232,104,26,.35)}
+.brand b{font-family:var(--h);font-size:19px;font-weight:800}
+.brand span{display:block;font-size:12px;color:var(--muted);font-family:var(--h)}
+.brand .bp{font-family:var(--h);font-size:12px;color:var(--leather);border:1px solid var(--gold);border-radius:20px;padding:3px 12px;white-space:nowrap}
+.title{font-family:var(--h);font-weight:800;font-size:32px;margin:14px 0 2px;line-height:1.4}
+.title em{font-style:normal;color:var(--orange)}
+.sub{font-size:14px;color:var(--muted);font-family:var(--h)}
+.route{display:flex;align-items:center;gap:16px;margin:16px 0 14px}
+.route .lb{font-size:11px;color:var(--muted);font-family:var(--h)}
+.route .v{font-family:var(--h);font-weight:800;font-size:22px;white-space:nowrap}
+.route .line{flex:1;height:2px;background:repeating-linear-gradient(to left,var(--gold) 0 7px,transparent 7px 14px);position:relative;min-width:40px}
+.route .line .pl{position:absolute;top:-12px;right:0;width:26px;height:26px;animation:fly 9s linear infinite}
+.route .line .pl svg{width:26px;height:26px;display:block}
+@keyframes fly{0%{right:0;opacity:0}8%{opacity:1}90%{opacity:1}100%{right:calc(100% - 26px);opacity:0}}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 16px}
+.f .lb{font-size:11px;color:var(--muted);font-family:var(--h)}
+.f .v{font-family:var(--h);font-weight:800;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.f .v.or{color:var(--orange)}
+.name .v{font-size:23px}
+.name .v.empty{color:#b9a58f;font-weight:600}
+.typing{border-left:2px solid var(--orange);animation:caret .8s step-end infinite}
+@keyframes caret{50%{border-color:transparent}}
+.note{margin-top:14px;font-family:var(--h);font-size:13.5px;color:var(--leather);background:#fff;border:1px solid #eadcc6;border-radius:12px;padding:8px 14px;line-height:1.8}
+.note b{color:var(--orange)}
+.stub{width:250px;background:linear-gradient(170deg,#E8681A,#B24C10);color:#fff;padding:24px 22px;position:relative;border-right:3px dashed var(--ivory);display:flex;flex-direction:column;transition:transform 1s cubic-bezier(.5,0,.3,1)}
+.stub::before,.stub::after{content:"";position:absolute;right:-14px;width:26px;height:26px;border-radius:50%;background:#1d120b}
+.stub::before{top:-13px}.stub::after{bottom:-13px}
+.stub .lb{font-size:11px;color:#ffe3cf;font-family:var(--h)}
+.stub .v{font-family:var(--h);font-weight:800;font-size:18px;margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bars{margin-top:auto;height:52px;background:repeating-linear-gradient(90deg,#fff 0 2px,transparent 2px 4px,#fff 4px 7px,transparent 7px 9px,#fff 9px 10px,transparent 10px 13px);opacity:.9;border-radius:3px}
+.bars+small{display:block;text-align:center;font-size:11px;letter-spacing:3px;margin-top:4px;direction:ltr}
+.stamp{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%) rotate(-14deg) scale(2.4);opacity:0;border:4px solid #2F6B4F;color:#2F6B4F;font-family:var(--h);font-weight:800;font-size:22px;padding:6px 18px;border-radius:10px;background:rgba(227,239,232,.85);white-space:nowrap;pointer-events:none;z-index:3;transition:all .45s cubic-bezier(.3,1.6,.5,1)}
+.stamp.on{opacity:1;transform:translate(-50%,-50%) rotate(-14deg) scale(1)}
+.pick{width:min(980px,100%);margin-top:20px;background:rgba(255,255,255,.06);border:1px solid rgba(194,154,90,.35);border-radius:18px;padding:16px 18px;color:#f6efe4}
+.pick h3{font-family:var(--h);font-size:16px;margin-bottom:10px;color:#f7d9a8}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{font-family:var(--h);font-size:14px;padding:7px 14px;border-radius:30px;border:1px solid rgba(194,154,90,.6);background:transparent;color:#f6efe4;cursor:pointer;white-space:nowrap;transition:.2s}
+.chips button:hover,.chips button.sel{background:var(--orange);border-color:var(--orange)}
+.go{margin-top:14px;font-family:var(--h);font-size:17px;font-weight:600;border:none;border-radius:40px;padding:12px 30px;background:linear-gradient(90deg,#F3893F,#E8681A);color:#fff;cursor:pointer;box-shadow:0 8px 22px rgba(232,104,26,.35)}
+.go:disabled{opacity:.4;cursor:default}
+.done{display:none;margin-top:14px;font-family:var(--h);font-size:16px;color:#f7d9a8;text-align:center;line-height:1.9}
+.sent{font-size:13px;color:#b9e3c9;margin-top:4px}.sent.err{color:#f3b7a8}
+#list{display:none;width:min(760px,100%);background:var(--ivory);border-radius:20px;padding:24px 28px;box-shadow:0 30px 70px rgba(0,0,0,.5)}
+#list h2{font-family:var(--h);font-size:24px;margin-bottom:4px}#list .cnt{font-family:var(--h);color:var(--orange);font-size:18px;margin-bottom:14px}
+#list .row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:#fff;border:1px solid #eadcc6;margin-bottom:8px;font-family:var(--h)}
+#list .row b{font-size:17px;white-space:nowrap}#list .row small{color:var(--muted);font-size:13px;margin-right:8px}
+#list .ok{color:#2F6B4F;font-weight:600;white-space:nowrap}#list .no{color:#b9a58f;white-space:nowrap}
+.fx{position:fixed;bottom:-40px;font-size:30px;pointer-events:none;z-index:50;animation:up 3s ease-out forwards}
+@keyframes up{0%{transform:translateY(0);opacity:0}10%{opacity:1}100%{transform:translateY(-105vh) rotate(25deg);opacity:0}}
+.bigplane{position:fixed;top:30%;right:-120px;font-size:70px;z-index:40;pointer-events:none;transform:scaleX(-1)}
+.bigplane.go2{animation:take 2.4s ease-in forwards}
+@keyframes take{to{right:110%;top:-10%}}
+#pw{width:min(980px,100%);position:relative;animation:in .9s cubic-bezier(.2,.9,.3,1.2) both}
+#pw .pass{width:980px;transform-origin:top right}
+</style>
+</head>
+<body>
+<div class="top"><small>مدرسة الشيماء الثانوية للبنات</small><b>لديكِ رحلةٌ غدًا… ✈️</b></div>
+
+<div id="pw"><div class="pass" id="pass">
+  <div class="main">
+    <div class="brand">
+      <div class="air"><div class="bx"></div><div><b>خطوط الصندوق الأسود</b><span>BLACK BOX AIRLINES</span></div></div>
+      <div class="bp">بطاقة صعود · BOARDING PASS</div>
+    </div>
+    <div class="title">ورشة «<em>الصندوق الأسود</em>: حين يتكلّم التقرير»</div>
+    <div class="sub">التقارير التأملية منهجٌ قياديّ لتطوير الأداء · للقيادة الوسطى</div>
+    <div class="route">
+      <div><div class="lb">من</div><div class="v">التقرير الوصفي</div></div>
+      <div class="line"><span class="pl"><svg viewBox="0 0 24 24"><path fill="#E8681A" transform="rotate(-90 12 12)" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg></span></div>
+      <div><div class="lb">إلى</div><div class="v">التقرير التأملي</div></div>
+    </div>
+    <div class="grid">
+      <div class="f name" style="grid-column:span 2"><div class="lb">المسافرة</div><div class="v empty" id="pname">اختاري اسمكِ في الأسفل…</div></div>
+      <div class="f"><div class="lb">رقم الرحلة</div><div class="v">SH-2027</div></div>
+      <div class="f"><div class="lb">تاريخ الإقلاع</div><div class="v or">الاثنين 16 نوفمبر</div></div>
+      <div class="f"><div class="lb">موعد الإقلاع</div><div class="v or">من 9:30 إلى 11:00</div></div>
+      <div class="f"><div class="lb">المقعد</div><div class="v" id="pseat">قمرة القيادة</div></div>
+      <div class="f"><div class="lb">الأمتعة</div><div class="v">جوالٌ مشحون 📱</div></div>
+      <div class="f"><div class="lb">الدرجة</div><div class="v">قيادة وسطى</div></div>
+      <div class="f"><div class="lb">الوجهة</div><div class="v">قرارٌ يُقاس</div></div>
+    </div>
+    <div class="note">🛎️ <b>تعليمات الصعود:</b> أحضري جوالكِ مشحونًا؛ فهو أداة مشاركتكِ في الرحلة… في الطريق قصصٌ وأسئلةٌ ونقاط، <b>وفائزةٌ واحدة 🏆</b></div>
+    <div class="stamp" id="stamp">✓ تمّ تأكيد الصعود</div>
+  </div>
+  <div class="stub" id="stub">
+    <div><div class="lb">المسافرة</div><div class="v" id="sname">—</div></div>
+    <div><div class="lb">الرحلة</div><div class="v">SH-2027</div></div>
+    <div><div class="lb">الإقلاع</div><div class="v">الاثنين 16/11</div></div>
+    <div><div class="lb">الموعد</div><div class="v">من 9:30 إلى 11:00</div></div>
+    <div class="bars"></div><small>SH2027 · 16NOV</small>
+  </div>
+</div></div>
+
+<div id="list"></div>
+<div class="pick" id="pick">
+  <h3>✈️ اختاري اسمكِ لإصدار بطاقتكِ</h3>
+  <div class="chips" id="chips"></div>
+  <div style="text-align:center"><button class="go" id="go" disabled>أكّدي صعودي إلى الرحلة</button></div>
+  <div class="done" id="done"></div>
+</div>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbzBti9yPtnDO_VMbUR1dFwwF15EwbLps94AZ2B012lWreM_BHZ2ZROOK8FmaeKwHRI5Uw/exec';
+const PEOPLE=[['شيخة الرميحي','مديرة المدرسة'],['وداد الكربي','النائبة الإدارية'],['خولة المطوع','العلوم الشرعية'],['نجوى أبو ناهية','اللغة العربية'],['هيا الدوسري','اللغة الإنجليزية'],['فاطمة النعيمي','العلوم الاجتماعية'],['أريج أبو حاشية','الفيزياء'],['انتصار أحمد جامع','الكيمياء'],['سحر الرشيد','الرياضيات'],['يسرا عبده كمال','الأحياء'],['فاتن عبدالرحمن','تكنولوجيا المعلومات'],['شيخة القحطاني','التربية البدنية'],['إيمان يوسف','المشاريع'],['أحلام الخليفي','شؤون الطالبات']];
+const $=s=>document.querySelector(s);
+function fitPass(){const pw=$('#pw'),p=$('#pass');const sc=Math.min(1,pw.clientWidth/980);p.style.transform='scale('+sc+')';pw.style.height=(p.offsetHeight*sc)+'px'}
+addEventListener('resize',fitPass);addEventListener('load',fitPass);setTimeout(fitPass,50);let chosen=null,typingT=null;
+$('#chips').innerHTML=PEOPLE.map((p,i)=>`<button data-i="${i}">${p[0]}</button>`).join('');
+function typeName(t){clearInterval(typingT);const el=$('#pname');el.classList.remove('empty');el.classList.add('typing');el.textContent='';let k=0;typingT=setInterval(()=>{el.textContent=t.slice(0,++k);if(k>=t.length){clearInterval(typingT);el.classList.remove('typing')}},45)}
+document.querySelectorAll('#chips button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#chips button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');
+  chosen=PEOPLE[+b.dataset.i];typeName('أ. '+chosen[0]);$('#sname').textContent=chosen[0];$('#pseat').textContent='قمرة '+chosen[1];
+  $('#go').disabled=false;$('#stamp').classList.remove('on');$('#done').style.display='none'});
+let AC;function chime(){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime;[[659.25,0],[523.25,.6]].forEach(([f,d])=>{const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;g.gain.setValueAtTime(0,t+d);g.gain.linearRampToValueAtTime(.15,t+d+.02);g.gain.exponentialRampToValueAtTime(.001,t+d+1.8);o.connect(g).connect(AC.destination);o.start(t+d);o.stop(t+d+1.9)})}catch(e){}}
+function burst(){for(let i=0;i<26;i++){const s=document.createElement('span');s.className='fx';s.textContent=['✈️','✨','🧡','🌟'][i%4];s.style.left=Math.random()*96+'%';s.style.animationDelay=Math.random()*1+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),4200)}}
+$('#go').onclick=()=>{if(!chosen)return;chime();$('#stamp').classList.add('on');
+  const p=document.createElement('div');p.className='bigplane';p.textContent='✈️';document.body.appendChild(p);requestAnimationFrame(()=>p.classList.add('go2'));setTimeout(()=>p.remove(),2600);
+  burst();const first=chosen[0].split(' ')[0];const nm=PEOPLE.filter(x=>x[0].split(' ')[0]===first).length>1?chosen[0]:first;
+  $('#done').innerHTML=`أهلًا بكِ على متن الرحلة يا ${nm} 🧡<br>نلتقي غدًا الاثنين، من الساعة 9:30 حتى 11:00 صباحًا… ولا تنسي جوالكِ!<div class="sent" id="sent">جارٍ إرسال تأكيدكِ…</div>`;$('#done').style.display='block';
+  fetch(API_URL+'?'+new URLSearchParams({a:'rsvp',n:chosen[0],d:chosen[1]})).then(r=>r.json()).then(r=>{const e=$('#sent');if(r&&r.ok){e.textContent='✓ وصل تأكيدكِ إلى قمرة القيادة'}else throw 0}).catch(()=>{const e=$('#sent');e.className='sent err';e.textContent='تعذّر إرسال التأكيد… اضغطي الزر مرة أخرى'})};
+/* صفحة المتابعة: invite.html#list */
+if(location.hash==='#list'){document.querySelector('.top').style.display='none';$('#pw').style.display='none';$('#pick').style.display='none';$('#list').style.display='block';
+  async function load(){try{const r=await (await fetch(API_URL+'?a=rsvps')).json();const R=r.rsvp||{};const n=PEOPLE.filter(p=>R[p[0]]).length;
+    $('#list').innerHTML=`<h2>✈️ تأكيد الصعود · ورشة الصندوق الأسود</h2><div class="cnt">أكّدت ${n} من ${PEOPLE.length}</div>`+PEOPLE.map(p=>{const x=R[p[0]];return `<div class="row"><div><b>${p[0]}</b><small>${p[1]}</small></div>${x?`<span class="ok">✓ أكّدت · ${new Date(x.t).toLocaleTimeString('ar-QA',{hour:'2-digit',minute:'2-digit'})}</span>`:'<span class="no">لم تؤكد بعد</span>'}</div>`}).join('')}catch(e){$('#list').innerHTML='<h2>تعذّر الاتصال بالخادم</h2>'}}
+  load();setInterval(load,15000)}
+</script>
+</body>
+</html>
