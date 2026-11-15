@@ -470,7 +470,7 @@ function Screen(){
   stage.innerHTML='<div id="deckWrap" style="position:absolute;top:0;left:0;right:0;bottom:78px;background:#0d0906"><iframe id="deck" src="deck.html" style="width:100%;height:100%;border:0;display:block" allow="autoplay; fullscreen"></iframe></div><div id="ui" style="position:absolute;inset:0;display:flex;flex-direction:column;pointer-events:none"></div>';
   const ui=$('#ui'),deckWrap=$('#deckWrap'),deck=$('#deck');
   let snap={st:{qi:-1,ph:'idle',qid:''},att:[],ans:{}}, seen=new Set(), lastReveal='', pin=ls('bb_pin')||'', overlay='';
-  let step=Math.min(+(ls('bb_step')||0),FLOW.length-1);
+  let step=0;try{step=Math.min(+(sessionStorage.getItem('bb_step')||0),FLOW.length-1)}catch(e){}
   let QSEC=20;let tEnd=0,tQ='',tRang=false;
   function timerHTML(){const q=curQ();if(!q||tQ!==q.id||!tEnd)return '';return `<div class="qTimer" id="qTimer"><svg viewBox="0 0 104 104"><circle class="bg" cx="52" cy="52" r="44"/><circle class="fg" cx="52" cy="52" r="44" stroke-dasharray="276.5" stroke-dashoffset="0"/></svg><div class="num"><span></span><small>ثانية</small></div></div>`}
   function tick(){const el=$('#qTimer');if(!el||!tEnd)return;const left=Math.max(0,(tEnd-Date.now())/1000);const n=Math.ceil(left);
@@ -596,7 +596,7 @@ function Screen(){
   }
   function nav(d){if(cur().s){try{deck.contentWindow.postMessage({nav:d},'*');return}catch(e){}}go(step+d)}
   async function go(i){
-    if(i<0||i>=FLOW.length)return;const back=i<step;step=i;stopTimer();ls('bb_step',String(i));
+    if(i<0||i>=FLOW.length)return;const back=i<step;step=i;stopTimer();try{sessionStorage.setItem('bb_step',String(i))}catch(e){}
     const f=FLOW[i];if(f.s){try{deck.contentWindow.postMessage({go:f.s,all:back},'*')}catch(e){}}
     draw();if(f.board){applause(2);setTimeout(chime,400);burst(['🏆','⭐','✨','👏'],24,$('#screenView'))}
     const q=curQ();
