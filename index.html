@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>الصندوق الأسود · منصة التفاعل</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Amiri:wght@400;700&family=Marhey:wght@500;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 :root{--ivory:#F6EFE4;--ivory2:#EFE4D3;--brown:#3A2418;--leather:#7A4A2B;--orange:#E8681A;--orange2:#F3893F;--gold:#C29A5A;--ink:#2A1A11;--muted:#8B7563;--green:#2F6B4F;--greenL:#E3EFE8;--red:#A23B2A;--redL:#F6E2DC;
@@ -209,6 +209,17 @@ textarea.pIn{width:100%;font-family:var(--h);font-size:17px;line-height:1.7;padd
 .react.no .e{animation:shake .5s 2}
 .phFoot{font-size:11px;color:var(--muted);text-align:center;padding:8px;font-family:var(--h);flex-shrink:0}
 .toast{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);background:var(--brown);color:#fff;font-family:var(--h);font-size:14px;padding:8px 18px;border-radius:20px;z-index:20;white-space:nowrap;animation:rise .3s both}
+
+/* أسماء المنسقات بخط مرهي */
+.nw,.nm2,.thxWrap .thName,.winWrap .slot,.acard .n{font-family:'Marhey',var(--h)!important;font-weight:700}
+.thxWrap .thName{font-size:92px}
+.nextUp{font-family:var(--h);font-size:17px;color:var(--muted);margin-right:14px;padding:5px 14px;border:1px dashed #d9c3a0;border-radius:30px;white-space:nowrap}.nextUp b{color:var(--orange)}
+.route{position:absolute;top:-34px;left:40px;right:40px;height:28px;display:flex;align-items:center;gap:12px;font-family:var(--h);font-size:15px;color:#c9b08c;pointer-events:none}
+.route .rLine{flex:1;height:4px;background:rgba(201,176,140,.3);border-radius:4px;position:relative}
+.route .rLine i{position:absolute;right:0;top:0;bottom:0;background:var(--orange);border-radius:4px;transition:width .8s}
+.route .rLine em{position:absolute;top:-12px;font-style:normal;font-size:20px;transform:scaleX(-1);transition:right .8s}
+.route .rInfo{background:rgba(44,26,16,.85);color:#f1d8b0;border-radius:20px;padding:2px 12px;white-space:nowrap}
+.route .rInfo b{color:var(--orange2)}
 </style>
 </head>
 <body>
@@ -251,7 +262,7 @@ const Q = [
    {t:'هيبة القائد وخبرته أسكتته',ok:1},
    {t:'كان مشغولًا بأجهزته',r:'مشغول؟ 😂 لا يا {n}، كان منتبه وسأل… بس سكت!'},
    {t:'ظنّ أن برج المراقبة سيتدخل',r:'قريبة يا {n} 🛬 بس السر كان داخل القمرة نفسها'}]},
- {id:'q04',tag:'تأمّلي قسمكِ',type:'text',text:'ما الذي قد يُسكت معلمةً في قسمكِ عن قول ما تشكّ فيه؟',ph:'جملة واحدة…'},
+ {id:'q04',tag:'تأمّلي قسمكِ',type:'text',calm:1,text:'ما الذي قد يُسكت معلمةً في قسمكِ عن قول ما تشكّ فيه؟',ph:'جملة واحدة…'},
  {id:'q05',tag:'📦 الصندوق الثاني',type:'mcq',text:'ماذا حدث لشعبية كينيدي بعد اعترافه بالفشل؟',opts:[
    {t:'انخفضت بشدة',r:'يا {n} توقعتِ العقاب؟ 😅 الناس احترموا اعترافه!'},
    {t:'بقيت كما هي',r:'قريبة يا {n}… بس الاعتراف رفعها 📈'},
@@ -262,17 +273,18 @@ const Q = [
    {t:'هاجرت الكوبرا إلى مدينة أخرى',r:'هاجرت؟ 😂 لا يا {n}، تكاثرت عند الناس!'},
    {t:'ربّى الناس الكوبرا للمكافأة… فزادت',ok:1},
    {t:'لم يتغير شيء',r:'تغيّر يا {n}… وللأسوأ 🙈'}]},
- {id:'q07',tag:'وين الكوبرا في قسمكِ؟',type:'text',text:'مؤشرٌ نقيسه في المدرسة… قد ينقلب على هدفه. ما هو؟',ph:'مثلًا: عدد الزيارات الصفية…'},
+ {id:'q07',tag:'والآن دوركِ · وين الكوبرا في قسمكِ؟',type:'text',text:'اكتبي مؤشرًا واحدًا نقيسه في المدرسة… وقد ينقلب على هدفه',ph:'مثلًا: عدد الأنشطة… أو عدد أوراق العمل…'},
  {id:'q08',tag:'📦 الصندوق الثالث',type:'mcq',text:'بعد الهبوط على النهر… كيف تعامل المحققون مع الكابتن سولي؟',opts:[
    {t:'كرّموه فورًا دون أي سؤال',r:'يا {n} حتى البطل يُسأل 😉 هذا هو التحقيق العادل'},
    {t:'سألوه: لماذا لم تعد إلى المطار؟',ok:1},
    {t:'أوقفوه عن الطيران',r:'لا يا {n} 🙈 سألوه… ثم أنصفوه'}]},
  {id:'q09',tag:'📦 الصندوق الرابع',type:'mcq',text:'ماذا حدث في قطاع الألبان في قطر بعد الحصار؟',opts:[
-   {t:'زاد الاستيراد من دول أخرى',r:'قريبة يا {n}… بس قطر اختارت الاعتماد على نفسها 🇶🇦'},
-   {t:'ارتفعت الأسعار وبقي الوضع كما هو',r:'لا يا {n} 🙈 الأزمة صارت فرصة!'},
-   {t:'حققت قطر الاكتفاء الذاتي وصارت تصدّر',ok:1}]},
- {id:'q10',tag:'خطة وقائية',type:'text',text:'مؤشر إنذارٍ مبكر واحد ستراقبينه في قسمكِ:',ph:'مثلًا: تراجع طالبة في اختبارين قصيرين متتاليين'},
- {id:'q11',tag:'بطاقة الهبوط 🛬',type:'text',text:'في تقريري القادم سأتوقف عن… وسأبدأ بـ…',ph:'سأتوقف عن… وسأبدأ بـ…'}
+   {t:'حققت قطر الاكتفاء الذاتي من الحليب… لكنها لم تصدّر حتى اليوم',r:'قريبة جدًا يا {n}! اكتفت… ثم صدّرت أيضًا 🇶🇦'},
+   {t:'غطّت قطر نصف حاجتها محليًا، واستوردت الباقي من دول جديدة',r:'لا يا {n} 🙈 قطر ما اكتفت بالنصف!'},
+   {t:'حققت قطر الاكتفاء الذاتي من الحليب الطازج… ثم بدأت التصدير',ok:1},
+   {t:'بنت قطر مزارع ضخمة… لكنها لم تبلغ الاكتفاء بعد',r:'المزارع صارت فعلًا يا {n}… والاكتفاء تحقق 💪'}]},
+ {id:'q10',tag:'خطة وقائية',type:'text',sec:60,calm:1,text:'مؤشر إنذارٍ مبكر واحد ستراقبينه في قسمكِ:',ph:'مثلًا: تراجع طالبة في اختبارين قصيرين متتاليين'},
+ {id:'q11',tag:'بطاقة الهبوط 🛬',type:'text',sec:60,calm:1,text:'في تقريري القادم سأتوقف عن… وسأبدأ بـ…',ph:'سأتوقف عن… وسأبدأ بـ…'}
 ];
 
 const PRAISE=['كفو يا {n}! قائدة قمرة من الطراز الأول ✈️','الله عليكِ يا {n}! صندوقكِ الأسود يتكلّم 🔥','هبوطٌ آمن يا {n} 👏','أحسنتِ يا {n}! نظرة قائدة 👑','يا سلام يا {n}… إجابة تستاهل تصفيق 👏👏','ما شاء الله يا {n}! التأمل لابق عليكِ ✨','{n} في القمرة… اطمئني يا طائرة 😎'];
@@ -411,27 +423,27 @@ function Phone(root){
 /* =====================================================================
    SCREEN VIEW (العرض + الأسئلة في مسار واحد)
    ===================================================================== */
-const SL={1:'الغلاف',2:'صعود الطائرة',3:'مقطع القمرة',4:'كارثة تينيريفي',5:'الصندوق البرتقالي',8:'تأثير الكوبرا',9:'صدمة الكوبرا',18:'غزوة أحد',20:'هبوط آمن',21:'وقفة تأمل · لماذا يخشى المرؤوس؟',28:'وقفة تأمل · الوقاية',29:'قانون القمرة',30:'لماذا الصندوق الأسود؟',31:'📦 آدم وإبليس',32:'وقفة تأمل · ماذا ترتّب؟',33:'وقفة تأمل · التأمل والتوبة',34:'وقفة تأمل · الكلام الآمن',35:'📦 كينيدي',36:'قائد اعترف وقائد برّر',37:'وقفة تأمل · أعترف أم أبرّر؟',38:'وقفة تأمل · قائدتان لا تتأمّلان',39:'وقفة تأمل · أمنية',40:'وقفة تأمل · هل التأمل عبء؟',41:'وقفة تأمل · المنسقة مرآة فريقها',42:'وقفة تأمل · أمانة ووقت',43:'📦 نهر هدسون',44:'وقفة تأمل · التأمل العادل',45:'📦 قطر 2017',46:'وقفة تأمل · تقرير دولة'};
+const SL={1:'الغلاف',2:'صعود الطائرة',3:'مقطع القمرة',4:'كارثة تينيريفي',5:'الصندوق البرتقالي',8:'تأثير الكوبرا',9:'صدمة الكوبرا',18:'غزوة أحد',20:'هبوط آمن',21:'وقفة تأمل · لماذا يخشى المرؤوس؟',28:'وقفة تأمل · الوقاية',29:'قانون القمرة',30:'لماذا الصندوق الأسود؟',31:'📦 آدم وإبليس',32:'وقفة تأمل · ماذا ترتّب؟',33:'وقفة تأمل · التأمل والتوبة',34:'وقفة تأمل · طائرتان والخطأ نفسه',35:'📦 كينيدي',36:'قائد اعترف وقائد برّر',37:'وقفة تأمل · أعترف أم أبرّر؟',38:'وقفة تأمل · قائدتان لا تتأمّلان',39:'وقفة تأمل · أمنية',40:'وقفة تأمل · هل التأمل عبء؟',41:'وقفة تأمل · المنسقة مرآة فريقها',42:'وقفة تأمل · أمانة ووقت',43:'📦 نهر هدسون',44:'وقفة تأمل · التأمل العادل',45:'📦 قطر 2017',46:'وقفة تأمل · تقرير دولة',47:'لماذا سكت المهندس؟',48:'📦 فتح الصندوق الأول',49:'📦 فتح الصندوق الثاني',50:'📦 فتح الصندوق الثالث',51:'📦 فتح الصندوق الرابع',52:'وقفة تأمل · الكلام الآمن في قسمكِ',53:'🎯 أهداف الورشة',54:'🐍 مؤشرات انقلبت على هدفها',55:'🐍 كوبرا المدرسة'};
 const THX={
  yusra:{n:'أ. يسرا عبده كمال',r:'منسقة الأحياء',t:'قائدةٌ تكاشف نفسها وقسمها بشجاعة، وتدوّن أخطاء القسم بوضوحٍ تأمّلي، ثم تضع خطواتٍ منهجية تتابعها وتتأمل أثرها في القراءات اللاحقة… فلا يتكرر الخطأ مرتين.'},
  haya:{n:'أ. هيا الدوسري',r:'منسقة اللغة الإنجليزية',t:'تعرف من أين تؤكل الكتف؛ قراءاتها تحليليةٌ تأمّلية، تقف عند أسباب التدني بشجاعة لا تخشى في الله لومة لائم، وتحاور نفسها بصدق، وتضع خطوات تحسينٍ صغيرة بأسلوب «كايزن» تنقل الطالبات نقلاتٍ حقيقية… وهذا من أسرار تفوّق قسم اللغة الإنجليزية في التحصيل الأكاديمي.'},
  najwa:{n:'أ. نجوى أبو ناهية',r:'منسقة اللغة العربية',t:'قائدةٌ تمتلك رؤيةً شمولية، تقرأ الموقف في سياقه الكامل قبل أن تحكم عليه. تنقل الواقع بأمانةٍ وموضوعية، وتضع الأمور في نصابها الصحيح، تاركةً القرار لأصحابه. وتتحلّى بشجاعة المساءلة الذاتية؛ فإذا أخطأت بادرت بالاعتراف وجهًا لوجه… فالخطأ المعلَن يُصلَح، والخطأ المخفي يتكرر.'},
  fatima:{n:'أ. فاطمة النعيمي',r:'منسقة العلوم الاجتماعية',t:'حين كانت النتائج دون الطموح، لم يقف قسمها عند التبرير، بل تأمّل سريعًا، ووضع خططًا بديلة في التحصيل والأنشطة معًا. وما إن تلقّى ملاحظة قلة الأنشطة حتى حوّلها إلى أنشطةٍ هادفة، أكاديمية ولا صفية، تصبّ في مصلحة الطالبة… فأصبح قسم الاجتماعيات في عامٍ واحد قسمًا آخر. وفي قراءتها للنتائج قارنت بين منتصف الفصل ونهايته وبين العامين، وأبرزت القيمة المضافة، وذكرت مواضع التراجع بصراحة.',pre:'كما حوّلت قطر الأزمة إلى اكتفاء… حوّل قسمٌ عندنا الملاحظة إلى نقلة'},
  sahar:{n:'أ. سحر الرشيد',r:'منسقة الرياضيات',pre:'وكما اعترف كينيدي بالتراجع… فعندنا قائدةٌ دوّنته بشجاعة',t:'لم تُخفِ تراجع نسبة التحصيل مقارنةً بالعام السابق، بل دوّنته بوضوح، وبحثت عن أسبابه في الخطة نفسها قبل الطالبات، فرصدت كثافة المحتوى مقارنةً بالزمن المتاح، وحصرت الأخطاء الشائعة، وتطورت قراءتها من التشخيص الوصفي إلى التحليل الفني المتعمق… ثم صنعت مع فريقها مبادرة «فزعة الرياضيات» لتكون الطالبة سندًا لزميلتها.'},
- sheikha:{n:'أ. شيخة القحطاني',r:'منسقة التربية البدنية',pre:'وعندنا قائدةٌ… لم تنخدع حتى بنسبة نجاح 100%',t:'رغم أن نسبة النجاح بلغت 100%، لم تكتفِ بالرقم؛ فتوقفت عند انخفاضٍ طفيف في تحصيل الحادي عشر وتساءلت: هل نراجع مستوى صعوبة التقويم النهائي؟ وهل نعيد موازنة الأحمال البدنية والمهارية؟… وربطت النتائج بممارساتٍ حقيقية داخل الحصة، كزمن الممارسة الفعلية والمتابعة الفردية.'},
+ sheikha:{n:'أ. شيخة القحطاني',r:'منسقة التربية البدنية',pre:'قسمٌ نشيط… وراءه قائدةٌ متأمّلة',t:'رغم أن تحصيل التربية البدنية عالٍ جدًا، والقسم زاخرٌ بالأنشطة… لا تكتفي أ. شيخة بما تحقق؛ فهي تطمح دائمًا إلى العُلا، وتسعى إلى التميّز، فيحصد قسمها المراكز… ويطمح إلى المزيد. قسمٌ نشيط وراءه قائدةٌ متأمّلة تستحق التقدير.'},
  intisar:{n:'أ. انتصار أحمد جامع',r:'منسقة الكيمياء',t:'انتقلت من عرض النتائج إلى تفسيرها؛ فربطت التحصيل بنوع الأسئلة ومستويات العمق المعرفي، وقرأت ورقة الاختبار قراءةً نوعية، ولم تكتفِ بوصف الفروق داخل الشعبة الواحدة، بل فسّرت أسبابها: الفجوات السابقة، والغياب، والاعتماد على الدروس الخصوصية… ثم صمّمت لطالباتها خطوات تفكيك المسألة: ضعي خطًّا، ثم دوّني، ثم خطّطي، ثم حُلّي.'},
  faten:{n:'أ. فاتن عبدالرحمن',r:'منسقة تكنولوجيا المعلومات',t:'قرأت التفاوت بين المسارين العلمي والتكنولوجي قراءةً واقعية، فربطته بطبيعة المادة التراكمية في البرمجة والتحليل المنطقي لا بالطالبات وحدهن، وربطت استقرار التحصيل بممارساتٍ صفية حقيقية كالتقييم المستمر والحصص الإثرائية… فقرأت النتيجة في سياقها الكامل قبل أن تحكم عليها.'},
  areej:{n:'أ. أريج أبو حاشية',r:'منسقة الفيزياء',pre:'وكما حوّلت قطر الأزمة إلى فرصة… حوّل قسمٌ عندنا القيمة السالبة إلى قفزة',t:'قارنت نتائج عامها بالعام السابق بصدق، فكشفت أن القيمة المضافة للحادي عشر كانت سالبة، فصارت موجبة بمقدار 11.28%، وارتفع المتوسط من 85.51% إلى 88.72%. وربطت التحصيل بمهارات الفيزياء وطبيعة الأسئلة، وحدّدت الإجراء الأعلى أثرًا: حصص رفع الكفاءة في أسبوع التوأمة… وعقدت مع فريقها اجتماعًا للمراجعة الذاتية.'},
  khawla:{k:'شكرٌ وتقدير · فريقٌ يصنع القيم',n:'فريق قسم العلوم الشرعية',r:'بقيادة أ. خولة المطوع',t:'بادر الفريق إلى جعل القيم واقعًا تعيشه الطالبات لا شعارًا يُكتب، فأسهم إسهامًا كبيرًا في تعزيز القيم في المدرسة، حتى تجلّت في أبهى صورها… فشكرًا لفريقٍ أدرك أن بناء الإنسان يبدأ من قيمه.',pre:'وقطر لم تصمد بالغذاء وحده… بل بالقيم: الهوية، والانتماء، والتماسك'}
 };
-const FLOW=[{s:1},{lobby:1},{s:2},{s:29},{s:30},{q:'q01'},{s:5},{s:31},{q:'q02'},{s:32},{s:33},{s:3},{q:'q03'},{s:4},{q:'q04'},{s:21},{s:34},{s:35},{q:'q05'},{s:36},{s:37},{thx:'yusra'},{thx:'haya'},{thx:'sahar'},{s:38},{board:1},{s:8},{q:'q06'},{s:9},{thx:'sheikha'},{q:'q07'},{s:39},{s:40},{s:41},{s:42},{s:43},{q:'q08'},{s:44},{thx:'najwa'},{thx:'intisar'},{thx:'faten'},{s:45},{q:'q09'},{s:46},{thx:'areej'},{thx:'fatima'},{thx:'khawla'},{s:18},{s:28},{q:'q10'},{q:'q11'},{board:1},{winner:1},{s:20}];
+const FLOW=[{s:1},{lobby:1},{s:2},{s:53},{s:29},{s:30},{q:'q01'},{s:5},{s:48},{s:31},{q:'q02'},{s:32},{s:33},{s:3},{s:4},{q:'q03'},{s:47},{q:'q04'},{s:21},{s:34},{s:52},{s:49},{s:35},{q:'q05'},{s:36},{s:37},{thx:'yusra'},{thx:'haya'},{thx:'sahar'},{s:38},{board:1},{s:8},{q:'q06'},{s:9},{thx:'sheikha'},{s:54},{q:'q07'},{s:55},{s:39},{s:40},{s:41},{s:42},{s:50},{s:43},{q:'q08'},{s:44},{thx:'najwa'},{thx:'intisar'},{thx:'faten'},{s:51},{s:45},{q:'q09'},{s:46},{thx:'areej'},{thx:'fatima'},{thx:'khawla'},{s:18},{s:28},{q:'q10'},{q:'q11'},{board:1},{winner:1},{s:20}];
 function Screen(){
   const stage=$('#stage');
   stage.innerHTML='<div id="deckWrap" style="position:absolute;top:0;left:0;right:0;bottom:78px;background:#0d0906"><iframe id="deck" src="deck.html" style="width:100%;height:100%;border:0;display:block" allow="autoplay; fullscreen"></iframe></div><div id="ui" style="position:absolute;inset:0;display:flex;flex-direction:column;pointer-events:none"></div>';
   const ui=$('#ui'),deckWrap=$('#deckWrap'),deck=$('#deck');
   let snap={st:{qi:-1,ph:'idle',qid:''},att:[],ans:{}}, seen=new Set(), lastReveal='', pin=ls('bb_pin')||'', overlay='';
   let step=Math.min(+(ls('bb_step')||0),FLOW.length-1);
-  const QSEC=30;let tEnd=0,tQ='',tRang=false;
+  let QSEC=20;let tEnd=0,tQ='',tRang=false;
   function timerHTML(){const q=curQ();if(!q||tQ!==q.id||!tEnd)return '';return `<div class="qTimer" id="qTimer"><svg viewBox="0 0 104 104"><circle class="bg" cx="52" cy="52" r="44"/><circle class="fg" cx="52" cy="52" r="44" stroke-dasharray="276.5" stroke-dashoffset="0"/></svg><div class="num"><span></span><small>ثانية</small></div></div>`}
   function tick(){const el=$('#qTimer');if(!el||!tEnd)return;const left=Math.max(0,(tEnd-Date.now())/1000);const n=Math.ceil(left);
     el.querySelector('.num span').textContent=left>0?ar(n):'⏰';el.querySelector('small').textContent=left>0?'ثانية':'انتهى الوقت';
@@ -439,7 +451,7 @@ function Screen(){
     el.classList.toggle('low',left>0&&left<=5);el.classList.toggle('end',left<=0);
     if(left<=0&&!tRang){tRang=true;cabinChime()}}
   setInterval(tick,200);
-  function startTimer(q){tQ=q.id;tEnd=Date.now()+QSEC*1000;tRang=false}
+  function startTimer(q){tQ=q.id;QSEC=q.sec||20;tEnd=Date.now()+QSEC*1000;tRang=false}
   function stopTimer(){tEnd=0;tQ=''}
   function fit(){const v=$('#screenView');const s=Math.min(v.clientWidth/1600,v.clientHeight/900);stage.style.transform='scale('+s+')'}
   addEventListener('resize',fit);fit();Screen.fit=fit;
@@ -450,15 +462,18 @@ function Screen(){
   const ans=()=>{const q=curQ();return q&&snap.st.qid===q.id?snap.ans:{}};
   function head(){const q=curQ(),st=qst();const ph={open:'الإجابات مفتوحة',closed:'أُغلقت الإجابات',reveal:'الكشف'}[st.ph]||'';
     return `<div class="sHead"><div class="brand"><div class="bx"></div><div><b>الصندوق الأسود</b><span>منصة التفاعل · ورشة القيادة الوسطى</span></div></div><div class="hMid">${q?'سؤال تفاعلي '+ar(Q.indexOf(q)+1)+' من '+ar(Q.length):cur().board?'لوحة النقاط':'صعود الطائرة'}</div><div class="hLeft">${ph?`<span class="pill ${st.ph}">${ph}</span>`:''}<span class="pill">على متن الرحلة: ${ar(snap.att.length)} / ${ar(PEOPLE.length)}</span></div></div>`}
+  function routeLeft(){const n=new Date(),end=new Date(n);end.setHours(11,0,0,0);const st=new Date(n);st.setHours(9,0,0,0);if(n<st||n>end)return '';const m=Math.ceil((end-n)/60000);return ' · المتبقي على الهبوط: <b>'+ar(m)+'</b> دقيقة'}
+  function routeHTML(){const pct=FLOW.length>1?step/(FLOW.length-1)*100:0;return `<div class="route"><span class="rA">🛫 الإقلاع 9:30</span><div class="rLine"><i style="width:${pct}%"></i><em style="right:calc(${pct}% - 12px)">✈️</em></div><span class="rB">🛬 الهبوط 11:00</span><span class="rInfo" id="rInfo">المحطة ${ar(step+1)} من ${ar(FLOW.length)}${routeLeft()}</span></div>`}
+  setInterval(()=>{const e=document.getElementById('rInfo');if(e)e.innerHTML='المحطة '+ar(step+1)+' من '+ar(FLOW.length)+routeLeft()},20000);
   function foot(){const q=curQ(),st=qst();
     const qb=q?`<button class="hb ${st.ph==='open'?'on':''}" id="bOpen">افتحي الإجابات</button>
       <button class="hb ${st.ph==='closed'?'on':''}" id="bClose" ${st.ph!=='open'?'disabled':''}>أغلقي</button>
       <button class="hb ${st.ph==='reveal'?'on':''}" id="bRev" ${st.ph==='idle'?'disabled':''}>اكشفي النتيجة 🎉</button>`:'';
     const lbl=cur().s?('شريحة: '+(SL[cur().s]||'')):cur().lobby?'تسجيل الحضور':cur().board?'لوحة النقاط':cur().winner?'فائزة الرحلة':cur().thx?('شكر: '+THX[cur().thx].n):'';
-    return `<div class="sFoot" style="pointer-events:auto;margin-top:auto"><div class="fGroup">
+    return `<div class="sFoot" style="pointer-events:auto;margin-top:auto;position:relative">${routeHTML()}<div class="fGroup">
       <button class="hb g" id="bPrev" ${step<=0?'disabled':''}>› السابق</button>${qb}
       <button class="hb g" id="bNext" ${step>=FLOW.length-1?'disabled':''}>التالي ‹</button>
-      ${lbl?`<span class="counter" style="font-size:17px;margin-right:10px">${esc(lbl)}</span>`:''}
+      ${lbl?`<span class="counter" style="font-size:17px;margin-right:10px">${esc(lbl)}</span>`:''}${(()=>{const n=FLOW[step+1];if(!n)return '';const t=n.s?'🖥️ '+(SL[n.s]||'شريحة'):n.q?'📱 سؤال قادم على الجوالات':n.board?'🏆 لوحة النقاط':n.winner?'👑 كشف الفائزة':n.thx?'🌟 شكر: '+THX[n.thx].n:n.lobby?'✈️ تسجيل الحضور':'';return `<span class="nextUp">القادم: <b>${esc(t)}</b></span>`})()}
     </div><div class="fGroup">
       ${q&&st.ph!=='idle'?`<span class="counter">أجابت <b>${ar(Object.keys(ans()).length)}</b> من ${ar(snap.att.length)}</span>`:''}
       <span class="counter" style="font-size:15px;color:var(--muted)">${ar(step+1)} / ${ar(FLOW.length)}</span>
@@ -536,7 +551,7 @@ function Screen(){
   }
   function bind(){
     const on=(id,fn)=>{const b=$('#'+id);if(b)b.onclick=fn};
-    on('bPrev',()=>go(step-1));on('bNext',()=>go(step+1));
+    on('bPrev',()=>nav(-1));on('bNext',()=>nav(1));
     on('bOpen',()=>setPh('open'));on('bClose',()=>setPh('closed'));on('bRev',()=>setPh('reveal'));
     on('bSnd',()=>{soundOn=!soundOn;draw()});
     on('winGo',()=>revealWinner());
@@ -548,9 +563,10 @@ function Screen(){
       $('#ovX').onclick=()=>{overlay='';draw()};
       $('#ovR').onclick=async()=>{overlay='';try{const r=await api({a:'reset',pin});if(r.ok===false&&r.err==='pin'){askPin();return}snap=r;seen.clear();lastReveal='';ls('bb_scores',null);ls('bb_last',null);ls('bb_winner',null);go(0)}catch(e){}if(DEMO)Sim.restart()}});
   }
+  function nav(d){if(cur().s){try{deck.contentWindow.postMessage({nav:d},'*');return}catch(e){}}go(step+d)}
   async function go(i){
-    if(i<0||i>=FLOW.length)return;step=i;stopTimer();ls('bb_step',String(i));
-    const f=FLOW[i];if(f.s){try{deck.contentWindow.postMessage({go:f.s},'*')}catch(e){}}
+    if(i<0||i>=FLOW.length)return;const back=i<step;step=i;stopTimer();ls('bb_step',String(i));
+    const f=FLOW[i];if(f.s){try{deck.contentWindow.postMessage({go:f.s,all:back},'*')}catch(e){}}
     draw();if(f.board){applause(2);setTimeout(chime,400);burst(['🏆','⭐','✨','👏'],24,$('#screenView'))}
     const q=curQ();
     if(f.winner&&jget('bb_winner').n)return;
@@ -578,14 +594,14 @@ function Screen(){
       if(r.st.ph==='open'&&newAns.length&&sameQ)ding();
       const rk=q.id+'reveal';
       if(r.st.ph==='reveal'){const S=jget('bb_scores');S[q.id]=scoreQ(q,r.ans);ls('bb_scores',JSON.stringify(S));ls('bb_last',JSON.stringify({q:q.id}))}
-      if(r.st.ph==='reveal'&&lastReveal!==rk){lastReveal=rk;applause();setTimeout(chime,300);burst(['❤️','👏','🎉','✨','✈️','💛'],34,$('#screenView'))}
+      if(r.st.ph==='reveal'&&lastReveal!==rk){lastReveal=rk;if(!q.calm){applause();setTimeout(chime,300);burst(['❤️','👏','🎉','✨','✈️','💛'],34,$('#screenView'))}}
       if(r.st.ph!=='reveal'&&lastReveal===rk)lastReveal='';
     }
   }
   async function poll(){if(cur().s||cur().board||cur().winner||cur().thx)return;try{const r=await api({a:'state'});const sig=JSON.stringify(r);if(sig!==Screen._sig){Screen._sig=sig;apply(r)}}catch(e){}}
   deck.addEventListener('load',()=>{const f=cur();try{deck.contentWindow.postMessage({go:f.s||1},'*')}catch(e){}});
   addEventListener('message',e=>{const d=e.data||{};if(d.bbkey==='next')go(step+1);if(d.bbkey==='prev')go(step-1)});
-  addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if(['ArrowLeft','PageDown'].includes(e.key)){e.preventDefault();go(step+1)}if(['ArrowRight','PageUp'].includes(e.key)){e.preventDefault();go(step-1)}});
+  addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if(['ArrowLeft','PageDown'].includes(e.key)){e.preventDefault();nav(1)}if(['ArrowRight','PageUp'].includes(e.key)){e.preventDefault();nav(-1)}});
   draw();setInterval(poll,DEMO?700:1500);
   if(!DEMO&&!pin)askPin();else go(step);
 }
