@@ -242,6 +242,36 @@ body.embed #stage{box-shadow:none}
 .chain{display:flex;align-items:stretch;gap:12px;margin-top:8px}
 .chain div{flex:1;background:#fff;border:1px solid #e6d6c0;border-radius:14px;padding:12px 18px;font-size:20px;line-height:1.7}
 .chain div b{display:block;font-family:var(--h);color:var(--orange);font-size:21px}
+
+/* ===== قصص ومحطات ===== */
+.box-k{align-self:flex-start;display:inline-block;font-family:var(--h);font-weight:800;font-size:22px;color:#fff;background:linear-gradient(135deg,#F3893F,#C2560F);padding:6px 22px;border-radius:30px;margin-bottom:12px}
+.story p{font-size:31px;line-height:1.95;margin-bottom:6px;text-align:right}
+.story p b{color:var(--orange)}
+.story .v{font-family:'Amiri',serif;font-weight:700;color:var(--leather);font-size:33px}
+.dark .story .v{color:#f1d8b0}
+.punch{font-family:var(--h);font-size:32px;font-weight:800;text-align:center;color:var(--brown);margin-top:auto;padding-top:12px}
+.dark .punch{color:#f7d9a8}
+.punch b{color:var(--orange)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px;flex:1;min-height:0}
+.colbox{border-radius:18px;padding:20px 26px;display:flex;flex-direction:column;gap:6px}
+.colbox h3{font-family:var(--h);font-size:28px;font-weight:800;margin-bottom:4px}
+.colbox p,.colbox li{font-size:22px;line-height:1.8}
+.colbox.red{background:#fbeee9;border:1px solid #ecc7bc}.colbox.red h3{color:#A23B2A}
+.colbox.green{background:#ebf4ee;border:1px solid #bfd9c9}.colbox.green h3{color:#2F6B4F}
+.colbox.ivory{background:#fff;border:1px solid #e6d6c0}.colbox.ivory h3{color:var(--leather)}
+.colbox .v{font-family:'Amiri',serif;font-weight:700;font-size:26px;color:var(--leather);line-height:1.9}
+.map{width:100%;border-collapse:separate;border-spacing:0 8px;margin-top:6px}
+.map td{background:#fff;border:1px solid #eadcc6;padding:10px 18px;font-size:21px;line-height:1.6}
+.map td:first-child{border-radius:0 12px 12px 0;font-family:var(--h);font-weight:800;color:var(--leather);width:28%}
+.map td:nth-child(2){width:40px;text-align:center;color:var(--orange);font-size:24px;border-right:none;border-left:none}
+.map td:last-child{border-radius:12px 0 0 12px}
+.quals{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:8px 0 14px}
+.quals div{background:#fff;border:1px solid #e6d6c0;border-top:5px solid var(--orange);border-radius:14px;padding:14px 14px;font-size:19px;line-height:1.7}
+.quals b{display:block;font-family:var(--h);font-size:20px;color:var(--leather);margin-bottom:4px}
+.bigq{font-family:var(--h);font-size:30px;line-height:1.8;text-align:center;color:var(--brown);background:#fff;border:2px dashed var(--gold);border-radius:18px;padding:16px 26px}
+.bigq b{color:var(--orange)}
+.stat{display:flex;gap:16px;align-items:baseline;justify-content:center}
+.stat .n{font-family:var(--h);font-weight:800;font-size:66px;color:var(--orange);line-height:1}
 </style>
 </head>
 <body>
@@ -282,7 +312,7 @@ body.embed #stage{box-shadow:none}
     </div>
     <div class="stub">
       <div class="lbl">تعليمات الرحلة</div>
-      <p style="font-size:20px;line-height:2;margin-top:8px;text-align:right">✈ الهاتف على وضع الطيران<br>✈ الصدق مقعدنا الوحيد<br>✈ لا لوم في هذه الرحلة<br>✈ السؤال أهم من الجواب</p>
+      <p style="font-size:20px;line-height:2;margin-top:8px;text-align:right">✈ جوالكِ في يدكِ… فهو بطاقة صعودكِ<br>✈ الصدق مقعدنا الوحيد<br>✈ لا لوم في هذه الرحلة<br>✈ السؤال أهم من الجواب</p>
     </div>
   </div>
 </section>
@@ -692,6 +722,260 @@ body.embed #stage{box-shadow:none}
     <div class="ani"><b>تدخّل مبكر</b>حوار داعم قبل المساءلة</div>
   </div>
   <p class="pclose">التقرير التأملي: أن تفتحي صندوقكِ الأسود <b>كل شهر</b>… حتى والأمور تمام.</p>
+</section>
+
+<section class="slide" data-seg="قانون القمرة">
+  <div class="kicker">قبل الإقلاع</div>
+  <h2>قانون القمرة 🤫</h2>
+  <div class="bigq" style="font-size:36px;margin-top:10px">مَن تعرف الإجابة… <b>لا تصرّح بها بصوتٍ عالٍ</b><br>كل واحدة تجيب بينها وبين نفسها… <b>في جوالها</b></div>
+  <div class="row" style="margin-top:26px">
+    <div class="card" style="flex:1;text-align:center"><div style="font-size:54px">📱</div><p class="center" style="text-align:center">مع كل سؤال تُفتح الإجابات تلقائيًا… ومعها <b>30 ثانية</b></p></div>
+    <div class="card" style="flex:1;text-align:center"><div style="font-size:54px">🛎️</div><p class="center" style="text-align:center">جرس الطائرة يعني: <b>انتهى الوقت</b></p></div>
+    <div class="card" style="flex:1;text-align:center"><div style="font-size:54px">🏆</div><p class="center" style="text-align:center">النقاط تتجمع… و<b>فائزة واحدة</b> في نهاية الرحلة</p></div>
+  </div>
+  <p class="punch" style="font-size:24px;color:var(--muted)">ومن تصرّح بالإجابة بصوتٍ عالٍ… تُخصم نقاطها 😄</p>
+</section>
+
+<section class="slide dark" data-seg="لماذا الصندوق الأسود">
+  <div class="kicker">لماذا سمّينا ورشتنا «الصندوق الأسود»؟</div>
+  <h2>لأنه لا يسجّل الأرقام وحدها… بل يسجّل <span style="color:var(--orange2)">حديث القمرة</span></h2>
+  <div class="story" style="margin-top:4px"><p>يسجّل ما فكّر فيه الطيارون… وما تردّدوا فيه… <b>وما سكتوا عنه.</b></p>
+  <p>وكذلك التقرير التأملي: يكشف ما في داخل النفس… <b>ما نكاشف به أنفسنا، وما نخفيه عنها.</b></p></div>
+  <div class="verse" style="font-size:46px;margin-top:6px">﴿بَلِ الْإِنْسَانُ عَلَى نَفْسِهِ بَصِيرَةٌ ۝ وَلَوْ أَلْقَى مَعَاذِيرَهُ﴾</div>
+  <div class="row" style="justify-content:center;gap:40px;margin-top:6px">
+    <div class="tag" style="font-size:24px;padding:8px 26px">البصيرة = التأمّل</div>
+    <div class="tag" style="font-size:24px;padding:8px 26px;background:rgba(162,59,42,.25);color:#f3b7a8">المعاذير = التبرير</div>
+  </div>
+</section>
+
+<section class="slide" data-seg="آدم وإبليس">
+  <div class="box-k">📦 الصندوق الأول</div>
+  <h2 style="margin-bottom:8px">خطأٌ واحد… وردّان</h2>
+  <div class="story">
+    <p>أمر الله الملائكة بالسجود لآدم، فسجدوا إلا إبليس… أبى واستكبر.</p>
+    <p>فلم يقل: أخطأت، بل قال: <span class="v">﴿أَنَا خَيْرٌ مِنْهُ﴾</span>… ثم ألقى اللوم على غيره: <span class="v">﴿فَبِمَا أَغْوَيْتَنِي﴾</span></p>
+    <p>وأُمر آدم وحواء ألا يقربا الشجرة، فوسوس لهما الشيطان فأكلا منها… <b>فأخطآ هما أيضًا.</b></p>
+    <p>فلما انتبها لم يبرّرا، ولم يقولا: الشيطان هو السبب، بل قالا: <span class="v">﴿رَبَّنَا ظَلَمْنَا أَنْفُسَنَا﴾</span></p>
+  </div>
+  <p class="punch">الخطأ وقع من الطرفين… <b>والفرق كان في الردّ على الخطأ</b></p>
+</section>
+
+<section class="slide pause" data-seg="وقفة تأمل">
+  <div class="pband"><span>وقفة تأمل</span></div>
+  <div class="kicker">ماذا ترتّب على كلٍّ منهما؟</div>
+  <h2 style="margin-bottom:10px">التبرير يُغلق الباب… والتأمّل يفتحه</h2>
+  <div class="two">
+    <div class="colbox red"><h3>إبليس · تبرير</h3>
+      <p>رأى سببًا يجعله على حق… ثم ألقى اللوم على غيره.</p>
+      <p><b>فطُرد من رحمة الله</b>، وأصرّ على خطئه إلى يوم الدين؛</p>
+      <p>لأن مَن يبرّر <b>لا يرى خطأً يرجع عنه.</b></p></div>
+    <div class="colbox green"><h3>آدم وحواء عليهما السلام · تأمّل</h3>
+      <div class="v">﴿ثُمَّ اجْتَبَاهُ رَبُّهُ فَتَابَ عَلَيْهِ وَهَدَى﴾</div>
+      <p><b>توبة:</b> قبِل الله رجوعه وغفر له.</p>
+      <p><b>اجتباء:</b> اصطفاه فارتفعت منزلته.</p>
+      <p><b>هداية:</b> دلّه على الطريق بعد الخطأ.</p></div>
+  </div>
+  <p class="punch">إبليس برّر فخسر… <b>وآدم اعترف فارتفع</b></p>
+</section>
+
+<section class="slide pause" data-seg="وقفة تأمل">
+  <div class="pband"><span>وقفة تأمل</span></div>
+  <div class="kicker">لماذا نربط التأمل بالتوبة؟</div>
+  <h2 style="margin-bottom:4px">التأمّل… بداية التوبة</h2>
+  <p style="font-size:22px">﴿إِنَّ الَّذِينَ اتَّقَوْا إِذَا مَسَّهُمْ طَائِفٌ مِنَ الشَّيْطَانِ <b style="color:var(--orange)">تَذَكَّرُوا فَإِذَا هُمْ مُبْصِرُونَ</b>﴾ · ﴿وَالَّذِينَ إِذَا فَعَلُوا فَاحِشَةً أَوْ ظَلَمُوا أَنْفُسَهُمْ <b style="color:var(--orange)">ذَكَرُوا اللَّهَ فَاسْتَغْفَرُوا</b>﴾</p>
+  <table class="map">
+    <tr><td>الندم على الخطأ</td><td>←</td><td>رؤية الخطأ وأثره بصدق: الوصف والتحليل</td></tr>
+    <tr><td>الإقلاع عنه</td><td>←</td><td>القرار: إيقاف الممارسة الخاطئة الآن</td></tr>
+    <tr><td>العزم على ألا يعود</td><td>←</td><td>الخطة الوقائية</td></tr>
+    <tr><td>ردّ الحقوق إلى أصحابها</td><td>←</td><td>معالجة أثر الخطأ على مَن تضرّر: خطة دعم للطالبات، وإنصاف معلمة</td></tr>
+  </table>
+  <p class="muted" style="font-size:19px;text-align:center">شروط التوبة كما ذكرها الإمام النووي، والرابع إذا تعلّق الذنب بحقوق الناس · لا نقول إن التقرير عبادة… بل إن منهج التوبة منهجٌ نتعلّم منه مراجعة أنفسنا وعملنا</p>
+  <p class="punch" style="padding-top:4px">لا توبة من خطأٍ لا نراه… <b>والتأمّل هو الذي يُرينا إياه</b></p>
+</section>
+
+<section class="slide pause" data-seg="وقفة تأمل">
+  <div class="pband"><span>وقفة تأمل</span></div>
+  <div class="kicker">ماذا تعلّم الطيران من صمت القمرة؟</div>
+  <h2>15 أبريل 1976: نظامٌ للإبلاغ عن الأخطاء</h2>
+  <div class="row" style="margin:8px 0 14px">
+    <div class="card" style="flex:1;text-align:center"><b style="font-family:var(--h);font-size:30px;color:var(--orange)">طوعي</b><p class="center" style="text-align:center;font-size:20px">يُبلّغ مَن يشاء</p></div>
+    <div class="card" style="flex:1;text-align:center"><b style="font-family:var(--h);font-size:30px;color:var(--orange)">سرّي</b><p class="center" style="text-align:center;font-size:20px">لا يُكشف اسمه</p></div>
+    <div class="card" style="flex:1;text-align:center"><b style="font-family:var(--h);font-size:30px;color:var(--orange)">غير عقابي</b><p class="center" style="text-align:center;font-size:20px">لا يُعاقَب على صدقه</p></div>
+    <div class="card" style="flex:1;text-align:center"><b style="font-family:var(--h);font-size:30px;color:var(--orange)">مستقل</b><p class="center" style="text-align:center;font-size:20px">بعيد عن جهة المحاسبة</p></div>
+  </div>
+  <div class="bigq">صار الطيران آمنًا… <b>حين صار الكلام عن الخطأ آمنًا</b></div>
+  <p class="punch" style="font-size:26px">وفي القسم: اجعلي سؤال «ما الذي لم ينجح هذا الشهر؟» <b>سؤالًا آمنًا</b>… بلا لوم</p>
+</section>
+
+<section class="slide" data-seg="كينيدي">
+  <div class="box-k">📦 الصندوق الثاني</div>
+  <h2 style="margin-bottom:8px">كينيدي · خليج الخنازير · أبريل 1961</h2>
+  <div class="story">
+    <p>أرسل الرئيس الأمريكي قوةً لغزو كوبا… <b>ففشل الغزو فشلًا ذريعًا.</b></p>
+    <p>توقّع الجميع أن يلوم المخابرات، أو الجيش، أو الإدارة السابقة.</p>
+    <p>لكنه وقف أمام الصحافة وقال: <b>«أنا المسؤول في هذه الحكومة».</b></p>
+    <p>ونصحه أحد وزرائه بتوزيع المسؤولية، فرفض: <b>«أنا الرئيس… وكان بإمكاني أن أقرر غير ذلك».</b></p>
+  </div>
+  <p class="punch">ماذا تتوقعين أن يحدث لقائدٍ اعترف بالفشل أمام الجميع؟</p>
+</section>
+
+<section class="slide" data-seg="قائد اعترف وقائد برّر">
+  <div class="kicker">قائدٌ اعترف… وقائدٌ برّر</div>
+  <div class="two" style="margin-top:6px">
+    <div class="colbox green"><h3>كينيدي · اعترف</h3>
+      <div class="stat"><span class="n">78% ← 83%</span></div>
+      <p style="text-align:center">ارتفعت شعبيته بعد الاعتراف</p>
+      <p>واكتشف أن كثيرًا من مستشاريه عارضوا الغزو… <b>وسكتوا.</b> فغيّر طريقة اجتماعاته وطلب المعارضة الصريحة، فأدار أزمة الصواريخ الكوبية عام 1962 بحكمة.</p></div>
+    <div class="colbox red"><h3>بوينغ 737 ماكس · برّر</h3>
+      <div class="stat"><span class="n">346</span></div>
+      <p style="text-align:center">ضحية في طائرتين سقطتا بسبب خللٍ في نظامٍ داخل الطائرة</p>
+      <p>ألقى المدير والشركة اللوم على الطيارين، ورفض في البداية الاعتراف بخلل التصميم… <b>فأُقيل في 23 ديسمبر 2019.</b></p></div>
+  </div>
+  <p class="punch">كينيدي اعترف فكبُر… <b>ومدير بوينغ برّر فسقط</b><br><span style="font-size:24px;color:var(--muted)">وكما برّر إبليس فطُرد… برّر المدير فأُقيل</span></p>
+</section>
+
+<section class="slide pause" data-seg="وقفة تأمل">
+  <div class="pband"><span>وقفة تأمل</span></div>
+  <div class="kicker">ما علاقة هذا بتقريركِ؟</div>
+  <h2>أمام كل تقرير… الخيار نفسه: أعترف أم أبرّر؟</h2>
+  <div class="two" style="margin-top:4px">
+    <div class="colbox ivory"><h3>الخوف: «سيُقال إنني ضعيفة»</h3>
+      <p>لو كتبتُ: «الخطة التي اعتمدتُها لم تنجح»…</p>
+      <p><b>وكينيدي يردّ:</b> اعترف بأكبر فشل في بداية رئاسته… فاحترمه الناس أكثر.</p>
+      <p>الاعتراف لا يُنزل قدر القائدة… <b>بل يرفعه.</b></p></div>
+    <div class="colbox red"><h3>التبرير يصنع الخطأ الثاني</h3>
+      <p>بعد الطائرة الأولى اتجه اللوم إلى الطيارين… <b>فسقطت الثانية بالسبب نفسه بعد أقل من خمسة أشهر.</b></p>
+      <p>والمنسقة التي تكتب بعد الاختبار الأول: «السبب ضعف الطالبات»… لن تغيّر شيئًا في ممارسات قسمها، <b>فتتراجع النتائج مرة أخرى.</b></p></div>
+  </div>
+  <p class="punch">التقرير الذي يبرّر اليوم… <b>يكتب المشكلة نفسها الشهر القادم</b></p>
+</section>
+
+<section class="slide pause" data-seg="وقفة تأمل">
+  <div class="pband"><span>وقفة تأمل</span></div>
+  <div class="kicker">قائدتان لا تتأمّلان</div>
+  <h2 style="margin-bottom:10px">أيّهما تخشين أن تكوني؟</h2>
+  <div class="two">
+    <div class="colbox red"><h3>١. القائدة التي تخشى فريقها</h3>
+      <p>تسكت عن الخطأ… كي لا تخسر فريقها.</p>
+      <p><b>والصواب أن تقول لفريقها:</b></p>
+      <p style="font-family:var(--h);font-size:24px;color:var(--brown)">«كما أُنصفكم في الحق… أحاسبكم عند الخطأ؛ محاسبةً لا تضرّكم، بل لمصلحة العمل».</p></div>
+    <div class="colbox red"><h3>٢. القائدة العاجزة عن التأمّل</h3>
+      <p>لا تقدر على تطوير قسمها ولا الارتقاء به بأي طريقة…</p>
+      <p>فيستشعر الفريق ضعفها، فيعتمد على نفسه… <b>ولا يؤمن بقيادتها.</b></p>
+      <p>وأسوأ ما يصيب الفريق… <b>أن يستشعر ضعف قائده.</b></p></div>
+  </div>
+  <p class="punch" style="font-size:27px">أتمنى ألا تكون في فريقي واحدةٌ من هذين النوعين…<br><b>فلتسأل كلٌّ منا نفسها: هل أنا منهما؟</b> ولتطوّر نفسها حتى تكون أعلى من أفضل مَن في قسمها</p>
+</section>
+
+<section class="slide pause" data-seg="وقفة تأمل">
+  <div class="pband"><span>وقفة تأمل</span></div>
+  <div class="kicker">أمنية</div>
+  <h2 style="margin-bottom:6px">صفات القائدة التأمّلية التي تحرز النجاح دائمًا</h2>
+  <div class="quals">
+    <div class="ani"><b>تقيس الأثر لا العدد</b>لا يهمها كم زيارة نفّذت… بل ماذا تغيّر في الفصل بعدها</div>
+    <div class="ani"><b>لا تنخدع بالأرقام العالية</b>إذا ارتفعت النتائج سألت: هل تحسّنت الطالبات… أم سهُل الاختبار؟</div>
+    <div class="ani"><b>تحافظ على صدق الاختبار</b>تفضّل اختبارًا يكشف المستوى الحقيقي… ولو انخفضت النسبة</div>
+    <div class="ani"><b>تجمع أكثر من دليل</b>الدرجات ومعها دفاتر الطالبات ومشاركتهن في الحصة</div>
+    <div class="ani"><b>تربط كل مؤشر بهدفه</b>قبل أن تقيس تسأل: لماذا أقيس هذا؟ وماذا أريد أن يتغيّر؟</div>
+  </div>
+  <div class="bigq" style="font-size:27px">بحثتُ بينكن عن منسقةٍ تتحلّى بهذه الصفات… <b>وللأسف لم أجدها بعد.</b><br>وأنا على يقين أنكن قادرات على اكتسابها؛ <b>فالقائدة التأمّلية هي التي تحرز النجاح دائمًا</b></div>
+</section>
+
+<section class="slide pause" data-seg="وقفة تأمل">
+  <div class="pband"><span>وقفة تأمل</span></div>
+  <div class="kicker">«لا نريد أن نُرهق الفريق»</div>
+  <h2 style="margin-bottom:10px">هل التأمّل عبء؟</h2>
+  <div class="two">
+    <div class="colbox red"><h3>الإرهاق الحقيقي</h3>
+      <p>أن نضع خططًا نحفظها ولا نفهمها…</p>
+      <p>فلا تؤتي أُكلها، فنعيدها، ونغيّرها، ونبدّلها…</p>
+      <p><b>هذا هو الفشل… وهذا هو الإرهاق.</b></p></div>
+    <div class="colbox green"><h3>التعب المثمر</h3>
+      <p>أن نسير على منهجٍ واضح ونحقق أهدافنا…</p>
+      <p>وهذا سعادةٌ للمعلم وإن تعب؛</p>
+      <p><b>فالنتائج بحدّ ذاتها سعادة.</b></p></div>
+  </div>
+  <p class="punch">البدايات صعبةٌ دائمًا… <b>ومع الاستمرار يصير التأمّل نهجنا، فنرتاح فيه مدى الحياة</b></p>
+</section>
+
+<section class="slide pause" data-seg="وقفة تأمل">
+  <div class="pband"><span>وقفة تأمل</span></div>
+  <div class="kicker">المنسقة مرآة فريقها</div>
+  <h2>الفريق يكتسب من منسقته… المصداقية، والجدية، والمهارة</h2>
+  <div class="story" style="margin-top:6px">
+    <p>إن كان همّكِ مصلحة الطالبات… <b>ونتائج حقيقية، لا إرضاء أحد</b>…</p>
+    <p>وإن كان سؤالكِ: هل أسهم ما فعلناه في رفع التحصيل فعلًا؟… <b>صار فريقكِ مثلكِ.</b></p>
+  </div>
+  <div class="bigq" style="margin-top:14px;font-size:32px">هؤلاء بناتنا… <b>وقطر تستحق الأفضل</b><br>طالبة اليوم هي التي ستعالج أبناءنا غدًا… وتبني بيوتنا… وتخترع لنا</div>
+  <p class="punch" style="font-size:26px">فلا نريدها أن تفعل ذلك… <b>وقد تعثّرت لأننا حرصنا ألا نُرهق أنفسنا</b></p>
+</section>
+
+<section class="slide pause" data-seg="وقفة تأمل">
+  <div class="pband"><span>وقفة تأمل</span></div>
+  <div class="kicker">أمانةٌ ووقت</div>
+  <div class="verse" style="font-size:40px;line-height:1.8">﴿إِنَّا عَرَضْنَا الْأَمَانَةَ عَلَى السَّمَاوَاتِ وَالْأَرْضِ وَالْجِبَالِ﴾</div>
+  <ul class="plist" style="margin-top:8px">
+    <li class="ani">حملنا أمانة العلم… <b>ووقتنا من السابعة إلى الثانية ملكٌ للواجب.</b></li>
+    <li class="ani">ابحثي عمّا يهدر وقتكِ الثمين: <b>الأحاديث السلبية، والشكوى.</b></li>
+    <li class="ani">لا مانع أن نفضفض ونقول ما يضايقنا… <b>لكن ننجز، ونُشعر الفريق أن قلبنا على العمل.</b></li>
+    <li class="ani">إذا شعر الفريق أن العمل «إرهاق… ونفعله فقط لنضعه في الملفات»… <b>فلن يكون في عملنا تأمّل أبدًا.</b></li>
+  </ul>
+  <div class="bigq" style="font-size:32px;margin-top:6px"><b>القائد قدوةٌ لنفسه ولزملائه</b></div>
+  <p class="punch" style="font-size:25px">وإذا كان عملنا بلا معايير ولا منهجية… فماذا نقيس في تقاريرنا؟ <b>نقيس كذبةً كبيرة</b></p>
+</section>
+
+<section class="slide" data-seg="نهر هدسون">
+  <div class="box-k">📦 الصندوق الثالث</div>
+  <h2 style="margin-bottom:8px">معجزة نهر هدسون · 15 يناير 2009</h2>
+  <div class="story">
+    <p>أقلعت طائرة من نيويورك، وبعد دقائق <b>دخلت طيورٌ في محرّكيها فتوقّفا.</b></p>
+    <p>أمام الكابتن «سولي» ثوانٍ ليقرر… <b>فلم يعد إلى المطار.</b></p>
+    <p>وهبط بالطائرة على سطح نهر هدسون… <b>فنجا جميع مَن على متنها: 155 شخصًا.</b></p>
+  </div>
+  <p class="punch">بعد الحادثة… هل مدحه المحققون، أم سألوه؟</p>
+</section>
+
+<section class="slide pause" data-seg="وقفة تأمل">
+  <div class="pband"><span>وقفة تأمل</span></div>
+  <div class="kicker">التأمّل العادل</div>
+  <div class="two" style="margin-top:4px">
+    <div class="colbox ivory"><h3>✈️ المحققون وسولي</h3>
+      <p>سألوه: لماذا لم تعد إلى المطار؟ وفي المحاكاة الأولى نجح الطيارون في العودة… <b>لأنهم عرفوا مسبقًا ما سيحدث.</b></p>
+      <p>فلما أُضيفت <b>35 ثانية</b> للفهم والقرار، كما عاشها سولي… <b>لم يصل أحدٌ منهم إلى المطار.</b></p></div>
+    <div class="colbox ivory"><h3>🏫 النائبة والمعلمة</h3>
+      <p>جهّزت معلمةٌ لعبةً لغلق الدرس، وهي في التحضير والعرض… <b>فلم تعمل.</b> فوزّعت فورًا أوراقًا بيضاء: «اكتبن السؤال وحُلّنه»؛ فعند الطالبات تقييم في اليوم التالي.</p>
+      <p>رفعت النائبة رأسها فرأت الأوراق البيضاء فظنّته ارتجالًا… <b>فلما جلست معها وفتحت التحضير، اكتشفت أن المعلمة أنقذت الحصة.</b></p></div>
+  </div>
+  <div class="bigq" style="font-size:25px;margin-top:12px">المحققون رأوا الطائرة في النهر… ولم يروا الـ35 ثانية · والنائبة رأت الورقة البيضاء… ولم ترَ اللعبة المحضّرة</div>
+  <p class="punch" style="font-size:27px"><b>تحضير المعلمة صندوقها الأسود… فلا تحكمي قبل أن تفتحيه</b><br><span style="font-size:22px;color:var(--muted)">قبل الحكم اسألي نفسكِ: ما الذي لم أرَه؟ وماذا حدث قبل أن أرفع رأسي؟</span></p>
+</section>
+
+<section class="slide" data-seg="قطر 2017">
+  <div class="box-k">📦 الصندوق الرابع</div>
+  <h2 style="margin-bottom:8px">قطر · يونيو 2017</h2>
+  <div class="story">
+    <p>بدأ الحصار، وانقطعت الطرق التي كانت تصل منها <b>أغلب احتياجاتنا… ومنها الحليب ومنتجات الألبان.</b></p>
+    <p>وكان يمكن أن نقضي الوقت في الشكوى ولوم الآخرين…</p>
+    <p>لكن سمو الأمير قال في أول خطاب بعد الأزمة (21 يوليو 2017): <b>«نتحدث بعقلانية لتقييم المرحلة التي نمر بها وتخطيط المستقبل»</b></p>
+    <p>ثم قال (2 أغسطس 2017): <b>«ما حدث في شهر يونيو 2017 قوّانا ودفعنا للمزيد من العمل لصالح هذا الوطن»</b></p>
+  </div>
+</section>
+
+<section class="slide pause" data-seg="وقفة تأمل">
+  <div class="pband"><span>وقفة تأمل</span></div>
+  <div class="kicker">تقريرٌ تأمّلي على مستوى دولة</div>
+  <div class="row" style="align-items:center;gap:30px;margin-bottom:10px">
+    <div class="card" style="text-align:center;flex:1"><div class="stat"><span class="n">98%</span></div><p class="center" style="text-align:center;font-size:20px">تقريبًا من الألبان كانت تُستورد قبل يونيو 2017</p></div>
+    <div style="font-size:48px;color:var(--orange)">←</div>
+    <div class="card" style="text-align:center;flex:1"><div class="stat"><span class="n">20 شهرًا</span></div><p class="center" style="text-align:center;font-size:20px">ثم أول شحنة تصدير… بعد الاكتفاء الذاتي</p></div>
+  </div>
+  <table class="map">
+    <tr><td>وصفت الواقع بصدق</td><td>←</td><td>اعتمادٌ على الغير في الغذاء</td></tr>
+    <tr><td>حلّلت نقطة الضعف</td><td>←</td><td>طريقٌ واحد للإمداد يمكن أن ينقطع</td></tr>
+    <tr><td>اتخذت قرارًا</td><td>←</td><td>الاعتماد على النفس: في الأمن، والاقتصاد، والغذاء، والدواء</td></tr>
+    <tr><td>قاست النتيجة</td><td>←</td><td>الاكتفاء الذاتي… ثم التصدير</td></tr>
+  </table>
+  <p class="punch" style="font-size:27px">لم تقل: «الظروف أقوى منا»… <b>بل حوّلت الأزمة إلى فرصة</b><br><span style="font-size:23px;color:var(--muted)">والنتائج المتدنية ليست نهاية القصة… قد تكون بداية أقوى نقلة في قسمكِ</span></p>
 </section>
 
 <div id="flightpath"><svg id="plane" viewBox="0 0 24 24"><path fill="#E8681A" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z" transform="rotate(90 12 12)"/></svg></div>

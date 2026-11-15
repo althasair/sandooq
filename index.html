@@ -150,6 +150,17 @@ button{font-family:var(--h);cursor:pointer}
 .qTimer.end .num{font-size:30px}
 @keyframes pulse{50%{transform:scale(1.12)}}
 .sBody .qText{padding-left:130px}
+.thxWrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:radial-gradient(ellipse at 50% 40%,#5a3722 0%,#1f120b 78%);color:var(--ivory);position:relative;overflow:hidden;padding:40px 120px}
+.thxWrap .k{font-family:var(--h);font-size:24px;color:var(--orange2);letter-spacing:.5px}
+.thxWrap .pre{font-family:var(--h);font-size:24px;color:#d9c2a3;margin-bottom:14px;max-width:1200px}
+.thxWrap .thName{font-family:var(--h);font-weight:800;font-size:84px;line-height:1.3;white-space:nowrap;background:linear-gradient(100deg,#c29a5a 0%,#fff2cf 30%,#e7c873 50%,#fff2cf 70%,#c29a5a 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 3.5s linear infinite, pop .9s both}
+@keyframes shine{to{background-position:-250% 0}}
+.thxWrap .rl{font-family:var(--h);font-size:26px;color:#e9cfa7;margin:4px 0 20px}
+.thxWrap .tx{font-family:var(--h);font-size:29px;line-height:1.9;color:#fff7ea;max-width:1250px;animation:rise .9s .4s both}
+.thxWrap .glow{position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(243,137,63,.35),transparent 65%);top:50%;left:50%;transform:translate(-50%,-60%);animation:pulseG 2.6s ease-in-out infinite;pointer-events:none}
+@keyframes pulseG{50%{transform:translate(-50%,-60%) scale(1.15);opacity:.7}}
+.thxWrap .stars{font-size:40px;letter-spacing:14px;margin-bottom:6px}
+.phoneCall{display:inline-flex;gap:18px;align-items:center;font-family:var(--h);font-size:19px;font-weight:600;color:#fff;background:linear-gradient(90deg,#E8681A,#B24C10);border-radius:30px;padding:6px 22px;margin-bottom:10px;animation:pop .5s both}
 /* overlays */
 .ov{position:absolute;inset:0;background:rgba(20,12,8,.6);display:flex;align-items:center;justify-content:center;z-index:50}
 .ovBox{background:var(--ivory);border-radius:20px;padding:34px 40px;width:620px;max-height:80%;overflow:auto}
@@ -231,69 +242,37 @@ const PEOPLE = [
 
 /* ------------------- الأسئلة ------------------- */
 const Q = [
- {id:'q01',tag:'قبل الإقلاع',type:'text',text:'بجملة قصيرة: التقرير الشهري بالنسبة لكِ يشبه…؟',ph:'مثلًا: واجب منزلي ثقيل 😅'},
- {id:'q02',tag:'بعد مقطع القمرة',type:'mcq',text:'لماذا لم يُصرّ مهندس الطيران على اعتراضه رغم أنه كان يشك؟',opts:[
+ {id:'q01',tag:'سؤال الإقلاع',type:'text',key:/برتقال|orange/i,keyText:'برتقالي ساطع… كي يُعثر عليه بين الحطام',text:'ما هو لون «الصندوق الأسود» في الطائرة؟',ph:'اكتبي اللون…',
+   okr:['عينكِ قائدة يا {n}! برتقالي فعلًا 🧡','ما شاء الله يا {n}… ما انخدعتِ بالاسم 😎','كفو يا {n}! الأسماء ما تخدعكِ 👏'],
+   nor:['يا {n} صدّقتِ الاسم؟ 😂 الأسماء تخدع… مثل بعض التقارير','قريبة يا {n}… بس هو برتقالي 🧡 ولا يهمكِ','يا {n} لو كان أسود ما لقوه بين الحطام 🙈']},
+ {id:'q02',tag:'📦 الصندوق الأول',type:'text',text:'ماذا ترتّب على التبرير؟ وماذا ترتّب على التأمّل؟',ph:'ترتّب على التبرير… وعلى التأمل…'},
+ {id:'q03',tag:'بعد مقطع القمرة',type:'mcq',text:'لماذا لم يُصرّ مهندس الطيران على اعتراضه رغم أنه كان يشك؟',opts:[
    {t:'لم يكن الأمر من تخصصه',r:'يا {n} المهندس متخصص وفاهم… بس الهيبة غلبت 😅'},
    {t:'هيبة القائد وخبرته أسكتته',ok:1},
    {t:'كان مشغولًا بأجهزته',r:'مشغول؟ 😂 لا يا {n}، كان منتبه وسأل… بس سكت!'},
    {t:'ظنّ أن برج المراقبة سيتدخل',r:'قريبة يا {n} 🛬 بس السر كان داخل القمرة نفسها'}]},
- {id:'q03',tag:'سؤال خاطف',type:'mcq',text:'ما لون «الصندوق الأسود» في الطائرة؟',opts:[
-   {t:'أسود طبعًا!',r:'يا {n} صدّقتِ الاسم؟ 😂 الأسماء تخدع… مثل بعض التقارير'},
-   {t:'برتقالي ساطع',ok:1},
-   {t:'رمادي معدني',r:'رمادي؟ 🙈 لا يا {n}… الجاية لكِ'},
-   {t:'أحمر',r:'دافية يا {n} 🔥 بس هو برتقالي'}]},
- {id:'q04',tag:'تأمّل سريع',type:'text',text:'ما الذي قد يُسكت معلمة في قسمكِ عن قول ما تشكّ فيه؟',ph:'جملة واحدة…'},
- {id:'q05',tag:'خطأٌ واحد… وردّان',type:'mcq',text:'أيّ الردّين تبرير، وأيّهما تأمّل؟ وماذا ترتّب على كلٍّ منهما؟',opts:[
-   {t:'كلاهما تبرير… وكلاهما خرج من الجنة',r:'قريبة يا {n} 😅 خرجا من الجنة صح… بس آدم تاب الله عليه واجتباه'},
-   {t:'«أنا خير منه» تبرير ← الطرد · «ظلمنا أنفسنا» تأمّل ← التوبة والاجتباء',ok:1},
-   {t:'«أنا خير منه» تأمّل ← الرفعة · «ظلمنا أنفسنا» تبرير ← الخروج',r:'يا {n} قلبتيها 😳 «أنا خير منه» أشهر تبرير في التاريخ!'},
-   {t:'كلاهما تأمّل… وكلاهما نال العفو',r:'يا {n} لو تأمّل إبليس ما طُرد 🙈'}],
-  ex:[{w:'إبليس · تبرير',v:'﴿أَنَا خَيْرٌ مِنْهُ﴾',then:'أصرّ… فطُرد',v2:'﴿فَاخْرُجْ مِنْهَا فَإِنَّكَ رَجِيمٌ﴾',c:'red'},
-      {w:'آدم وحواء عليهما السلام · تأمّل',v:'﴿رَبَّنَا ظَلَمْنَا أَنْفُسَنَا﴾',then:'اعترفا… فتاب الله عليهما',v2:'﴿ثُمَّ اجْتَبَاهُ رَبُّهُ فَتَابَ عَلَيْهِ وَهَدَى﴾',c:'green'}]},
- {id:'q06',tag:'تقريران… ورحلة واحدة',type:'mcq',text:'أيّ التقريرين يقود إلى قرار؟',opts:[
-   {t:'التقرير (أ)',r:'يا {n} التقرير (أ) يرمي الكرة على التأسيس 🏐😅'},
-   {t:'التقرير (ب)',ok:1}]},
- {id:'q07',tag:'صنّفي العبارة',type:'mcq',text:'«يُعزى انخفاض النتائج إلى ضعف التأسيس لدى الطالبات»',opts:[
-   {t:'وصفية',r:'يا {n} فيها «يُعزى»… يعني تبرير متنكّر 🕵️‍♀️'},
-   {t:'تبريرية',ok:1},
-   {t:'تأملية',r:'جبتي العيد يا {n} 😂 التأمل يبدأ من ممارساتنا مو من الطالبات'}]},
- {id:'q08',tag:'صنّفي العبارة',type:'mcq',text:'«تم تنفيذ 12 زيارة صفية خلال الشهر»',opts:[
-   {t:'وصفية',ok:1},
-   {t:'تأملية',r:'يا {n} عدّ الزيارات مو تأمل 😅 وش طلع منها؟'},
-   {t:'تبريرية',r:'لا يا {n} 🙈 ما فيها دفاع… بس أرقام'}]},
- {id:'q09',tag:'صنّفي العبارة',type:'mcq',text:'«أظهرت الزيارات ضعفًا مشتركًا في التغذية الراجعة لدى ثلاث معلمات، وعليه تم اعتماد مجتمع تعلم أسبوعي يُقاس أثره بعد أسبوعين»',opts:[
-   {t:'وصفية',r:'يا {n} فيها سبب وقرار ومؤشر… هذي ما تكون وصفية 😉'},
-   {t:'تبريرية',r:'تبرير؟ 😂 لا يا {n}، هذي قائدة شايلة المسؤولية'},
-   {t:'تأملية',ok:1}]},
- {id:'q10',tag:'تأثير الكوبرا 🐍',type:'mcq',text:'دفعت الحكومة مكافأة لكل كوبرا ميتة… فماذا حدث بعد فترة؟',opts:[
+ {id:'q04',tag:'تأمّلي قسمكِ',type:'text',text:'ما الذي قد يُسكت معلمةً في قسمكِ عن قول ما تشكّ فيه؟',ph:'جملة واحدة…'},
+ {id:'q05',tag:'📦 الصندوق الثاني',type:'mcq',text:'ماذا حدث لشعبية كينيدي بعد اعترافه بالفشل؟',opts:[
+   {t:'انخفضت بشدة',r:'يا {n} توقعتِ العقاب؟ 😅 الناس احترموا اعترافه!'},
+   {t:'بقيت كما هي',r:'قريبة يا {n}… بس الاعتراف رفعها 📈'},
+   {t:'ارتفعت',ok:1},
+   {t:'طالبوه بالاستقالة',r:'لا يا {n} 🙈 بالعكس… صار أقرب للناس'}]},
+ {id:'q06',tag:'تأثير الكوبرا 🐍',type:'mcq',text:'دفعت الحكومة مكافأة لكل كوبرا ميتة… فماذا حدث بعد فترة؟',opts:[
    {t:'قلّت الكوبرا في المدينة',r:'أفا يا {n}! صدّقتِ الأرقام؟ الكوبرا تربّت في البيوت 🐍😂'},
    {t:'هاجرت الكوبرا إلى مدينة أخرى',r:'هاجرت؟ 😂 لا يا {n}، تكاثرت عند الناس!'},
    {t:'ربّى الناس الكوبرا للمكافأة… فزادت',ok:1},
    {t:'لم يتغير شيء',r:'تغيّر يا {n}… وللأسوأ 🙈'}]},
- {id:'q11',tag:'وين الكوبرا في قسمكِ؟',type:'text',text:'مؤشر نقيسه في المدرسة… قد ينقلب على هدفه. ما هو؟',ph:'مثلًا: عدد الزيارات الصفية…'},
- {id:'q12',tag:'المحطة الأولى · تشالنجر',type:'mcq',text:'خللٌ تكرر عشر مرات ومرّ بلا حادث… فهو:',opts:[
-   {t:'آمن، والتجربة أثبتت ذلك',r:'يا {n} هذا بالضبط اللي قالوه قبل الانفجار 😬'},
-   {t:'صار عاديًا… فلم نعد نراه',ok:1},
-   {t:'مقبول إداريًا',r:'«اخلعي قبعة المهندس» يا {n}؟ 😅 لا لا'}]},
- {id:'q13',tag:'تطبيع الانحراف',type:'text',text:'ما الخلل الذي اعتاد عليه قسمكِ حتى لم يعد يُرى؟',ph:'جملة واحدة… بصراحة القائدة 😉'},
- {id:'q14',tag:'المحطة الثانية · زيملفايس',type:'mcq',text:'لماذا رفض الأطباء فكرة غسل اليدين رغم انخفاض الوفيات؟',opts:[
-   {t:'لأنها مكلفة',r:'مكلفة؟ 😂 يا {n} كانت ماء وجير بس!'},
-   {t:'لأن الاعتراف يعني أنهم سبب الوفيات',ok:1},
-   {t:'لأنها لم تثبت نجاحها',r:'ثبتت يا {n}… بس الكبرياء ما يقرأ الأرقام 🙈'}]},
- {id:'q15',tag:'المحطة الثالثة · كوداك',type:'mcq',text:'ما الذي أوقع كوداك في الإفلاس؟',opts:[
-   {t:'منافسة شركات أقوى منها',r:'يا {n} هي اللي اخترعت الكاميرا الرقمية 😳'},
-   {t:'تقارير نجاحٍ قالت «استمرّي»',ok:1},
-   {t:'ضعف موظفيها',r:'لا يا {n} 🙈 موظفوها اخترعوا المستقبل… والإدارة دفنته'}]},
- {id:'q16',tag:'الصندوق الأسود',type:'mcq',text:'الصندوق الأسود يُفتح بعد الحادثة… أما التقرير التأملي فيُفتح:',opts:[
-   {t:'عند تدنّي النتائج',r:'يا {n} كذا ننتظر الطائرة تطيح ✈️💥😅'},
-   {t:'كل شهر… حتى والأمور تمام',ok:1},
-   {t:'عندما تطلبه الإدارة',r:'هههه يا {n} 😂 الصندوق مو للإدارة… لقسمكِ أنتِ'}]},
- {id:'q17',tag:'خطة وقائية',type:'text',text:'مؤشر إنذار مبكر واحد ستراقبينه في قسمكِ:',ph:'مثلًا: تراجع طالبة في اختبارين قصيرين متتاليين'},
- {id:'q18',tag:'بعد غزوة أحد',type:'mcq',text:'<span class="verse">﴿قُلْ هُوَ مِنْ عِنْدِ أَنْفُسِكُمْ﴾</span> تمثّل في التقرير التأملي:',opts:[
-   {t:'وصف ما حدث',r:'قريبة يا {n} 🌿 بس الآية تحدد السبب'},
-   {t:'البحث عن السبب من الداخل',ok:1},
-   {t:'القرار التطويري',r:'يا {n} القرار يجي بعدين… الآية تشير للسبب 😉'}]},
- {id:'q19',tag:'بطاقة الهبوط 🛬',type:'text',text:'في تقريري القادم سأتوقف عن… وسأبدأ بـ…',ph:'سأتوقف عن… وسأبدأ بـ…'}
+ {id:'q07',tag:'وين الكوبرا في قسمكِ؟',type:'text',text:'مؤشرٌ نقيسه في المدرسة… قد ينقلب على هدفه. ما هو؟',ph:'مثلًا: عدد الزيارات الصفية…'},
+ {id:'q08',tag:'📦 الصندوق الثالث',type:'mcq',text:'بعد الهبوط على النهر… كيف تعامل المحققون مع الكابتن سولي؟',opts:[
+   {t:'كرّموه فورًا دون أي سؤال',r:'يا {n} حتى البطل يُسأل 😉 هذا هو التحقيق العادل'},
+   {t:'سألوه: لماذا لم تعد إلى المطار؟',ok:1},
+   {t:'أوقفوه عن الطيران',r:'لا يا {n} 🙈 سألوه… ثم أنصفوه'}]},
+ {id:'q09',tag:'📦 الصندوق الرابع',type:'mcq',text:'ماذا حدث في قطاع الألبان في قطر بعد الحصار؟',opts:[
+   {t:'زاد الاستيراد من دول أخرى',r:'قريبة يا {n}… بس قطر اختارت الاعتماد على نفسها 🇶🇦'},
+   {t:'ارتفعت الأسعار وبقي الوضع كما هو',r:'لا يا {n} 🙈 الأزمة صارت فرصة!'},
+   {t:'حققت قطر الاكتفاء الذاتي وصارت تصدّر',ok:1}]},
+ {id:'q10',tag:'خطة وقائية',type:'text',text:'مؤشر إنذارٍ مبكر واحد ستراقبينه في قسمكِ:',ph:'مثلًا: تراجع طالبة في اختبارين قصيرين متتاليين'},
+ {id:'q11',tag:'بطاقة الهبوط 🛬',type:'text',text:'في تقريري القادم سأتوقف عن… وسأبدأ بـ…',ph:'سأتوقف عن… وسأبدأ بـ…'}
 ];
 
 const PRAISE=['كفو يا {n}! قائدة قمرة من الطراز الأول ✈️','الله عليكِ يا {n}! صندوقكِ الأسود يتكلّم 🔥','هبوطٌ آمن يا {n} 👏','أحسنتِ يا {n}! نظرة قائدة 👑','يا سلام يا {n}… إجابة تستاهل تصفيق 👏👏','ما شاء الله يا {n}! التأمل لابق عليكِ ✨','{n} في القمرة… اطمئني يا طائرة 😎'];
@@ -302,12 +281,12 @@ const TEXTP=['جملة من ذهب يا {n} ✨','كلام قائدة يا {n} �
 const NOANS=['يا {n}… الطائرة أقلعت وأنتِ في السوق الحرة 🛍️😂','{n} على وضع الطيران؟ ✈️😴 الجاية لا تفوتك!','يا {n} فاتكِ الإقلاع… نحجز لكِ الرحلة الجاية 😄'];
 
 const SAMPLE_TXT={
- q01:['قائمة إنجازات نكتبها ونرتاح','صورة جماعية للقسم','واجب منزلي ثقيل 😅','مرآة… بس أحيانًا مغبّشة','أرشيف ما أحد يقرؤه','بطاقة هوية القسم'],
- q04:['الخوف من أن يُفهم كلامها اعتراضًا','قلة الخبرة مقارنة بالأقدم','إن رأيها ما يأخذ مكانه','المجاملة وحب السلامة','ضغط الوقت والحصص'],
- q11:['عدد الزيارات الصفية','نسبة النجاح','عدد الأنشطة المنفذة','عدد ساعات التدريب','نسبة تسليم التحضير في الموعد'],
- q13:['تأخر رصد الدرجات','زيارات تنتهي دائمًا بـ«جيد»','اجتماعات قسم بلا قرارات','نفس الحصص العلاجية كل سنة','تكرار الأخطاء نفسها في الاختبارات'],
- q17:['تراجع طالبة في اختبارين متتاليين','تأخر معلمة في التسليم مرتين','انخفاض مشاركة الطالبات في الحصة','غياب متكرر يوم الاختبار','تراجع نتائج شعبة كاملة'],
- q19:['سأتوقف عن سرد الأنشطة وسأبدأ بالسؤال لماذا','سأتوقف عن لوم التأسيس وسأبدأ بممارساتنا','سأتوقف عن الأرقام وحدها وسأبدأ بالدلالات','سأتوقف عن الكتابة وحدي وسأبدأ بإشراك معلماتي']
+ q01:['أسود','أسود طبعًا','برتقالي','أحمر','برتقالي ساطع','رمادي'],
+ q02:['التبرير ترتّب عليه الطرد، والتأمل ترتّبت عليه التوبة','الطرد من رحمة الله… والتوبة والاجتباء','الخسارة مقابل الارتفاع','الإصرار على الخطأ… والرجوع عنه'],
+ q04:['الخوف من أن يُفهم كلامها اعتراضًا','الحياء','الخوف من زيادة الأعباء','تجربة سابقة لم يُسمع فيها رأيها','الخشية من أن تُستهدف'],
+ q07:['عدد الزيارات الصفية','نسبة النجاح','عدد الأنشطة المنفذة','عدد ساعات التدريب','نسبة تسليم التحضير في الموعد'],
+ q10:['تراجع طالبة في اختبارين متتاليين','تأخر معلمة في التسليم مرتين','انخفاض مشاركة الطالبات في الحصة','غياب متكرر يوم الاختبار'],
+ q11:['سأتوقف عن سرد الأنشطة وسأبدأ بالسؤال لماذا','سأتوقف عن لوم التأسيس وسأبدأ بممارساتنا','سأتوقف عن الأرقام وحدها وسأبدأ بالدلالات','سأتوقف عن الكتابة وحدي وسأبدأ بإشراك معلماتي']
 };
 
 /* ------------------- helpers ------------------- */
@@ -323,12 +302,14 @@ const qById=id=>Q.find(q=>q.id===id);
 function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){return null}}
 function verdict(q,name,a){ // {cls,text,emoji}
   if(!a) return {cls:'na',e:'😴',t:fill(pick(NOANS,name+q.id),name)};
+  if(q.type==='text'&&q.key){return q.key.test(a.v)?{cls:'ok',e:'🧡',t:fill(pick(q.okr||PRAISE,name+q.id),name)}:{cls:'no',e:'😂',t:fill(pick(q.nor||OOPS,name+q.id),name)}}
   if(q.type==='text') return {cls:'ok',e:'❤️',t:fill(pick(TEXTP,name+q.id),name)};
   const o=q.opts[+a.v]; if(!o) return {cls:'na',e:'🤔',t:name};
   if(o.ok) return {cls:'ok',e:'👏',t:fill(pick(PRAISE,name+q.id),name)};
   return {cls:'no',e:'😂',t:fill(o.r&&hash(name+q.id)%2===0?o.r:pick(OOPS,name+q.id),name)};
 }
-function scoreQ(q,A){const out={};const names=Object.keys(A||{});if(q.type==='text'){names.forEach(n=>out[n]=5);return out}
+function scoreQ(q,A){const out={};const names=Object.keys(A||{});if(q.type==='text'&&q.key){names.filter(n=>q.key.test(A[n].v)).sort((a,b)=>A[a].t-A[b].t).forEach((n,i)=>out[n]=10+(i===0?5:0));return out}
+  if(q.type==='text'){names.forEach(n=>out[n]=5);return out}
   const c=q.opts.findIndex(o=>o.ok);names.filter(n=>+A[n].v===c).sort((a,b)=>A[a].t-A[b].t).forEach((n,i)=>out[n]=10+(i===0?5:0));return out}
 function jget(k){try{return JSON.parse(ls(k)||'{}')}catch(e){return {}}}
 function burst(list,count=26,target=document.body){for(let i=0;i<count;i++){const s=document.createElement('span');s.className='fx';s.textContent=list[i%list.length];s.style.left=(Math.random()*95)+'%';s.style.animationDelay=(Math.random()*1.2)+'s';s.style.fontSize=(28+Math.random()*30)+'px';target.appendChild(s);setTimeout(()=>s.remove(),4800)}}
@@ -407,6 +388,7 @@ function Phone(root){
       const v=verdict(q,me,myAns);
       let extra='';
       if(q.type==='mcq'){const c=q.opts.findIndex(o=>o.ok);extra=`<div class="ans">الإجابة الصحيحة: ${LET[c]}) ${esc(q.opts[c].t)}</div>`}
+      if(q.keyText)extra=`<div class="ans">الإجابة: ${esc(q.keyText)}</div>`;
       const sc=scoreQ(q,snap.ans||{});const my=jget('bb_my');my[q.id]=sc[me]||0;ls('bb_my',JSON.stringify(my));
       const tot=Object.values(my).reduce((a,b)=>a+b,0),got=sc[me]||0;
       const ptsTxt=`<div class="myPts">${got?`+${ar(got)} نقطة في هذا السؤال${got===15?' ⚡ أسرع إجابة صحيحة!':''}<br>`:''}رصيدكِ في الرحلة: <b>${ar(tot)}</b> نقطة ✈️</div>`;
@@ -429,8 +411,20 @@ function Phone(root){
 /* =====================================================================
    SCREEN VIEW (العرض + الأسئلة في مسار واحد)
    ===================================================================== */
-const SL={1:'الغلاف',2:'صعود الطائرة',3:'مقطع القمرة',4:'كارثة تينيريفي',5:'الصندوق الأسود',6:'خطأ واحد وردّان',7:'تقريران ورحلة واحدة',8:'تأثير الكوبرا',9:'صدمة الكوبرا',10:'ثلاثة تقارير',11:'نموذج الأسئلة الثلاثة',12:'محطات التحقيق',13:'المحطة الأولى · تشالنجر',14:'المحطة الثانية · زيملفايس',15:'المحطة الثالثة · كوداك',16:'الكرسي الساخن المعكوس',17:'رسالة إلى نفسي',18:'غزوة أحد',20:'هبوط آمن',21:'وقفة تأمل · لماذا يخشى المرؤوس؟',22:'وقفة تأمل · تسلّل التبرير',23:'وقفة تأمل · معادلة الجملة التأملية',24:'وقفة تأمل · حماية المؤشرات',25:'وقفة تأمل · كسر تطبيع الانحراف',26:'وقفة تأمل · حين يكون السبب أنا',27:'وقفة تأمل · التأمل في النجاح',28:'وقفة تأمل · الوقاية'};
-const FLOW=[{s:1},{lobby:1},{s:2},{q:'q01'},{s:3},{q:'q02'},{s:4},{q:'q03'},{s:5},{q:'q04'},{s:21},{s:6},{q:'q05'},{s:22},{s:7},{q:'q06'},{q:'q07'},{q:'q08'},{q:'q09'},{s:23},{board:1},{s:8},{q:'q10'},{s:9},{q:'q11'},{s:24},{s:10},{s:11},{s:12},{s:13},{q:'q12'},{q:'q13'},{s:25},{s:14},{q:'q14'},{s:26},{s:15},{q:'q15'},{s:27},{board:1},{s:16},{s:17},{q:'q16'},{q:'q17'},{s:28},{s:18},{q:'q18'},{q:'q19'},{board:1},{winner:1},{s:20}];
+const SL={1:'الغلاف',2:'صعود الطائرة',3:'مقطع القمرة',4:'كارثة تينيريفي',5:'الصندوق البرتقالي',8:'تأثير الكوبرا',9:'صدمة الكوبرا',18:'غزوة أحد',20:'هبوط آمن',21:'وقفة تأمل · لماذا يخشى المرؤوس؟',28:'وقفة تأمل · الوقاية',29:'قانون القمرة',30:'لماذا الصندوق الأسود؟',31:'📦 آدم وإبليس',32:'وقفة تأمل · ماذا ترتّب؟',33:'وقفة تأمل · التأمل والتوبة',34:'وقفة تأمل · الكلام الآمن',35:'📦 كينيدي',36:'قائد اعترف وقائد برّر',37:'وقفة تأمل · أعترف أم أبرّر؟',38:'وقفة تأمل · قائدتان لا تتأمّلان',39:'وقفة تأمل · أمنية',40:'وقفة تأمل · هل التأمل عبء؟',41:'وقفة تأمل · المنسقة مرآة فريقها',42:'وقفة تأمل · أمانة ووقت',43:'📦 نهر هدسون',44:'وقفة تأمل · التأمل العادل',45:'📦 قطر 2017',46:'وقفة تأمل · تقرير دولة'};
+const THX={
+ yusra:{n:'أ. يسرا عبده كمال',r:'منسقة الأحياء',t:'قائدةٌ تكاشف نفسها وقسمها بشجاعة، وتدوّن أخطاء القسم بوضوحٍ تأمّلي، ثم تضع خطواتٍ منهجية تتابعها وتتأمل أثرها في القراءات اللاحقة… فلا يتكرر الخطأ مرتين.'},
+ haya:{n:'أ. هيا الدوسري',r:'منسقة اللغة الإنجليزية',t:'تعرف من أين تؤكل الكتف؛ قراءاتها تحليليةٌ تأمّلية، تقف عند أسباب التدني بشجاعة لا تخشى في الله لومة لائم، وتحاور نفسها بصدق، وتضع خطوات تحسينٍ صغيرة بأسلوب «كايزن» تنقل الطالبات نقلاتٍ حقيقية… وهذا من أسرار تفوّق قسم اللغة الإنجليزية في التحصيل الأكاديمي.'},
+ najwa:{n:'أ. نجوى أبو ناهية',r:'منسقة اللغة العربية',t:'قائدةٌ تمتلك رؤيةً شمولية، تقرأ الموقف في سياقه الكامل قبل أن تحكم عليه. تنقل الواقع بأمانةٍ وموضوعية، وتضع الأمور في نصابها الصحيح، تاركةً القرار لأصحابه. وتتحلّى بشجاعة المساءلة الذاتية؛ فإذا أخطأت بادرت بالاعتراف وجهًا لوجه… فالخطأ المعلَن يُصلَح، والخطأ المخفي يتكرر.'},
+ fatima:{n:'أ. فاطمة النعيمي',r:'منسقة العلوم الاجتماعية',t:'حين كانت النتائج دون الطموح، لم يقف قسمها عند التبرير، بل تأمّل سريعًا، ووضع خططًا بديلة في التحصيل والأنشطة معًا. وما إن تلقّى ملاحظة قلة الأنشطة حتى حوّلها إلى أنشطةٍ هادفة، أكاديمية ولا صفية، تصبّ في مصلحة الطالبة… فأصبح قسم الاجتماعيات في عامٍ واحد قسمًا آخر. وفي قراءتها للنتائج قارنت بين منتصف الفصل ونهايته وبين العامين، وأبرزت القيمة المضافة، وذكرت مواضع التراجع بصراحة.',pre:'كما حوّلت قطر الأزمة إلى اكتفاء… حوّل قسمٌ عندنا الملاحظة إلى نقلة'},
+ sahar:{n:'أ. سحر الرشيد',r:'منسقة الرياضيات',pre:'وكما اعترف كينيدي بالتراجع… فعندنا قائدةٌ دوّنته بشجاعة',t:'لم تُخفِ تراجع نسبة التحصيل مقارنةً بالعام السابق، بل دوّنته بوضوح، وبحثت عن أسبابه في الخطة نفسها قبل الطالبات، فرصدت كثافة المحتوى مقارنةً بالزمن المتاح، وحصرت الأخطاء الشائعة، وتطورت قراءتها من التشخيص الوصفي إلى التحليل الفني المتعمق… ثم صنعت مع فريقها مبادرة «فزعة الرياضيات» لتكون الطالبة سندًا لزميلتها.'},
+ sheikha:{n:'أ. شيخة القحطاني',r:'منسقة التربية البدنية',pre:'وعندنا قائدةٌ… لم تنخدع حتى بنسبة نجاح 100%',t:'رغم أن نسبة النجاح بلغت 100%، لم تكتفِ بالرقم؛ فتوقفت عند انخفاضٍ طفيف في تحصيل الحادي عشر وتساءلت: هل نراجع مستوى صعوبة التقويم النهائي؟ وهل نعيد موازنة الأحمال البدنية والمهارية؟… وربطت النتائج بممارساتٍ حقيقية داخل الحصة، كزمن الممارسة الفعلية والمتابعة الفردية.'},
+ intisar:{n:'أ. انتصار أحمد جامع',r:'منسقة الكيمياء',t:'انتقلت من عرض النتائج إلى تفسيرها؛ فربطت التحصيل بنوع الأسئلة ومستويات العمق المعرفي، وقرأت ورقة الاختبار قراءةً نوعية، ولم تكتفِ بوصف الفروق داخل الشعبة الواحدة، بل فسّرت أسبابها: الفجوات السابقة، والغياب، والاعتماد على الدروس الخصوصية… ثم صمّمت لطالباتها خطوات تفكيك المسألة: ضعي خطًّا، ثم دوّني، ثم خطّطي، ثم حُلّي.'},
+ faten:{n:'أ. فاتن عبدالرحمن',r:'منسقة تكنولوجيا المعلومات',t:'قرأت التفاوت بين المسارين العلمي والتكنولوجي قراءةً واقعية، فربطته بطبيعة المادة التراكمية في البرمجة والتحليل المنطقي لا بالطالبات وحدهن، وربطت استقرار التحصيل بممارساتٍ صفية حقيقية كالتقييم المستمر والحصص الإثرائية… فقرأت النتيجة في سياقها الكامل قبل أن تحكم عليها.'},
+ areej:{n:'أ. أريج أبو حاشية',r:'منسقة الفيزياء',pre:'وكما حوّلت قطر الأزمة إلى فرصة… حوّل قسمٌ عندنا القيمة السالبة إلى قفزة',t:'قارنت نتائج عامها بالعام السابق بصدق، فكشفت أن القيمة المضافة للحادي عشر كانت سالبة، فصارت موجبة بمقدار 11.28%، وارتفع المتوسط من 85.51% إلى 88.72%. وربطت التحصيل بمهارات الفيزياء وطبيعة الأسئلة، وحدّدت الإجراء الأعلى أثرًا: حصص رفع الكفاءة في أسبوع التوأمة… وعقدت مع فريقها اجتماعًا للمراجعة الذاتية.'},
+ khawla:{k:'شكرٌ وتقدير · فريقٌ يصنع القيم',n:'فريق قسم العلوم الشرعية',r:'بقيادة أ. خولة المطوع',t:'بادر الفريق إلى جعل القيم واقعًا تعيشه الطالبات لا شعارًا يُكتب، فأسهم إسهامًا كبيرًا في تعزيز القيم في المدرسة، حتى تجلّت في أبهى صورها… فشكرًا لفريقٍ أدرك أن بناء الإنسان يبدأ من قيمه.',pre:'وقطر لم تصمد بالغذاء وحده… بل بالقيم: الهوية، والانتماء، والتماسك'}
+};
+const FLOW=[{s:1},{lobby:1},{s:2},{s:29},{s:30},{q:'q01'},{s:5},{s:31},{q:'q02'},{s:32},{s:33},{s:3},{q:'q03'},{s:4},{q:'q04'},{s:21},{s:34},{s:35},{q:'q05'},{s:36},{s:37},{thx:'yusra'},{thx:'haya'},{thx:'sahar'},{s:38},{board:1},{s:8},{q:'q06'},{s:9},{thx:'sheikha'},{q:'q07'},{s:39},{s:40},{s:41},{s:42},{s:43},{q:'q08'},{s:44},{thx:'najwa'},{thx:'intisar'},{thx:'faten'},{s:45},{q:'q09'},{s:46},{thx:'areej'},{thx:'fatima'},{thx:'khawla'},{s:18},{s:28},{q:'q10'},{q:'q11'},{board:1},{winner:1},{s:20}];
 function Screen(){
   const stage=$('#stage');
   stage.innerHTML='<div id="deckWrap" style="position:absolute;top:0;left:0;right:0;bottom:78px;background:#0d0906"><iframe id="deck" src="deck.html" style="width:100%;height:100%;border:0;display:block" allow="autoplay; fullscreen"></iframe></div><div id="ui" style="position:absolute;inset:0;display:flex;flex-direction:column;pointer-events:none"></div>';
@@ -460,7 +454,7 @@ function Screen(){
     const qb=q?`<button class="hb ${st.ph==='open'?'on':''}" id="bOpen">افتحي الإجابات</button>
       <button class="hb ${st.ph==='closed'?'on':''}" id="bClose" ${st.ph!=='open'?'disabled':''}>أغلقي</button>
       <button class="hb ${st.ph==='reveal'?'on':''}" id="bRev" ${st.ph==='idle'?'disabled':''}>اكشفي النتيجة 🎉</button>`:'';
-    const lbl=cur().s?('شريحة: '+(SL[cur().s]||'')):cur().lobby?'تسجيل الحضور':cur().board?'لوحة النقاط':cur().winner?'فائزة الرحلة':'';
+    const lbl=cur().s?('شريحة: '+(SL[cur().s]||'')):cur().lobby?'تسجيل الحضور':cur().board?'لوحة النقاط':cur().winner?'فائزة الرحلة':cur().thx?('شكر: '+THX[cur().thx].n):'';
     return `<div class="sFoot" style="pointer-events:auto;margin-top:auto"><div class="fGroup">
       <button class="hb g" id="bPrev" ${step<=0?'disabled':''}>› السابق</button>${qb}
       <button class="hb g" id="bNext" ${step>=FLOW.length-1?'disabled':''}>التالي ‹</button>
@@ -493,6 +487,7 @@ function Screen(){
     let note='';if(tied.length>1){note='تعادل بين '+tied.map(short).join(' و')+' في النقاط والسرعة… فاختارت القرعة 🎲'}
     else{const second=pool[1];if(second&&(T[second]||0)===top[0])note='تعادل في النقاط… وحسمته سرعة الإجابات ⚡'}
     return {n:tied[Math.floor(Math.random()*tied.length)],p:top[0],note,contenders:pool.slice(0,Math.max(4,tied.length))}}
+  function thxView(k){const T=THX[k];return `<div class="thxWrap"><div class="glow"></div><div class="stars">✨🌟✨</div><div class="k">${esc(T.k||'شكرٌ وتقدير · قائدةٌ تتأمّل')}</div>${T.pre?`<div class="pre">${esc(T.pre)}</div>`:''}<div class="thName">${esc(T.n)}</div><div class="rl">${esc(T.r)}</div><div class="tx">${esc(T.t)}</div></div>`}
   function winnerView(){const W=jget('bb_winner');
     if(W.n)return `<div class="winWrap done"><div class="k">🏆 فائزة رحلة التأمل</div><div class="crown">👑</div><div class="slot">${esc(W.n)}</div><div class="sub">قائدة القمرة الأولى · ${ar(W.p)} نقطة</div><div class="tie">${esc(W.note||'')}</div><button class="hb g" id="winAgain" style="margin-top:24px;color:#e9cfa7;border-color:#7a5a3a">إعادة الكشف</button></div>`;
     return `<div class="winWrap" id="winWrap"><div class="k">🏆 لحظة الحسم</div><div class="crown">👑</div><div class="slot" id="slot">من ستكون فائزة الرحلة؟</div><div class="sub" id="wsub"></div><div class="tie" id="wtie"></div><button class="hb winBtn" id="winGo">🥁 اكشفي الفائزة</button></div>`}
@@ -513,7 +508,7 @@ function Screen(){
     const order=[...snap.att].sort((a,b)=>{const r=n=>{const v=verdict(q,n,A[n]).cls;return v==='ok'?0:v==='no'?1:2};return r(a)-r(b)});
     return `<div class="reacts">${order.map((n,i)=>{const v=verdict(q,n,A[n]);const P=scoreQ(q,A)[n];return `<div class="rcard ${v.cls}" style="animation-delay:${i*.08}s"><span class="e">${v.e}</span><span>${esc(v.t)}</span>${P?`<span class="ptsTag">+${ar(P)}${P===15?' ⚡':''}</span>`:''}</div>`}).join('')}</div>`}
   function qView(){
-    const q=curQ(),st=qst(),A=ans();let h=`<div class="sBody">${st.ph==='open'?timerHTML():''}<div class="qTag">${esc(q.tag)}</div><div class="qText">${q.text}</div>`;
+    const q=curQ(),st=qst(),A=ans();let h=`<div class="sBody">${st.ph==='open'?timerHTML():''}${st.ph==='open'?'<div><span class="phoneCall">📱 امسكي جوالكِ · 🤫 جاوبي في جوالكِ</span></div>':''}<div class="qTag">${esc(q.tag)}</div><div class="qText">${q.text}</div>`;
     if(st.ph==='idle'){return h+`<div class="idleHint"><div class="pl">✈️</div><div>السؤال جاهز للإقلاع… اضغطي «افتحي الإجابات»</div></div></div>`}
     const names=Object.keys(A),total=names.length||1,rev=st.ph==='reveal';
     if(q.type==='mcq'){
@@ -524,7 +519,8 @@ function Screen(){
       h+=rev?reactions(q,A):answeredStrip(A);
     }else{
       const sorted=names.sort((a,b)=>A[a].t-A[b].t);
-      h+=`<div class="wall">${sorted.map(n=>{const k=q.id+n+A[n].v;const anim=seen.has(k)?'style="animation:none"':'';seen.add(k);return `<div class="acard" ${anim}><div class="n nw">${esc(n)} قالت:</div><div class="v">${esc(A[n].v)}</div>${rev?`<div class="pr">${esc(verdict(q,n,A[n]).t)}</div>`:''}</div>`}).join('')||'<div class="idleHint" style="grid-column:1/-1">بانتظار أول إجابة… ✍️</div>'}</div>`;
+      h+=`<div class="wall">${sorted.map(n=>{const k=q.id+n+A[n].v;const anim=seen.has(k)?'style="animation:none"':'';seen.add(k);return `<div class="acard" ${anim} ${rev&&q.key?(q.key.test(A[n].v)?'style="border-color:#2F6B4F;background:#E3EFE8"':'style="opacity:.75"'):''}><div class="n nw">${esc(n)} قالت:</div><div class="v">${esc(A[n].v)}</div>${rev?`<div class="pr">${esc(verdict(q,n,A[n]).t)}</div>`:''}</div>`}).join('')||'<div class="idleHint" style="grid-column:1/-1">بانتظار أول إجابة… ✍️</div>'}</div>`;
+      if(rev&&q.keyText)h+=`<div class="exRow" style="grid-template-columns:1fr"><div class="exBox green"><b>الإجابة الصحيحة</b><span class="ar">${esc(q.keyText)}</span></div></div>`;
       if(!rev)h+=answeredStrip(A);
       else{const miss=snap.att.filter(n=>!A[n]);if(miss.length)h+=`<div class="reacts" style="flex:0 0 auto">${miss.map(n=>{const v=verdict(q,n,null);return `<div class="rcard na"><span class="e">${v.e}</span><span>${esc(v.t)}</span></div>`}).join('')}</div>`}
     }
@@ -533,7 +529,7 @@ function Screen(){
   function draw(){
     const f=cur();
     if(f.s){deckWrap.style.visibility='visible';ui.style.background='transparent';ui.innerHTML=foot()+overlay}
-    else{deckWrap.style.visibility='hidden';ui.style.background='var(--ivory)';ui.innerHTML=`<div style="pointer-events:auto;display:flex;flex-direction:column;flex:1;min-height:0">${f.winner?'':head()}${f.lobby?lobby():f.board?boardView():f.winner?winnerView():qView()}</div>`+foot()+overlay;if(f.board)animBars()}
+    else{deckWrap.style.visibility='hidden';ui.style.background='var(--ivory)';ui.innerHTML=`<div style="pointer-events:auto;display:flex;flex-direction:column;flex:1;min-height:0">${f.winner||f.thx?'':head()}${f.lobby?lobby():f.board?boardView():f.winner?winnerView():f.thx?thxView(f.thx):qView()}</div>`+foot()+overlay;if(f.board)animBars()}
     tick();
     if(f.lobby&&window.QRCode){try{new QRCode($('#qr'),{text:joinUrl,width:270,height:270,colorDark:'#3A2418',colorLight:'#ffffff'})}catch(e){}}
     bind();
@@ -547,7 +543,7 @@ function Screen(){
     on('winAgain',()=>{ls('bb_winner',null);draw()});
     on('bBoard',()=>{overlay=`<div class="ov" style="pointer-events:auto;align-items:stretch;justify-content:stretch;padding:30px 40px 108px"><div style="background:var(--ivory);border-radius:20px;flex:1;display:flex;flex-direction:column;min-height:0;position:relative">${boardView()}<button class="hb g" id="bdX" style="position:absolute;bottom:-62px;left:0;background:var(--ivory)">إغلاق اللوحة</button></div></div>`;draw();animBars();applause(1.6);$('#bdX').onclick=()=>{overlay='';draw()}});
     on('bFs',()=>{try{const p=document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();p&&p.catch&&p.catch(()=>{})}catch(e){}});
-    on('bList',()=>{overlay=`<div class="ov" style="pointer-events:auto"><div class="ovBox" style="width:760px"><h3>مسار الورشة</h3><div class="qlist">${FLOW.map((x,i)=>{const t=x.s?'🖥️ '+SL[x.s]:x.lobby?'✈️ تسجيل الحضور':x.board?'🏆 لوحة النقاط':x.winner?'👑 كشف الفائزة':'💬 '+qById(x.q).tag+' · '+qById(x.q).text.replace(/<[^>]+>/g,'').slice(0,50);return `<button data-i="${i}" class="${i===step?'cur':''}">${ar(i+1)}. ${esc(t)}</button>`}).join('')}</div><button class="hb g" id="ovX" style="margin-top:10px">إغلاق</button><button class="hb g" id="ovR" style="margin-top:10px;margin-right:8px;color:var(--red);border-color:var(--red)">بدء جلسة جديدة (مسح الحضور والإجابات)</button></div></div>`;draw();
+    on('bList',()=>{overlay=`<div class="ov" style="pointer-events:auto"><div class="ovBox" style="width:760px"><h3>مسار الورشة</h3><div class="qlist">${FLOW.map((x,i)=>{const t=x.s?'🖥️ '+SL[x.s]:x.lobby?'✈️ تسجيل الحضور':x.board?'🏆 لوحة النقاط':x.winner?'👑 كشف الفائزة':x.thx?'🌟 شكر: '+THX[x.thx].n:'💬 '+qById(x.q).tag+' · '+qById(x.q).text.replace(/<[^>]+>/g,'').slice(0,50);return `<button data-i="${i}" class="${i===step?'cur':''}">${ar(i+1)}. ${esc(t)}</button>`}).join('')}</div><button class="hb g" id="ovX" style="margin-top:10px">إغلاق</button><button class="hb g" id="ovR" style="margin-top:10px;margin-right:8px;color:var(--red);border-color:var(--red)">بدء جلسة جديدة (مسح الحضور والإجابات)</button></div></div>`;draw();
       ui.querySelectorAll('.qlist button').forEach(b=>b.onclick=()=>{overlay='';go(+b.dataset.i)});
       $('#ovX').onclick=()=>{overlay='';draw()};
       $('#ovR').onclick=async()=>{overlay='';try{const r=await api({a:'reset',pin});if(r.ok===false&&r.err==='pin'){askPin();return}snap=r;seen.clear();lastReveal='';ls('bb_scores',null);ls('bb_last',null);ls('bb_winner',null);go(0)}catch(e){}if(DEMO)Sim.restart()}});
@@ -558,7 +554,10 @@ function Screen(){
     draw();if(f.board){applause(2);setTimeout(chime,400);burst(['🏆','⭐','✨','👏'],24,$('#screenView'))}
     const q=curQ();
     if(f.winner&&jget('bb_winner').n)return;
-    try{const r=await api({a:'set',pin,qi:q?Q.indexOf(q):-1,ph:'idle',qid:q?q.id:''});if(r.ok===false&&r.err==='pin'){askPin();return}apply(r);if(DEMO)Sim.onPhase(r.st)}catch(e){}
+    if(f.thx){applause(2.6);setTimeout(chime,300);burst(['✨','🌟','👏','💛','🎉'],40,$('#screenView'))}
+    const done=q&&jget('bb_scores')[q.id];
+    if(q&&!done)startTimer(q);
+    try{const r=await api({a:'set',pin,qi:q?Q.indexOf(q):-1,ph:q?(done?'reveal':'open'):'idle',qid:q?q.id:''});if(r.ok===false&&r.err==='pin'){askPin();return}apply(r);if(DEMO)Sim.onPhase(r.st)}catch(e){}
   }
   async function setPh(ph){const q=curQ();if(!q)return;
     if(ph==='open')startTimer(q);else if(ph!=='closed'||!tRang)stopTimer();
@@ -583,7 +582,7 @@ function Screen(){
       if(r.st.ph!=='reveal'&&lastReveal===rk)lastReveal='';
     }
   }
-  async function poll(){if(cur().s||cur().board||cur().winner)return;try{const r=await api({a:'state'});const sig=JSON.stringify(r);if(sig!==Screen._sig){Screen._sig=sig;apply(r)}}catch(e){}}
+  async function poll(){if(cur().s||cur().board||cur().winner||cur().thx)return;try{const r=await api({a:'state'});const sig=JSON.stringify(r);if(sig!==Screen._sig){Screen._sig=sig;apply(r)}}catch(e){}}
   deck.addEventListener('load',()=>{const f=cur();try{deck.contentWindow.postMessage({go:f.s||1},'*')}catch(e){}});
   addEventListener('message',e=>{const d=e.data||{};if(d.bbkey==='next')go(step+1);if(d.bbkey==='prev')go(step-1)});
   addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if(['ArrowLeft','PageDown'].includes(e.key)){e.preventDefault();go(step+1)}if(['ArrowRight','PageUp'].includes(e.key)){e.preventDefault();go(step-1)}});

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>شهادات ورشة الصندوق الأسود</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marhey:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--brown:#3A2418;--leather:#7A4A2B;--orange:#D9661C;--gold:#B8914F;--muted:#8B7563;--m:'Marhey',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#e9e2d6;font-family:var(--m);color:var(--brown)}
+.bar{position:sticky;top:0;z-index:10;background:#2c1a10;color:#f6efe4;display:flex;gap:16px;align-items:center;justify-content:space-between;padding:12px 28px}
+.bar b{font-size:18px}
+.bar span{font-size:13px;color:#d9c2a3}
+.bar button{font-family:var(--m);font-size:15px;border:none;border-radius:30px;padding:9px 24px;background:#E8681A;color:#fff;cursor:pointer}
+.wrap{display:flex;flex-direction:column;align-items:center;gap:26px;padding:26px 0 60px}
+.cert{width:297mm;height:210mm;background:#fff;position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+/* إطار أنيق قليل الحبر */
+.cert .f1{position:absolute;inset:9mm;border:1.2px solid var(--gold);border-radius:3mm}
+.cert .f2{position:absolute;inset:11.5mm;border:.5px solid rgba(184,145,79,.55);border-radius:2mm}
+.cert .corner{position:absolute;width:16mm;height:16mm;border-color:var(--orange);border-style:solid;border-width:0}
+.cert .c1{top:7mm;right:7mm;border-top-width:2.2px;border-right-width:2.2px}
+.cert .c2{top:7mm;left:7mm;border-top-width:2.2px;border-left-width:2.2px}
+.cert .c3{bottom:7mm;right:7mm;border-bottom-width:2.2px;border-right-width:2.2px}
+.cert .c4{bottom:7mm;left:7mm;border-bottom-width:2.2px;border-left-width:2.2px}
+.cert .ribbon{position:absolute;top:0;right:28mm;width:13mm;height:30mm;background:linear-gradient(180deg,#F08A3E,#C2560F);clip-path:polygon(0 0,100% 0,100% 100%,50% 82%,0 100%)}
+.cert .in{position:absolute;inset:16mm 22mm 14mm;display:flex;flex-direction:column;align-items:center;text-align:center}
+.school{font-size:13pt;font-weight:500;color:var(--leather);letter-spacing:.3px}
+.event{font-size:10.5pt;color:var(--muted);margin-top:1mm}
+.title{font-size:36pt;font-weight:700;color:var(--orange);line-height:1.25;margin-top:13mm}
+.lead{font-size:13pt;color:var(--leather);margin-top:2mm}
+.name{font-size:30pt;font-weight:600;color:var(--brown);margin-top:3mm;white-space:nowrap;line-height:1.4;outline:none}
+.role{font-size:12.5pt;color:var(--gold);margin-top:.5mm}
+.text{font-size:13.2pt;line-height:1.95;color:#4a3426;max-width:225mm;margin-top:8mm;text-align:justify;text-align-last:center}
+.verse{font-family:'Amiri',serif;font-weight:700;font-size:17pt;color:var(--leather);margin-top:8mm}
+.sigs{margin-top:auto;width:100%;display:flex;justify-content:space-between;align-items:flex-end;padding:0 6mm}
+.sig{width:72mm;text-align:center;position:relative}
+.sig .t{font-size:10.5pt;color:var(--muted)}
+.sig .n{font-size:13pt;font-weight:600;color:var(--brown);position:relative;z-index:2}
+.sig.mid{height:30mm;display:flex;flex-direction:column;justify-content:flex-end}
+.sig.mid img{position:absolute;left:50%;bottom:-5mm;transform:translateX(-50%);height:26mm;max-width:70mm;opacity:.55;z-index:1;mix-blend-mode:multiply}
+.sig .ln{width:44mm;height:.6px;background:rgba(184,145,79,.7);margin:0 auto 1.5mm}
+.hint{font-family:var(--m);font-size:13px;color:#7a5a3a;text-align:center;max-width:900px;line-height:1.9}
+@media print{
+  @page{size:A4 landscape;margin:0}
+  body{background:#fff}
+  .bar,.hint{display:none}
+  .wrap{padding:0;gap:0}
+  .cert{box-shadow:none;page-break-after:always;break-after:page}
+  .cert:last-child{page-break-after:auto}
+  .name{outline:none}
+}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div><b>شهادات ورشة «الصندوق الأسود: حين يتكلّم التقرير»</b><br><span>11 شهادة · A4 بالعرض · اسم الفائزة يُكتب تلقائيًا بعد كشفها، ويمكن تعديل أي اسم بالضغط عليه</span></div>
+  <button onclick="window.print()">🖨️ طباعة الشهادات</button>
+</div>
+<div class="wrap" id="wrap"></div>
+<p class="hint">التوقيع: ارفعي صورة توقيعكِ بصيغة PNG بخلفية شفافة إلى المستودع نفسه باسم <b dir="ltr">signature.png</b> فيظهر تلقائيًا كبيرًا شفافًا فوق اسمكِ في كل الشهادات.</p>
+
+<script>
+const EVENT='ورشة «الصندوق الأسود: حين يتكلّم التقرير» · القيادة الوسطى · العام الدراسي 2026–2027';
+const CERTS=[
+ {title:'شهادة فخر واعتزاز',lead:'تتقدّم إدارة المدرسة بخالص الشكر والتقدير إلى',name:'أ. يسرا عبده كمال',role:'منسقة الأحياء',
+  text:'تقديرًا لقيادتها التأمّلية التي تكاشف بها نفسها وقسمها بشجاعة، وتدوّن أخطاء القسم بوضوحٍ وصدق، ثم تضع خطواتٍ منهجية تتابعها وتتأمل أثرها في القراءات اللاحقة، فلا يتكرر الخطأ مرتين.',
+  verse:'﴿بَلِ الْإِنْسَانُ عَلَى نَفْسِهِ بَصِيرَةٌ﴾'},
+ {title:'شهادة تميّز',lead:'تتقدّم إدارة المدرسة بخالص الشكر والتقدير إلى',name:'أ. هيا الدوسري',role:'منسقة اللغة الإنجليزية',
+  text:'تقديرًا لقراءاتها التحليلية التأمّلية التي تقف عند أسباب التدني بشجاعةٍ لا تخشى في الله لومة لائم، ولخطوات التحسين التي تضعها بأسلوب «كايزن» فتنقل الطالبات نقلاتٍ حقيقية، وتصنع تفوّق قسم اللغة الإنجليزية في التحصيل الأكاديمي.',
+  verse:'﴿إِنَّ اللَّهَ لَا يُغَيِّرُ مَا بِقَوْمٍ حَتَّى يُغَيِّرُوا مَا بِأَنْفُسِهِمْ﴾'},
+ {title:'شهادة امتنان',lead:'تتقدّم إدارة المدرسة بخالص الشكر والتقدير إلى',name:'أ. نجوى أبو ناهية',role:'منسقة اللغة العربية',
+  text:'تقديرًا لرؤيتها الشمولية التي تقرأ الموقف في سياقه الكامل، ولأمانتها في نقل الواقع بموضوعية ووضع الأمور في نصابها الصحيح، ولشجاعتها في المساءلة الذاتية والاعتراف بالخطأ وجهًا لوجه؛ فالخطأ المعلَن يُصلَح، والخطأ المخفي يتكرر.',
+  verse:'﴿وَإِذَا قُلْتُمْ فَاعْدِلُوا﴾'},
+ {title:'شهادة إشادة',lead:'تتقدّم إدارة المدرسة بخالص الشكر والتقدير إلى',name:'أ. فاطمة النعيمي',role:'منسقة العلوم الاجتماعية',
+  text:'تقديرًا لقيادتها التأمّلية التي تقرأ النتائج بأمانة، فتقارن بين الفترات وبين العامين وتُبرز القيمة المضافة، ولما قدّمه قسم العلوم الاجتماعية بقيادتها من أنشطة أكاديمية ولا صفية هادفة تصنع الأثر في الطالبة.',
+  verse:'﴿وَقُلِ اعْمَلُوا فَسَيَرَى اللَّهُ عَمَلَكُمْ﴾'},
+ {title:'شهادة فخر واعتزاز',lead:'تتقدّم إدارة المدرسة بخالص الشكر والتقدير إلى',name:'أ. سحر الرشيد',role:'منسقة الرياضيات',
+  text:'تقديرًا لشجاعتها في تدوين تراجع التحصيل بوضوح، والبحث عن أسبابه في الخطة قبل الطالبات، وحصرها الأخطاء الشائعة، وتطوّر قراءتها من التشخيص الوصفي إلى التحليل الفني المتعمق، ولمبادرة «فزعة الرياضيات» التي جعلت الطالبة سندًا لزميلتها.',
+  verse:'﴿وَقُولُوا قَوْلًا سَدِيدًا﴾'},
+ {title:'شهادة إشادة',lead:'تتقدّم إدارة المدرسة بخالص الشكر والتقدير إلى',name:'أ. شيخة القحطاني',role:'منسقة التربية البدنية',
+  text:'تقديرًا لقراءتها التي لم تكتفِ بنسبة نجاح بلغت 100%، فتوقفت عند انخفاضٍ طفيف في التحصيل، وراجعت مستوى صعوبة التقويم وموازنة الأحمال البدنية والمهارية، وربطت النتائج بممارساتٍ حقيقية داخل الحصة.',
+  verse:'﴿وَأَقِيمُوا الْوَزْنَ بِالْقِسْطِ﴾'},
+ {title:'شهادة تميّز',lead:'تتقدّم إدارة المدرسة بخالص الشكر والتقدير إلى',name:'أ. انتصار أحمد جامع',role:'منسقة الكيمياء',
+  text:'تقديرًا لقراءتها التفسيرية التي ربطت التحصيل بنوع الأسئلة ومستويات العمق المعرفي، وفسّرت الفروق داخل الشعبة الواحدة بأسبابها، ولخطوات تفكيك المسألة التي صمّمتها لطالباتها.',
+  verse:'﴿وَقُلْ رَبِّ زِدْنِي عِلْمًا﴾'},
+ {title:'شهادة امتنان',lead:'تتقدّم إدارة المدرسة بخالص الشكر والتقدير إلى',name:'أ. فاتن عبدالرحمن',role:'منسقة تكنولوجيا المعلومات',
+  text:'تقديرًا لقراءتها الواقعية التي فسّرت التفاوت بين المسارين بطبيعة المادة التراكمية في البرمجة والتحليل المنطقي، وربطت استقرار التحصيل بممارساتٍ صفية حقيقية، فقرأت النتيجة في سياقها الكامل قبل الحكم عليها.',
+  verse:'﴿وَلَا تَقْفُ مَا لَيْسَ لَكَ بِهِ عِلْمٌ﴾'},
+ {title:'شهادة تميّز',lead:'تتقدّم إدارة المدرسة بخالص الشكر والتقدير إلى',name:'أ. أريج أبو حاشية',role:'منسقة الفيزياء',
+  text:'تقديرًا لمقارنتها الصادقة بين عامين، وتحويل القيمة المضافة للحادي عشر من السالب إلى قيمة موجبة بلغت 11.28%، وربطها التحصيل بمهارات الفيزياء وطبيعة الأسئلة، وتحديدها الإجراء الأعلى أثرًا، وعقدها اجتماع المراجعة الذاتية مع فريقها.',
+  verse:'﴿إِنَّ اللَّهَ لَا يُضِيعُ أَجْرَ مَنْ أَحْسَنَ عَمَلًا﴾'},
+ {title:'شهادة فخر واعتزاز',lead:'تتقدّم إدارة المدرسة بخالص الشكر والتقدير إلى',name:'فريق قسم العلوم الشرعية',role:'بقيادة أ. خولة المطوع',
+  text:'تقديرًا لمبادرة الفريق إلى جعل القيم واقعًا تعيشه الطالبات لا شعارًا يُكتب، وإسهامه الكبير في تعزيز القيم في المدرسة حتى تجلّت في أبهى صورها؛ إيمانًا بأن بناء الإنسان يبدأ من قيمه.',
+  verse:'﴿وَلْتَكُنْ مِنْكُمْ أُمَّةٌ يَدْعُونَ إِلَى الْخَيْرِ﴾'},
+ {title:'وسام فائزة رحلة التأمّل',lead:'تتقدّم إدارة المدرسة بالتهنئة والتقدير إلى',name:'',role:'قائدة القمرة الأولى',winner:1,
+  text:'لتصدّرها لوحة النقاط في ورشة «الصندوق الأسود»، بإجاباتٍ واعية ومشاركةٍ متميزة عكست بصيرة القائدة التأمّلية وحضورها.',
+  verse:'﴿وَفِي ذَلِكَ فَلْيَتَنَافَسِ الْمُتَنَافِسُونَ﴾'}
+];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let winner='';try{winner=(JSON.parse(localStorage.getItem('bb_winner')||'{}').n)||''}catch(e){}
+document.getElementById('wrap').innerHTML=CERTS.map(c=>`
+<div class="cert">
+  <div class="f1"></div><div class="f2"></div>
+  <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
+  <div class="ribbon"></div>
+  <div class="in">
+    <div class="school">مدرسة الشيماء الثانوية للبنات</div>
+    <div class="event">${esc(EVENT)}</div>
+    <div class="title">${esc(c.title)}</div>
+    <div class="lead">${esc(c.lead)}</div>
+    <div class="name" contenteditable="true" spellcheck="false">${esc(c.winner?(winner?'أ. '+winner:'اسم الفائزة'):c.name)}</div>
+    <div class="role">${esc(c.role)}</div>
+    <div class="text">${esc(c.text)}</div>
+    <div class="verse">${c.verse}</div>
+    <div class="sigs">
+      <div class="sig"><div class="ln"></div><div class="n">أ. وداد الكربي</div><div class="t">النائبة الإدارية</div></div>
+      <div class="sig mid"><img src="signature.png" alt="" onerror="this.remove()"><div class="n">أ. آسيا الذبياني</div><div class="t">نائب المديرة للشؤون الأكاديمية</div></div>
+      <div class="sig"><div class="ln"></div><div class="n">أ. شيخة الرميحي</div><div class="t">مديرة المدرسة</div></div>
+    </div>
+  </div>
+</div>`).join('');
+</script>
+</body>
+</html>
