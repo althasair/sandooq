@@ -573,6 +573,57 @@ body.embed #stage{box-shadow:none}
 .tfCol.ok b{color:#9fe0b8}.tfCol.no b{color:var(--orange2)}
 .tfQ{font-family:var(--h);font-weight:800}
 .vsWho{font-family:var(--h);font-size:21px;color:#8a7560;margin-top:-2px}
+
+/* الجملة الختامية وحدها في الوسط */
+.slide:has(.closer.on){justify-content:center!important;align-items:center!important}
+.slide:has(.closer.on)>*:not(.closer):not(.pband){display:none!important}
+.slide .closer.on{display:block!important;margin:10px auto!important;max-width:1300px;text-align:center!important;font-family:var(--h)!important;font-weight:800!important;font-size:68px!important;line-height:1.5!important;padding:0!important;background:none!important;border:none!important;color:inherit;animation:closerIn .9s cubic-bezier(.3,1.4,.5,1) both}
+.slide .closer.on b,.slide .closer.on span{color:var(--orange)!important}
+.slide.dark .closer.on{color:#f6e7cf!important}.slide.dark .closer.on b,.slide.dark .closer.on span{color:var(--orange2)!important}
+.slide:not(.dark) .closer.on{color:var(--leather)!important}
+.slide .closer.on+.closer.on{font-size:44px!important}
+@keyframes closerIn{0%{opacity:0;transform:scale(.7)}100%{opacity:1;transform:none}}
+
+/* إغلاق الهدف: عنصر واحد في كل مرة */
+.wrapG{justify-content:flex-start}
+.wiStage{flex:1;position:relative}
+.wi{position:absolute;left:50%;top:44%;width:1250px;margin-left:-625px;transform:translateY(-50%);text-align:center;font-family:var(--h);font-weight:700;font-size:50px;line-height:1.6;color:var(--leather);background:#fff;border:2px solid #eadcc6;border-top:8px solid var(--orange);border-radius:26px;padding:34px 46px}
+.wi b{color:var(--orange)}
+.wi span{display:block;margin:0 auto 10px;width:66px;height:66px;line-height:66px;border-radius:50%;background:var(--orange);color:#fff;font-size:34px}
+.wi.on{animation:closerIn .7s cubic-bezier(.3,1.4,.5,1) both}
+.wi.on:has(~ .wi.on){display:none}
+.wiLead{border-top-color:#2F6B4F}.wiLead span{background:#2F6B4F}
+
+/* تبرير/تأمل تفاعلي */
+.jz{padding-top:44px}
+.jStage{flex:1;position:relative}
+.jp{position:absolute;inset:0;display:flex;flex-direction:column;gap:12px}
+.jp:not(:has(.on)):not(.on){display:none}
+.jp:has(~ .jp .on),.jp:has(~ .jp.on){display:none}
+.jTag{align-self:center;font-family:var(--h);font-weight:800;font-size:30px;color:#fff;background:var(--leather);border-radius:40px;padding:6px 28px}
+.jRow{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center;flex:1}
+.jC{border-radius:24px;padding:20px 28px;text-align:center;position:relative;transition:transform .7s cubic-bezier(.3,1.3,.5,1),opacity .5s,filter .5s}
+.jL{background:#fbeee9;border:3px solid #e2a493;color:#5a2218;transform:translateX(160%);opacity:0}
+.jL.on{transform:none;opacity:1}
+.jR{background:#ebf4ee;border:3px solid #7fb896;color:#1f4d38;transform:translateX(-160%);opacity:0}
+.jR.on{transform:scale(1.08);opacity:1;box-shadow:0 18px 50px rgba(47,107,79,.3)}
+.jRow:has(.jR.on) .jL{transform:scale(.9);filter:saturate(.6);opacity:.8}
+.jF{font-size:66px;line-height:1.1}
+.jR.on .jF{animation:pop 1s .4s cubic-bezier(.3,1.6,.5,1) both}
+.jL.on .jF{animation:shake .6s .3s both}
+@keyframes shake{25%{transform:rotate(-10deg)}50%{transform:rotate(8deg)}75%{transform:rotate(-5deg)}}
+.jH{font-family:var(--h);font-weight:800;font-size:30px;margin-bottom:4px}
+.jL .jH{color:#B23A2B}.jR .jH{color:#2F6B4F}
+.jC p{font-size:30px;line-height:1.6;text-align:center}
+.jL p{font-size:32px}
+.jR b{color:#2F6B4F;background:#d6ecdd;border-radius:6px;padding:0 4px}
+.jC small{display:block;font-family:var(--h);font-size:20px;opacity:.75;margin-top:6px}
+.jPh{justify-content:center;align-items:center}
+.jPh.on{animation:closerIn .8s both}
+.jPhr{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%}
+.jPhr span{font-family:var(--h);font-weight:800;font-size:34px;color:#2F6B4F;background:#ebf4ee;border:2px solid #7fb896;border-radius:18px;padding:16px;text-align:center}
+.jFormula{font-family:var(--h);font-weight:700;font-size:32px;color:var(--leather);margin-top:10px}
+.jFormula b{color:var(--orange)}
 </style>
 </head>
 <body>
@@ -662,7 +713,7 @@ body.embed #stage{box-shadow:none}
       <p class="center muted" style="font-size:20px;text-align:center">سورة القيامة</p>
     </div>
   </div>
-  <p style="font-family:var(--h);font-size:30px;color:var(--leather);text-align:center;margin-top:auto">التقرير التأملي هو <span style="color:var(--orange)">الصندوق الأسود لقسمكِ</span>.</p>
+  <p class="frag closer" data-o="99" style="font-family:var(--h);font-size:30px;color:var(--leather);text-align:center;margin-top:auto">التقرير التأملي هو <span style="color:var(--orange)">الصندوق الأسود لقسمكِ</span>.</p>
 </section>
 
 <!-- 6 ADAM / IBLIS -->
@@ -726,7 +777,7 @@ body.embed #stage{box-shadow:none}
     <div class="card cobCard frag" style="flex:1"><span class="cobSet frag"></span><div class="cobTag">حين يصبح المؤشر</div><p class="cob9a">عدد الزيارات الصفية…</p><p class="cob9b">تكثر الزيارات… ولا يتغير شيء داخل الفصل.</p></div>
     <div class="card cobCard frag" style="flex:1"><span class="cobSet frag"></span><div class="cobTag">حين يصبح المؤشر</div><p class="cob9a">ساعات التدريب…</p><p class="cob9b">يكتمل الحضور… ولا يُطبَّق شيء.</p></div>
   </div>
-  <p class="frag" style="font-family:var(--h);font-size:34px;color:#f1d8b0;text-align:center;margin-top:auto">التقرير الوصفي يقول: «تحقق المؤشر»… والتأملي يسأل: <span style="color:var(--orange2)">«هل تحقق الهدف، أم ربّينا كوبرا؟»</span></p>
+  <p class="frag closer" data-o="99" style="font-family:var(--h);font-size:34px;color:#f1d8b0;text-align:center;margin-top:auto">التقرير الوصفي يقول: «تحقق المؤشر»… والتأملي يسأل: <span style="color:var(--orange2)">«هل تحقق الهدف، أم ربّينا كوبرا؟»</span></p>
 </section>
 
 <!-- 9 THREE TYPES -->
@@ -1043,7 +1094,7 @@ body.embed #stage{box-shadow:none}
     <div class="aiL frag" data-o="2">ماذا قال؟</div><div class="aiC bad frag" data-o="2"><q>﴿أَنَا خَيْرٌ مِنْهُ﴾</q>برّر خطأه بتفضيل نفسه</div><div class="aiC good frag" data-o="2"><q>﴿رَبَّنَا ظَلَمْنَا أَنْفُسَنَا﴾</q>اعترف… ونسب الخطأ إلى نفسه</div>
     <div class="aiL frag" data-o="3">على مَن ألقى اللوم؟</div><div class="aiC bad frag" data-o="3"><q>﴿فَبِمَا أَغْوَيْتَنِي﴾</q>أي: «بسبب أنك أضللتني»… فنسب ضلاله إلى الله</div><div class="aiC good frag" data-o="3">لم يقل: «الشيطان هو السبب»… <b>مع أنه وسوس له</b></div>
   </div>
-  <p class="punch frag" data-o="4" style="font-size:38px;margin-top:auto">الخطأ وقع من الطرفين… <b>والفرق كان في الردّ</b></p>
+  <p class="punch frag closer" data-o="99" style="font-size:38px;margin-top:auto">الخطأ وقع من الطرفين… <b>والفرق كان في الردّ</b></p>
   <div class="fBand frag" data-o="5" style="text-align:center;font-size:34px;margin-top:8px">📱 فإلى أين قاد كلَّ واحدٍ منهما ردُّه؟</div>
 </section>
 
@@ -1054,7 +1105,7 @@ body.embed #stage{box-shadow:none}
     <div class="aiC bad frag"><div class="aiH bad">🔥 إبليس برّر</div><q>﴿قَالَ فَاخْرُجْ مِنْهَا فَإِنَّكَ رَجِيمٌ﴾</q><p>طُرد من رحمة الله، وبقي على خطئه؛<br><b>لأن مَن يبرّر لا يرى خطأً يرجع عنه</b></p></div>
     <div class="aiC good frag"><div class="aiH good">✨ آدم اعترف</div><q>﴿ثُمَّ اجْتَبَاهُ رَبُّهُ فَتَابَ عَلَيْهِ وَهَدَى﴾</q><p><b>تاب</b> اللهُ عليه، <b>واجتباه</b> فارتفعت منزلته،<br><b>وهداه</b> إلى الطريق بعد الخطأ</p></div>
   </div>
-  <div class="fBand frag" style="text-align:center;font-size:32px;margin-top:auto">وكذلك تقاريرنا: <b>التقرير الذي يبرّر يُغلق باب التحسين… والتقرير الذي يتأمّل يفتحه</b></div>
+  <div class="fBand frag closer" data-o="99" style="text-align:center;font-size:32px;margin-top:auto">وكذلك تقاريرنا: <b>التقرير الذي يبرّر يُغلق باب التحسين… والتقرير الذي يتأمّل يفتحه</b></div>
 </section>
 
 <section class="slide pause tawba tb2" data-seg="وقفة تأمل">
@@ -1073,7 +1124,7 @@ body.embed #stage{box-shadow:none}
     <div class="tvRow"><div class="tvStep frag">العزم على ألا يعود<small>الخطة الوقائية</small></div><div class="tvArr frag"><i></i></div><div class="tvApp">لا حكم قبل أن أطّلع على الخطة وأسمع المعلمة</div></div>
     <div class="tvRow"><div class="tvStep frag">ردّ الحقوق إلى أصحابها<small>معالجة الأثر</small></div><div class="tvArr frag"><i></i></div><div class="tvApp">شكرتُها على خطتها البديلة، وعدّلتُ تقييمها</div></div>
   </div>
-  <p class="punch frag tbEnd">الرجوع عن الخطأ ليس ضعفًا… <b>بل شجاعةُ القائد</b></p>
+  <p class="punch  tbEnd frag closer" data-o="99">الرجوع عن الخطأ ليس ضعفًا… <b>بل شجاعةُ القائد</b></p>
 </section>
 
 <section class="slide pause asrs" data-seg="وقفة تأمل">
@@ -1092,7 +1143,7 @@ body.embed #stage{box-shadow:none}
     <div class="frag"><b>غير عقابي</b><span>مَن يبلّغ عن خطئه غير المقصود لا يُعاقَب</span></div>
     <div class="frag"><b>مستقل</b><span>تديره ناسا… لا الجهة التي تحاسب الطيارين</span></div>
   </div>
-  <p class="punch frag" style="padding-top:8px">صار الطيران آمنًا… <b>حين صار الاعتراف بالخطأ مأمونَ العاقبة</b></p>
+  <p class="punch frag closer" data-o="99" style="padding-top:8px">صار الطيران آمنًا… <b>حين صار الاعتراف بالخطأ مأمونَ العاقبة</b></p>
 </section>
 
 <section class="slide" data-seg="كينيدي">
@@ -1124,8 +1175,8 @@ body.embed #stage{box-shadow:none}
       <div class="vsLine frag">برنامجٌ في الطائرة يخفض مقدّمتها وحده… فألقى اللوم على الطيارين، وأصرّ أن الطائرة آمنة… <b>فأُقيل في ديسمبر 2019</b></div>
     </div>
   </div>
-  <div class="vsPunch frag">كينيدي اعترف <b class="g">فكبُر</b>… ومدير بوينغ برّر <b class="r">فسقط</b></div>
-  <div class="vsPunch2 frag">وكما برّر إبليس فطُرد… برّر المدير فأُقيل</div>
+  <div class="vsPunch frag closer" data-o="98">كينيدي اعترف <b class="g">فكبُر</b>… ومدير بوينغ برّر <b class="r">فسقط</b></div>
+  <div class="vsPunch2 frag closer" data-o="99">وكما برّر إبليس فطُرد… برّر المدير فأُقيل</div>
 </section>
 
 <section class="slide pause" data-seg="وقفة تأمل">
@@ -1141,7 +1192,7 @@ body.embed #stage{box-shadow:none}
       <p>بعد الطائرة الأولى اتجه اللوم إلى الطيارين… <b>فسقطت الثانية بالسبب نفسه بعد أقل من خمسة أشهر.</b></p>
       <p>والمنسقة التي تكتب بعد الاختبار الأول: «السبب ضعف الطالبات»… لن تغيّر شيئًا في ممارسات قسمها، <b>فتتراجع النتائج مرة أخرى.</b></p></div>
   </div>
-  <p class="punch">التقرير الذي يبرّر اليوم… <b>يكتب المشكلة نفسها الشهر القادم</b></p>
+  <p class="punch frag closer" data-o="99">التقرير الذي يبرّر اليوم… <b>يكتب المشكلة نفسها الشهر القادم</b></p>
 </section>
 
 <section class="slide pause lt" data-seg="وقفة تأمل">
@@ -1252,8 +1303,8 @@ body.embed #stage{box-shadow:none}
       <div class="frL frag" data-o="6"><span>أنصفت</span>جلست معها وفتحت التحضير… <b>فاكتشفت أن المعلمة أنقذت الحصة</b></div>
     </div>
   </div>
-  <div class="mrBig frag" data-o="7" style="font-size:40px">تحضير المعلمة صندوقها الأسود… <b>فلا تحكمي قبل أن تفتحيه</b></div>
-  <p class="punch frag" data-o="8" style="font-size:28px">قبل الحكم اسألي نفسكِ: <b>ما الذي لم أرَه؟ وماذا حدث قبل أن أرفع رأسي؟</b></p>
+  <div class="mrBig frag closer" data-o="98" style="font-size:40px">تحضير المعلمة صندوقها الأسود… <b>فلا تحكمي قبل أن تفتحيه</b></div>
+  <p class="punch frag closer" data-o="99" style="font-size:28px">قبل الحكم اسألي نفسكِ: <b>ما الذي لم أرَه؟ وماذا حدث قبل أن أرفع رأسي؟</b></p>
 </section>
 
 <section class="slide qa" data-seg="قطر 2017">
@@ -1285,8 +1336,8 @@ body.embed #stage{box-shadow:none}
     <div class="tvRow"><div class="tvStep frag">اتخذت قرارًا</div><div class="tvArr frag"><i></i></div><div class="tvApp">الاعتماد على النفس: في الأمن، والاقتصاد، والغذاء، والدواء</div></div>
     <div class="tvRow"><div class="tvStep frag">قاست النتيجة</div><div class="tvArr frag"><i></i></div><div class="tvApp">الاكتفاء الذاتي… ثم التصدير</div></div>
   </div>
-  <p class="punch frag" style="font-size:34px">لم تقل: «الظروف أقوى منا»… <b>بل حوّلت الأزمة إلى فرصة</b></p>
-  <p class="frag" style="font-family:var(--h);font-size:26px;text-align:center;color:var(--muted)">والنتائج المتدنية ليست نهاية القصة… قد تكون بداية أقوى نقلة في قسمكِ</p>
+  <p class="punch frag closer" data-o="98" style="font-size:34px">لم تقل: «الظروف أقوى منا»… <b>بل حوّلت الأزمة إلى فرصة</b></p>
+  <p class="frag closer" data-o="99" style="font-family:var(--h);font-size:26px;text-align:center;color:var(--muted)">والنتائج المتدنية ليست نهاية القصة… قد تكون بداية أقوى نقلة في قسمكِ</p>
 </section>
 <section class="slide dark" data-seg="الإقلاع">
   <div class="kicker">الكشف</div>
@@ -1385,6 +1436,33 @@ body.embed #stage{box-shadow:none}
   <div class="scGrid"><div class="scC frag"><div class="scM">عدد الأنشطة والفعاليات</div><div class="scR"><span>قد ينقلب إلى</span>كثرةٌ بلا أثرٍ في تعلّم الطالبة</div><div class="scQ"><span>والسؤال الأصدق</span>ماذا تغيّر في الطالبة بعد النشاط؟</div></div><div class="scC frag"><div class="scM">إنجاز الخطة في وقتها</div><div class="scR"><span>قد ينقلب إلى</span>إسراعٌ في الشرح على حساب الفهم</div><div class="scQ"><span>والسؤال الأصدق</span>كم طالبةً أتقنت فعلًا؟</div></div><div class="scC frag"><div class="scM">عدد الأوراق المصحّحة</div><div class="scR"><span>قد ينقلب إلى</span>علامةٌ بلا تغذيةٍ راجعة</div><div class="scQ"><span>والسؤال الأصدق</span>هل عرفت الطالبة خطأها؟</div></div><div class="scC frag"><div class="scM">ارتفاع درجات أعمال السنة</div><div class="scR"><span>قد ينقلب إلى</span>تساهلٌ في التقدير</div><div class="scQ"><span>والسؤال الأصدق</span>هل تتّفق مع نتائج الاختبار النهائي؟</div></div><div class="scC frag"><div class="scM">عدد البرامج العلاجية</div><div class="scR"><span>قد ينقلب إلى</span>قوائم وحضور… بلا تحسّن</div><div class="scQ"><span>والسؤال الأصدق</span>هل تحسّن مستوى المستهدفات؟</div></div><div class="scC frag"><div class="scM">عدد الشواهد في الملف</div><div class="scR"><span>قد ينقلب إلى</span>انشغالٌ بالتوثيق عن العمل</div><div class="scQ"><span>والسؤال الأصدق</span>هل يدلّ الشاهد على أثر؟</div></div></div>
   <p class="punch frag" style="font-size:34px">لا نترك المؤشر… <b>بل نسأل معه دائمًا: هل تحقق الهدف؟</b></p>
 </section>
+<section class="slide wrapG" data-seg="إغلاق الهدف">
+  <div class="kicker" style="text-align:center">🎯 إغلاق الهدف الأول · عصفٌ سريع</div>
+  <h2 style="text-align:center;margin-bottom:6px">التأمّل لا التبرير… والاعتراف يكسب الثقة</h2>
+  <div class="wiStage"><div class="wi frag"><span>1</span>تكلّمنا عن <b>إبليس</b> برّر فطُرد… و<b>آدم</b> اعترف فتاب الله عليه</div><div class="wi frag"><span>2</span>وعن <b>النائبة</b> التي تراجعت عن حكمها… فكان رجوعها شجاعة</div><div class="wi frag"><span>3</span>وعن <b>كينيدي</b> اعترف فكبُر… و<b>مدير بوينغ</b> برّر فسقط</div><div class="wi frag wiLead"><span>✔</span>القائدة الناجحة تبحث عن السبب <b>في داخلها</b> قبل أن تبحث عنه في غيرها</div></div>
+  <p class="frag closer" data-o="98">إذا اعترفتِ بخطئكِ… <b>كسبتِ ثقة فريقكِ، وفتحتِ باب التحسين</b></p>
+  <p class="frag closer" data-o="99">واضح يا جماعة؟ 😄 ننتقل للهدف التالي… <b>ولا ننام عند هذا الهدف؟</b></p>
+</section>
+<section class="slide wrapG" data-seg="إغلاق الهدف">
+  <div class="kicker" style="text-align:center">🎯 إغلاق الهدف الثاني · عصفٌ سريع</div>
+  <h2 style="text-align:center;margin-bottom:6px">الكلام عن الخطأ آمن… والحكم بإنصاف</h2>
+  <div class="wiStage"><div class="wi frag"><span>1</span>تكلّمنا عن <b>المهندس</b> شكّ… وسكت هيبةً من قائده</div><div class="wi frag"><span>2</span>وعن <b>المعلمة</b> التي تسكت حياءً وخوفًا من الأعباء والاستهداف</div><div class="wi frag"><span>3</span>وعن <b>المحققين</b> الذين لم يروا الـ35 ثانية التي عاشها سولي</div><div class="wi frag wiLead"><span>✔</span>القائدة الناجحة <b>ملجأٌ لفريقها</b>: تسمع قبل أن تحكم، وتبدأ بنفسها: «ما الذي لم ينجح معي هذا الشهر؟»</div></div>
+  <p class="frag closer" data-o="98">إذا أمِن فريقكِ أن يقول الخطأ… <b>رأيتِ ما لا ترينه وحدكِ</b></p>
+  <p class="frag closer" data-o="99">واضح يا جماعة؟ 😄 ننتقل للهدف التالي… <b>ولا ننام عند هذا الهدف؟</b></p>
+</section>
+<section class="slide wrapG" data-seg="إغلاق الهدف">
+  <div class="kicker" style="text-align:center">🎯 إغلاق الهدف الثالث · عصفٌ سريع</div>
+  <h2 style="text-align:center;margin-bottom:6px">مؤشرٌ صادق… وتأمّلٌ يصير خطة</h2>
+  <div class="wiStage"><div class="wi frag"><span>1</span>تكلّمنا عن <b>الكوبرا</b>: تحقق المؤشر… ولم يتحقق الهدف</div><div class="wi frag"><span>2</span>وعن <b>قطر</b> التي حوّلت الأزمة إلى خطة… ثم إلى إنجاز</div><div class="wi frag"><span>3</span>وعن <b>غزوة أحد</b>: محاسبةٌ بلا إهانة… تبني ولا تكسر</div><div class="wi frag wiLead"><span>✔</span>القائدة الناجحة تسأل عن <b>الأثر لا العدد</b>، وتفتح الصندوق <b>قبل أن تسقط الطائرة</b></div></div>
+  <p class="frag closer" data-o="98">إذا قِستِ الأثر لا العدد… <b>صار تقريركِ خطةً تصنع الفرق</b></p>
+  <p class="frag closer" data-o="99">واضح يا جماعة؟ 😄 ننتقل للهدف التالي… <b>ولا ننام عند هذا الهدف؟</b></p>
+</section>
+<section class="slide jz" data-seg="من القصة إلى التقرير">
+  <div class="kicker">من القصة… إلى تقريري وإيميلي</div>
+  <h2 style="margin-bottom:6px">متى أكتب تأمّلًا… ومتى يصير كلامي تبريرًا؟</h2>
+  <div class="jStage"><div class="jp"><div class="jTag">🎓 أكاديمي · النتائج</div><div class="jRow"><div class="jC jL frag"><div class="jF">😒</div><div class="jH">تبرير</div><p>«تراجعت نتائج الصف الحادي عشر بسبب ضعف التأسيس لدى الطالبات».</p></div><div class="jC jR frag"><div class="jF">😊👍</div><div class="jH">تأمّل</div><p>«تراجعت نتائج الصف الحادي عشر بنسبة (…)، <b>ويُعزى ذلك إلى</b> أن الخطة العلاجية بُنيت على نتائج العام الماضي دون تشخيصٍ حديث. <b>وعليه، سيتم</b> بناء خطة علاجية على نتائج الاختبار التشخيصي، ومتابعة أثرها أسبوعيًا».</p></div></div></div><div class="jp"><div class="jTag">🎓 أكاديمي · تنفيذ الخطة</div><div class="jRow"><div class="jC jL frag"><div class="jF">😒</div><div class="jH">تبرير</div><p>«لم تُنفَّذ بعض بنود الخطة لضيق الوقت».</p></div><div class="jC jR frag"><div class="jF">😊👍</div><div class="jH">تأمّل</div><p>«بلغت نسبة تنفيذ الخطة (…)، <b>وقد تبيّن أن</b> توزيع بعض البنود تزامن مع فترة التقويمات. <b>وعليه، سيتم</b> مراعاة التقويم المدرسي في التخطيط، وإدراج البنود المؤجّلة في خطة الشهر القادم».</p></div></div></div><div class="jp"><div class="jTag">🎓 أكاديمي · أداء المعلمة</div><div class="jRow"><div class="jC jL frag"><div class="jF">😒</div><div class="jH">تبرير</div><p>«المعلمة غير متجاوبة مع التوجيهات».</p></div><div class="jC jR frag"><div class="jF">😊👍</div><div class="jH">تأمّل</div><p>«لُوحظ تفاوتٌ في توظيف المعلمة للتعلم النشط، <b>ويبدو أن</b> التوجيهات المكتوبة وحدها <b>لم تكن كافية</b>. <b>وعليه، سيتم</b> دعمها بزيارة تبادلية لحصة نموذجية، يليها حوارٌ مهني لتحديد احتياجاتها».</p></div></div></div><div class="jp"><div class="jTag">🗂️ إداري · إيميل للمسؤول</div><div class="jRow"><div class="jC jL frag"><div class="jF">😒</div><div class="jH">تبرير</div><p>«تأخّر تسليم الكشوف نظرًا لكثرة المهام وانشغال المعلمات».</p></div><div class="jC jR frag"><div class="jF">😊👍</div><div class="jH">تأمّل</div><p>«تأخّر تسليم الكشوف يومين، <b>وأتحمّل مسؤولية ذلك؛ إذ</b> تمّت المراجعة في نهاية الفترة لا أولًا بأول. <b>وتلافيًا لتكرار ذلك</b>، سيتم اعتماد مراجعة أسبوعية كل خميس، والإرسال قبل الموعد بيوم».</p></div></div></div><div class="jp"><div class="jTag">🗂️ إداري · ظرفٌ خارجي حقيقي</div><div class="jRow"><div class="jC jL frag"><div class="jF">😐</div><div class="jH">اعتذارٌ ناقص</div><p>«أعتذر عن التأخر في رفع الدرجات».<br><small>اعتذارٌ مهذّب… لكنه ناقص</small></p></div><div class="jC jR frag"><div class="jF">😊👍</div><div class="jH">تفسيرٌ موثّق… وقرار</div><p>«تأخّر رفع الدرجات لتوقّف النظام يوم الأربعاء <b>(مرفق إشعار الدعم الفني)</b>، وتم الرفع فور عودته. <b>وسيتم مستقبلًا</b> الاحتفاظ بنسخة احتياطية لضمان التسليم في الموعد».<br><small>تفسيرٌ موثّق… ينتهي بقرار</small></p></div></div></div><div class="jp jPh frag"><div class="jTag">🖊️ عباراتٌ مهنية للتأمل</div><div class="jPhr"><span>ويُعزى ذلك إلى…</span><span>وقد تبيّن أن…</span><span>ويبدو أن… لم يكن كافيًا</span><span>وأتحمّل مسؤولية ذلك؛ إذ…</span><span>وعليه، سيتم…</span><span>وتلافيًا لتكرار ذلك…</span></div><div class="jFormula">الواقع بالأرقام ← <b>ويُعزى ذلك إلى</b> سببٍ من الداخل ← <b>وعليه، سيتم</b> إجراءٌ محدد</div></div></div>
+  <p class="frag closer" data-o="99">التقرير الذي ينتهي بالظرف تبرير… <b>والذي ينتهي بقرار تأمّل</b></p>
+</section>
 
 
 
@@ -1434,7 +1512,7 @@ addEventListener('keydown',e=>{
 });
 
 (function autoFrag(){const SKIP=/(^|\s)(kicker|pband|goalTag|box-k|note)(\s|$)/;const GRID=/(^|\s)(row|two|cards|grid|cols|colbox-wrap)(\s|$)/;
-document.querySelectorAll('.slide').forEach(sl=>{if(sl.querySelector('.frag')||sl.classList.contains('cover')||sl.classList.contains('boxOpen')||sl.id==='cockpitSlide'||sl.querySelector('button,input,textarea,audio,video,canvas'))return;
+document.querySelectorAll('.slide').forEach(sl=>{if(sl.querySelector('.frag:not(.closer)')||sl.classList.contains('cover')||sl.classList.contains('boxOpen')||sl.id==='cockpitSlide'||sl.querySelector('button,input,textarea,audio,video,canvas'))return;
   const kids=[...sl.children].filter(e=>!SKIP.test(e.className||'')&&!/^H[12]$/.test(e.tagName));
   kids.slice(1).forEach(e=>{if(GRID.test(e.className||'')&&e.children.length>1)[...e.children].forEach(c=>c.classList.add('frag'));else e.classList.add('frag')});});})();
 const h=parseInt((location.hash||'').replace('#s',''));go(h>0&&h<=slides.length?h-1:0);
