@@ -617,7 +617,7 @@ function Screen(){
     const q=curQ();
     if(f.winner&&jget('bb_winner').n)return;
     if(f.thx){if(THX[f.thx].special){applause(5);whistle();setTimeout(whistle,900);setTimeout(()=>applause(4),2500);setTimeout(whistle,2800);let k=0;const iv=setInterval(()=>{burst(['❤️','💖','💛','🧡','💕','👏'],18,$('#screenView'));if(++k>6)clearInterval(iv)},700)}else{applause(2.6);setTimeout(chime,300);burst(['✨','🌟','👏','💛','🎉'],40,$('#screenView'))}}
-    const done=q&&jget('bb_scores')[q.id];
+    const sc=q&&jget('bb_scores')[q.id];const done=!!(sc&&Object.keys(sc).length);
     if(q&&!done)startTimer(q);
     try{const r=await api({a:'set',pin,qi:q?Q.indexOf(q):-1,ph:q?(done?'reveal':'open'):'idle',qid:q?q.id:''});if(r.ok===false&&r.err==='pin'){askPin();return}apply(r);if(DEMO)Sim.onPhase(r.st)}catch(e){}
   }
