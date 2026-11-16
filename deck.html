@@ -632,6 +632,20 @@ body.embed #stage{box-shadow:none}
 .apS i{font-style:normal;flex:0 0 54px;height:54px;border-radius:50%;background:#2F6B4F;color:#fff;font-family:var(--h);font-weight:800;font-size:28px;display:flex;align-items:center;justify-content:center}
 .apS p{font-size:30px;line-height:1.5;text-align:right}
 .apS b{color:#2F6B4F}
+
+/* ===== وضع الطباعة / PDF: deck.html?print ===== */
+body.pmode{overflow:auto;height:auto;background:#555}
+body.pmode #viewport{display:none}
+#printRoot{display:none}
+body.pmode #printRoot{display:block}
+.pstage{width:1600px;height:900px;position:relative;overflow:hidden;background:var(--ivory);margin:0 auto 20px;page-break-after:always;break-after:page}
+.pstage .slide{display:flex!important;opacity:1!important;position:absolute;inset:0}
+.pstage *{animation:none!important;transition:none!important}
+.pstage .frag.on,.pstage .wi.on{opacity:1}
+#pbar{position:fixed;top:0;left:0;right:0;z-index:99;background:#2c1a10;color:#f1d8b0;font-family:var(--h);font-size:18px;padding:12px 20px;display:flex;gap:16px;align-items:center;justify-content:center}
+#pbar button{font-family:var(--h);font-size:18px;border:none;border-radius:30px;padding:8px 26px;background:linear-gradient(90deg,#F3893F,#E8681A);color:#fff;cursor:pointer}
+body.pmode #printRoot{padding-top:70px}
+@media print{@page{size:1600px 900px;margin:0}html,body.pmode{background:#fff!important;height:auto!important;overflow:visible!important}#pbar{display:none!important}body.pmode #printRoot{padding:0}.pstage{margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 </head>
 <body>
@@ -1652,6 +1666,21 @@ document.getElementById('playCvr').onclick=async()=>{
   await sleep(5200);if(!alive())return;
   stopCvr();sub.style.opacity=0;scene.textContent='';await sleep(900);silence.style.opacity=1;
 };
+
+/* ===== وضع الطباعة: يحوّل العرض كاملًا إلى صفحات PDF ===== */
+if(/[?&]print/.test(location.search)){(function(){
+  document.body.classList.add('pmode');const root=document.createElement('div');root.id='printRoot';document.body.appendChild(root);
+  const bar=document.createElement('div');bar.id='pbar';bar.innerHTML='📄 العرض جاهز للتحويل · اختاري <b>Save as PDF</b> من نافذة الطباعة <button id="pgo">حفظ PDF</button>';document.body.appendChild(bar);
+  function page(sl,fn){const st=document.createElement('div');st.className='pstage';const c=sl.cloneNode(true);c.removeAttribute('id');c.classList.add('active');
+    c.querySelectorAll('[data-to]').forEach(e=>e.textContent=e.dataset.to+(e.dataset.suf||''));fn(c);st.appendChild(c);root.appendChild(st)}
+  const ord=(new URLSearchParams(location.search).get('print')||'').split(',').map(Number).filter(n=>n>0&&n<=slides.length);
+  (ord.length?ord.map(n=>slides[n-1]):slides).forEach(sl=>{const hasC=sl.querySelector('.closer'),wis=[...sl.querySelectorAll('.wi')];
+    page(sl,c=>{c.querySelectorAll('.frag:not(.closer):not(.wi)').forEach(f=>f.classList.add('on'));c.querySelectorAll('.closer').forEach(f=>f.classList.remove('on'))});
+    wis.forEach((w,k)=>page(sl,c=>{c.querySelectorAll('.frag:not(.closer):not(.wi)').forEach(f=>f.classList.add('on'));c.querySelectorAll('.wi')[k].classList.add('on')}));
+    if(hasC)page(sl,c=>{c.querySelectorAll('.frag').forEach(f=>f.classList.add('on'))});});
+  document.getElementById('pgo').onclick=()=>print();
+  (document.fonts&&document.fonts.ready||Promise.resolve()).then(()=>setTimeout(()=>print(),900));
+})()}
 </script>
 </body>
 </html>

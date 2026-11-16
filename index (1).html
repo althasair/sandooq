@@ -120,6 +120,52 @@ button{font-family:var(--h);cursor:pointer}
 .ptsTag{font-family:var(--h);font-size:14px;font-weight:800;color:#fff;background:var(--green);border-radius:20px;padding:2px 10px;margin-right:auto;white-space:nowrap}
 .myPts{margin-top:14px;font-family:var(--h);font-size:16px;color:var(--leather);background:#fff;border:1.5px solid var(--gold);border-radius:14px;padding:10px 14px}
 .myPts b{color:var(--orange);font-size:22px}
+
+/* ===== ختام الرحلة: الفائزتان · التقييم · النتائج ===== */
+.w2{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:radial-gradient(ellipse at 50% 40%,#5a3722 0%,#24150d 75%);color:var(--ivory);position:relative;overflow:hidden;padding-bottom:20px}
+.w2 .k{font-family:var(--h);font-size:30px;color:var(--orange2)}
+.w2 .crownBig{font-size:96px;line-height:1;margin:6px 0 10px;animation:pop .8s both}
+.w2 .pods{display:flex;gap:50px;align-items:flex-end;justify-content:center;margin-top:10px}
+.pod{width:560px;border-radius:26px;padding:26px 20px 30px;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));border:2px solid rgba(243,137,63,.5);opacity:0;transform:translateY(60px) scale(.8)}
+.pod.on{animation:podIn .9s cubic-bezier(.2,1.3,.4,1) forwards}
+@keyframes podIn{to{opacity:1;transform:none}}
+.pod.p1{border-color:#F2C658;box-shadow:0 0 60px rgba(242,198,88,.35);padding-top:36px;padding-bottom:44px}
+.pod .md{font-size:90px;line-height:1}
+.pod .wrk{font-family:var(--h);font-size:26px;color:#f7d9a8;margin-top:6px}
+.pod .wnm{font-family:var(--h);font-weight:800;font-size:58px;color:#fff;white-space:nowrap;margin-top:6px;text-shadow:0 0 26px rgba(243,137,63,.6)}
+.pod.p1 .wnm{font-size:66px}
+.pod .ds{font-family:var(--h);font-size:20px;color:#e9cfa7;margin-top:8px}
+.fbW{flex:1;display:grid;grid-template-columns:1fr 600px;gap:50px;align-items:center;padding:30px 70px 20px;background:radial-gradient(ellipse at 30% 30%,#4a2e1e 0%,#1d120b 75%);color:var(--ivory)}
+.fbW .k{font-family:var(--h);font-size:24px;color:var(--orange2)}
+.fbW h2{font-family:var(--h);font-weight:800;font-size:48px;line-height:1.5;color:#fff;margin:10px 0}
+.fbW h2 b{color:var(--orange2)}
+.fbW p{font-family:var(--h);font-size:30px;line-height:1.8;color:#f1d8b0}
+.fbW .rate{display:inline-block;margin-top:22px;font-family:var(--h);font-weight:800;font-size:46px;color:#fff;background:linear-gradient(90deg,#F3893F,#E8681A);border-radius:60px;padding:10px 46px;box-shadow:0 10px 30px rgba(232,104,26,.5);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.06)}}
+.bpass{display:flex;border-radius:26px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.6);cursor:pointer;text-decoration:none;color:var(--brown);transform:rotate(-2deg);transition:transform .3s}
+.bpass:hover{transform:rotate(0) scale(1.03)}
+.bpass .m{flex:1;background:var(--ivory);padding:22px 24px;text-align:center}
+.bpass .m b{display:block;font-family:var(--h);font-size:22px}
+.bpass .m small{display:block;font-size:14px;color:var(--muted);letter-spacing:1px;margin-bottom:12px}
+.bpass #fbqr{display:inline-block;background:#fff;padding:12px;border-radius:14px;border:1px solid #eadcc6}
+.bpass .m i{display:block;font-style:normal;font-family:var(--h);font-size:20px;color:var(--orange);margin-top:10px}
+.bpass .s{width:150px;background:linear-gradient(170deg,#E8681A,#B24C10);color:#fff;border-right:3px dashed var(--ivory);display:flex;flex-direction:column;justify-content:center;gap:14px;padding:18px 14px;font-family:var(--h);text-align:center}
+.bpass .s span{font-size:13px;opacity:.85;display:block}.bpass .s b{font-size:19px}
+.frW{flex:1;display:flex;flex-direction:column;min-height:0;padding:20px 40px 8px;background:var(--ivory)}
+.frTop{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.frTop h2{font-family:var(--h);font-size:32px;color:var(--brown)}.frTop h2 b{color:var(--orange)}
+.frTop .live{font-family:var(--h);font-size:16px;color:var(--green);background:var(--greenL);border-radius:20px;padding:4px 14px}
+.frGrid{flex:1;min-height:0;display:grid;grid-template-columns:560px 1fr;gap:26px;margin-top:12px}
+.frK{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
+.frK div{background:#fff;border:1px solid #eadcc6;border-top:6px solid var(--orange);border-radius:16px;padding:10px;text-align:center;font-family:var(--h)}
+.frK b{display:block;font-size:44px;color:var(--orange);line-height:1.2}.frK span{font-size:15px;color:var(--muted)}
+.frS{font-family:var(--h);font-size:17px;color:#fff;background:var(--leather);border-radius:10px;padding:2px 12px;display:inline-block;margin-top:6px}
+.frB{margin:7px 0}.frB .t{display:flex;justify-content:space-between;font-family:var(--h);font-size:16px;color:var(--brown);gap:10px}.frB .t b{color:var(--orange);white-space:nowrap}
+.frB .tr{height:14px;background:#efe4d3;border-radius:10px;overflow:hidden;margin-top:3px}.frB .tr i{display:block;height:100%;width:0;background:linear-gradient(90deg,#F3893F,#E8681A);border-radius:10px;transition:width 1.2s}
+.frC{overflow:auto;min-height:0;padding-left:6px}
+.frC h3{font-family:var(--h);font-size:20px;color:var(--leather);margin:4px 0 8px}
+.frC .cm{background:#fff;border:1px solid #eadcc6;border-right:6px solid var(--gold);border-radius:14px;padding:10px 16px;margin-bottom:10px;font-family:var(--h);font-size:19px;line-height:1.7;color:var(--brown);animation:rise .6s both}
+.frC .cm small{display:block;font-size:14px;color:var(--orange)}
 /* winner */
 .winWrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:radial-gradient(ellipse at 50% 45%,#5a3722 0%,#24150d 75%);color:var(--ivory);position:relative;overflow:hidden}
 .winWrap .k{font-family:var(--h);font-size:24px;color:var(--orange2);letter-spacing:.5px}
@@ -480,7 +526,7 @@ const THX={
  khawla:{k:'شكرٌ وتقدير · فريقٌ يصنع القيم',n:'فريق قسم العلوم الشرعية',r:'بقيادة أ. خولة المطوع',t:'بادر الفريق إلى جعل القيم واقعًا تعيشه الطالبات لا شعارًا يُكتب، فأسهم إسهامًا كبيرًا في تعزيز القيم في المدرسة، حتى تجلّت في أبهى صورها… فشكرًا لفريقٍ أدرك أن بناء الإنسان يبدأ من قيمه.',pre:'وقطر لم تصمد بالغذاء وحده… بل بالقيم: الهوية، والانتماء، والتماسك'},
  wadad:{special:1,k:'تحيةٌ خاصة · نصفي المهني الثاني',n:'أ. وداد الكربي',r:'النائبة الإدارية',pre:'أول عامٍ لها في الشيماء… وكأنها منّا منذ سنين',t:'في شهرين ونصف فقط، منذ سبتمبر، تأمّلت وطوّرت نفسها، فصنعت إنجازاتٍ واضحة في الميدان وفي مدرسة الشيماء. قائدةٌ تأمّلية بحق، وشريكةُ النجاح… ونصفي المهني الثاني.'}
 };
-const FLOW=[{s:1},{lobby:1},{s:53},{s:29},{s:30},{q:'q01'},{s:5},{s:48},{s:31},{q:'q02'},{s:32},{s:33},{s:49},{s:35},{q:'q05'},{s:36},{thx:'yusra'},{thx:'haya'},{thx:'sahar'},{s:59},{q:'q15'},{s:60},{q:'q12'},{s:56},{s:3},{s:4},{q:'q03'},{s:47},{q:'q04'},{s:21},{s:34},{s:50},{s:43},{q:'q08'},{s:44},{thx:'najwa'},{thx:'intisar'},{thx:'faten'},{q:'q13'},{s:57},{s:8},{q:'q06'},{s:9},{thx:'sheikha'},{q:'q07'},{s:55},{s:51},{s:45},{q:'q09'},{s:46},{thx:'areej'},{thx:'fatima'},{thx:'khawla'},{thx:'wadad'},{s:18},{q:'q14'},{s:58},{q:'q11'},{board:1},{winner:1},{s:20}];
+const FLOW=[{s:1},{lobby:1},{s:53},{s:29},{s:30},{q:'q01'},{s:5},{s:48},{s:31},{q:'q02'},{s:32},{s:33},{s:49},{s:35},{q:'q05'},{s:36},{thx:'yusra'},{thx:'haya'},{thx:'sahar'},{s:59},{q:'q15'},{s:60},{q:'q12'},{s:56},{s:3},{s:4},{q:'q03'},{s:47},{q:'q04'},{s:21},{s:34},{s:50},{s:43},{q:'q08'},{s:44},{thx:'najwa'},{thx:'intisar'},{thx:'faten'},{q:'q13'},{s:57},{s:8},{q:'q06'},{s:9},{thx:'sheikha'},{q:'q07'},{s:55},{s:51},{s:45},{q:'q09'},{s:46},{thx:'areej'},{thx:'fatima'},{thx:'khawla'},{thx:'wadad'},{s:18},{q:'q14'},{s:58},{q:'q11'},{board:1},{winner:1},{s:20},{wins:1},{fb:1},{fbres:1}];
 function Screen(){
   const stage=$('#stage');
   stage.innerHTML='<div id="deckWrap" style="position:absolute;top:0;left:0;right:0;bottom:78px;background:#0d0906"><iframe id="deck" src="deck.html" style="width:100%;height:100%;border:0;display:block" allow="autoplay; fullscreen"></iframe></div><div id="ui" style="position:absolute;inset:0;display:flex;flex-direction:column;pointer-events:none"></div>';
@@ -500,7 +546,7 @@ function Screen(){
   function fit(){const v=$('#screenView');const s=Math.min(v.clientWidth/1600,v.clientHeight/900);stage.style.transform='scale('+s+')'}
   addEventListener('resize',fit);fit();Screen.fit=fit;
   const joinUrl=location.href.split('#')[0].replace(/deck\.html$/,'')+'#join';
-  const cur=()=>FLOW[step];
+  const cur=()=>FLOW[step];let winsDone=true;
   const curQ=()=>cur().q?qById(cur().q):null;
   const qst=()=>{const q=curQ();return q&&snap.st.qid===q.id?snap.st:{ph:'idle',qid:q?q.id:''}};
   const ans=()=>{const q=curQ();return q&&snap.st.qid===q.id?snap.ans:{}};
@@ -513,15 +559,15 @@ function Screen(){
     const qb=q?`<button class="hb ${st.ph==='open'?'on':''}" id="bOpen">افتحي الإجابات</button>
       <button class="hb ${st.ph==='closed'?'on':''}" id="bClose" ${st.ph!=='open'?'disabled':''}>أغلقي</button>
       <button class="hb ${st.ph==='reveal'?'on':''}" id="bRev" ${st.ph==='idle'?'disabled':''}>اكشفي النتيجة 🎉</button>`:'';
-    const lbl=cur().s?('شريحة: '+(SL[cur().s]||'')):cur().lobby?'تسجيل الحضور':cur().board?'لوحة النقاط':cur().winner?'فائزة الرحلة':cur().thx?('شكر: '+THX[cur().thx].n):'';
+    const lbl=cur().s?('شريحة: '+(SL[cur().s]||'')):cur().lobby?'تسجيل الحضور':cur().board?'لوحة النقاط':cur().winner?'فائزة الرحلة':cur().wins?'الفائزتان':cur().fb?'قيّمي الرحلة':cur().fbres?'نتائج التقييم':cur().thx?('شكر: '+THX[cur().thx].n):'';
     return `<div class="sFoot" style="pointer-events:auto;margin-top:auto;position:relative">${routeHTML()}<div class="fGroup">
       <button class="hb g" id="bPrev" ${step<=0?'disabled':''}>› السابق</button>${qb}
       <button class="hb g" id="bNext" ${step>=FLOW.length-1?'disabled':''}>التالي ‹</button>
-      ${lbl?`<span class="counter" style="font-size:17px;margin-right:10px">${esc(lbl)}</span>`:''}${(()=>{const n=FLOW[step+1];if(!n)return '';const t=n.s?'🖥️ '+(SL[n.s]||'شريحة'):n.q?'📱 سؤال قادم على الجوالات':n.board?'🏆 لوحة النقاط':n.winner?'👑 كشف الفائزة':n.thx?'🌟 شكر: '+THX[n.thx].n:n.lobby?'✈️ تسجيل الحضور':'';return `<span class="nextUp">القادم: <b>${esc(t)}</b></span>`})()}
+      ${lbl?`<span class="counter" style="font-size:17px;margin-right:10px">${esc(lbl)}</span>`:''}${(()=>{const n=FLOW[step+1];if(!n)return '';const t=n.s?'🖥️ '+(SL[n.s]||'شريحة'):n.q?'📱 سؤال قادم على الجوالات':n.board?'🏆 لوحة النقاط':n.winner?'👑 كشف الفائزة':n.wins?'🏆 الفائزتان':n.fb?'🛬 قيّمي الرحلة':n.fbres?'📊 نتائج التقييم':n.thx?'🌟 شكر: '+THX[n.thx].n:n.lobby?'✈️ تسجيل الحضور':'';return `<span class="nextUp">القادم: <b>${esc(t)}</b></span>`})()}
     </div><div class="fGroup">
       ${q&&st.ph!=='idle'?`<span class="counter">أجابت <b>${ar(Object.keys(ans()).length)}</b> من ${ar(snap.att.length)}</span>`:''}
       <span class="counter" style="font-size:15px;color:var(--muted)">${ar(step+1)} / ${ar(FLOW.length)}</span>
-      <button class="hb g" id="bBoard">🏆 النقاط</button><button class="hb g" id="bList">☰ المسار</button><button class="hb g" id="bSnd">${soundOn?'🔊':'🔇'}</button><button class="hb g" id="bFs">⛶</button>
+      <button class="hb g" id="bEnd" title="ختام الرحلة: الفائزتان والتقييم">🛬 الختام</button><button class="hb g" id="bPdf" title="تحويل العرض إلى PDF">📄 PDF</button><button class="hb g" id="bBoard">🏆 النقاط</button><button class="hb g" id="bList">☰ المسار</button><button class="hb g" id="bSnd">${soundOn?'🔊':'🔇'}</button><button class="hb g" id="bFs">⛶</button>
     </div></div>`}
   function lobby(){
     return `<div class="sBody"><div class="qTag">صعود الطائرة · تسجيل الحضور</div><div class="qText" style="font-size:38px">امسحي الرمز بجوالكِ… واختاري اسمكِ ✈️</div>
@@ -549,6 +595,27 @@ function Screen(){
     else if(second&&(T[second]||0)===top[0])note=(cor[second]||0)===top[1]?'تعادل في النقاط والدقة… وحسمته سرعة الإجابات ⚡':'تعادل في النقاط… وحسمته دقة الإجابات 🎯';
     const win=tied[Math.floor(Math.random()*tied.length)];const sec=pool.find(n=>n!==win);
     return {n:win,p:top[0],note,second:sec?{n:sec,p:T[sec]||0}:null,contenders:pool.slice(0,Math.max(4,tied.length))}}
+
+  const WINS=[{n:'يسرا عبده كمال',r:'منسقة الأحياء',md:'🥇',rk:'الفائزة الأولى'},{n:'أريج أبو حاشية',r:'منسقة الفيزياء',md:'🥈',rk:'الفائزة الثانية'}];
+  const evalUrl=location.href.split('#')[0].replace(/[^\/]*$/,'')+'evaluation.html';
+  function winsView(){return `<div class="w2"><div class="k">🏆 فائزتا رحلة التأمّل · أعلى النقاط</div><div class="crownBig">👑</div><div class="pods">
+    ${WINS.map((w,i)=>`<div class="pod p${i+1}" id="pod${i}"><div class="md">${w.md}</div><div class="wrk">${w.rk}</div><div class="wnm">${esc(w.n)}</div><div class="ds">${esc(w.r)}</div></div>`).join('')}</div></div>`}
+  function fbView(){return `<div class="fbW"><div><div class="k">🛬 هبطت الطائرة بسلام</div><h2>سعدتُ بوجودكنّ معي في هذه الرحلة…<br>وأتمنى أن يكون <b>هبوطنا ناجحًا</b></h2><p>امسحي الرمز بجوالكِ، أو اضغطي على البطاقة…<br>واكتبي اسمكِ وقيّمي رحلتنا ✈️</p><div class="rate">قيّمي الرحلة ⭐</div></div>
+    <a class="bpass" href="${evalUrl}" target="_blank" rel="noopener"><div class="m"><b>خطوط الصندوق الأسود</b><small>FLIGHT FEEDBACK · تقييم الرحلة</small><div id="fbqr"></div><i>اضغطي هنا لفتح التقييم</i></div><div class="s"><div><span>الرحلة</span><b>SH-2027</b></div><div><span>الحالة</span><b>هبطت ✓</b></div><div><span>المطلوب</span><b>دقيقتان</b></div></div></a></div>`}
+  const EQ=['أهداف واضحة ومرتبطة بعملي','القصص والأمثلة والأنشطة','قابلية التطبيق في تقريري','أسلوب المدرّبة','تفاعل المدرّبة وإشراكنا','الاستمتاع (لم تكن مملة)'];
+  let EV=[],evT=0,evSig='';
+  async function loadEvals(){try{const r=DEMO?{evals:[]}:await fetch(API_URL+'?a=evals').then(x=>x.json());const sig=JSON.stringify(r.evals||[]);if(sig!==evSig){evSig=sig;EV=r.evals||[];if(cur().fbres&&!overlay){draw();if(EV.length)ding()}}}catch(e){}}
+  function fbresView(){const n=EV.length;const av=EQ.map((_,i)=>n?EV.reduce((s,e)=>s+(+String(e.r).split(',')[i]||0),0)/n:0);
+    const pc=v=>ar(Math.round(v/5*100))+'%';const cA=(av[0]+av[1]+av[2])/3,tA=(av[3]+av[4]+av[5])/3;
+    const cms=[...EV].reverse().flatMap(e=>[[e.t3,'💌 '],[e.t1,'📘 '],[e.t2,'📚 ']].filter(x=>x[0]).map(x=>({t:x[1]+x[0],n:e.n})));
+    const sec=(t,a,b)=>`<div class="frS">${t}</div>`+EQ.slice(a,b).map((q,k)=>{const i=a+k;return `<div class="frB"><div class="t"><span>${q}</span><b>${n?av[i].toFixed(1):'—'} / 5</b></div><div class="tr"><i data-w="${av[i]/5*100}"></i></div></div>`}).join('');
+    return `<div class="frW"><div class="frTop"><h2>📊 تقييم رحلة <b>«الصندوق الأسود»</b> · نوفمبر 2026</h2><button class="hb g" id="frPrint" style="pointer-events:auto">🖨️ طباعة التقرير</button><span class="live">● مباشر · يتحدّث تلقائيًا</span></div>
+    <div class="frGrid"><div><div class="frK"><div><b>${ar(n)}</b><span>تقييمًا وصل</span></div><div><b>${n?pc(cA):'—'}</b><span>تقييم المحتوى</span></div><div><b>${n?pc(tA):'—'}</b><span>تقييم المدرّبة</span></div></div>
+    ${sec('📘 المحتوى',0,3)}${sec('👩‍✈️ المدرّبة',3,6)}</div>
+    <div class="frC"><h3>💭 بكلماتهن…</h3>${cms.map(c=>`<div class="cm">${esc(c.t)}<small>— ${esc(c.n||'قائدة')}</small></div>`).join('')||'<div class="idleHint">بانتظار أول تقييم… ✈️</div>'}</div></div></div>`}
+  function winsAnim(){ls('bb_winner',JSON.stringify({n:WINS[0].n,p:0,note:''}));ls('bb_second',JSON.stringify({n:WINS[1].n,p:0}));
+    drumroll(2);setTimeout(()=>{const a=$('#pod1');if(a)a.classList.add('on');chime()},900);
+    setTimeout(()=>{const a=$('#pod0');if(a)a.classList.add('on');fanfare();applause(3.5);burst(['👑','🏆','🎉','✨','❤️','⭐'],60,$('#screenView'))},2400)}
   function thxView(k){const T=THX[k];return `<div class="thxWrap${T.special?' lionWrap':''}">${T.special?'<div class="crownL">👑</div><div class="lion">🦁</div>':''}<div class="glow"></div><div class="stars">✨🌟✨</div><div class="k">${esc(T.k||'شكرٌ وتقدير · قائدةٌ تتأمّل')}</div>${T.pre?`<div class="pre">${esc(T.pre)}</div>`:''}<div class="thName">${esc(T.n)}</div><div class="rl">${esc(T.r)}</div><div class="tx">${esc(T.t)}</div></div>`}
   function winnerView(){const W=jget('bb_winner');
     if(W.n)return `<div class="winWrap done"><div class="k">🏆 فائزة رحلة التأمل</div><div class="crown">👑</div><div class="slot">${esc(W.n)}</div><div class="sub">قائدة القمرة الأولى · ${ar(W.p)} نقطة</div><div class="tie">${esc(W.note||'')}</div><button class="hb g" id="winAgain" style="margin-top:24px;color:#e9cfa7;border-color:#7a5a3a">إعادة الكشف</button></div>`;
@@ -591,21 +658,25 @@ function Screen(){
   function draw(){
     const f=cur();
     if(f.s){deckWrap.style.visibility='visible';ui.style.background='transparent';ui.innerHTML=foot()+overlay}
-    else{deckWrap.style.visibility='hidden';ui.style.background='var(--ivory)';ui.innerHTML=`<div style="pointer-events:auto;display:flex;flex-direction:column;flex:1;min-height:0">${f.winner||f.thx?'':head()}${f.lobby?lobby():f.board?boardView():f.winner?winnerView():f.thx?thxView(f.thx):qView()}</div>`+foot()+overlay;if(f.board)animBars()}
+    else{deckWrap.style.visibility='hidden';ui.style.background='var(--ivory)';ui.innerHTML=`<div style="pointer-events:auto;display:flex;flex-direction:column;flex:1;min-height:0">${f.winner||f.thx||f.wins||f.fb||f.fbres?'':head()}${f.lobby?lobby():f.board?boardView():f.winner?winnerView():f.thx?thxView(f.thx):f.wins?winsView():f.fb?fbView():f.fbres?fbresView():qView()}</div>`+foot()+overlay;if(f.board)animBars();if(f.fbres)setTimeout(()=>ui.querySelectorAll('.frB .tr i').forEach(i=>i.style.width=i.dataset.w+'%'),80);if(f.wins&&winsDone)ui.querySelectorAll('.pod').forEach(p=>p.classList.add('on'))}
     tick();
     if(f.lobby&&window.QRCode){try{new QRCode($('#qr'),{text:joinUrl,width:270,height:270,colorDark:'#3A2418',colorLight:'#ffffff'})}catch(e){}}
+    if(f.fb&&window.QRCode){try{new QRCode($('#fbqr'),{text:evalUrl,width:300,height:300,colorDark:'#3A2418',colorLight:'#ffffff'})}catch(e){}}
     bind();
   }
   function bind(){
     const on=(id,fn)=>{const b=$('#'+id);if(b)b.onclick=fn};
     on('bPrev',()=>nav(-1));on('bNext',()=>nav(1));
     on('bOpen',()=>setPh('open'));on('bClose',()=>setPh('closed'));on('bRev',()=>setPh('reveal'));
+    on('frPrint',()=>window.open(evalUrl+'#list','_blank'));
+    on('bEnd',()=>{overlay='';go(FLOW.findIndex(x=>x.wins))});
+    on('bPdf',()=>window.open('deck.html?print='+FLOW.filter(x=>x.s).map(x=>x.s).join(','),'_blank'));
     on('bSnd',()=>{soundOn=!soundOn;draw()});
     on('winGo',()=>revealWinner());
     on('winAgain',()=>{ls('bb_winner',null);draw()});
     on('bBoard',()=>{overlay=`<div class="ov" style="pointer-events:auto;align-items:stretch;justify-content:stretch;padding:30px 40px 108px"><div style="background:var(--ivory);border-radius:20px;flex:1;display:flex;flex-direction:column;min-height:0;position:relative">${boardView()}<button class="hb g" id="bdX" style="position:absolute;bottom:-62px;left:0;background:var(--ivory)">إغلاق اللوحة</button></div></div>`;draw();animBars();applause(1.6);$('#bdX').onclick=()=>{overlay='';draw()}});
     on('bFs',()=>{try{const p=document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();p&&p.catch&&p.catch(()=>{})}catch(e){}});
-    on('bList',()=>{overlay=`<div class="ov" style="pointer-events:auto"><div class="ovBox" style="width:760px"><h3>مسار الورشة</h3><div class="qlist">${FLOW.map((x,i)=>{const t=x.s?'🖥️ '+SL[x.s]:x.lobby?'✈️ تسجيل الحضور':x.board?'🏆 لوحة النقاط':x.winner?'👑 كشف الفائزة':x.thx?'🌟 شكر: '+THX[x.thx].n:'💬 '+qById(x.q).tag+' · '+qById(x.q).text.replace(/<[^>]+>/g,'').slice(0,50);return `<button data-i="${i}" class="${i===step?'cur':''}">${ar(i+1)}. ${esc(t)}</button>`}).join('')}</div><button class="hb g" id="ovX" style="margin-top:10px">إغلاق</button><button class="hb g" id="ovR" style="margin-top:10px;margin-right:8px;color:var(--red);border-color:var(--red)">بدء جلسة جديدة (مسح الحضور والإجابات)</button></div></div>`;draw();
+    on('bList',()=>{overlay=`<div class="ov" style="pointer-events:auto"><div class="ovBox" style="width:760px"><h3>مسار الورشة</h3><div class="qlist">${FLOW.map((x,i)=>{const t=x.s?'🖥️ '+SL[x.s]:x.lobby?'✈️ تسجيل الحضور':x.board?'🏆 لوحة النقاط':x.winner?'👑 كشف الفائزة':x.wins?'🏆 الفائزتان':x.fb?'🛬 قيّمي الرحلة':x.fbres?'📊 نتائج التقييم':x.thx?'🌟 شكر: '+THX[x.thx].n:'💬 '+qById(x.q).tag+' · '+qById(x.q).text.replace(/<[^>]+>/g,'').slice(0,50);return `<button data-i="${i}" class="${i===step?'cur':''}">${ar(i+1)}. ${esc(t)}</button>`}).join('')}</div><button class="hb g" id="ovX" style="margin-top:10px">إغلاق</button><button class="hb g" id="ovR" style="margin-top:10px;margin-right:8px;color:var(--red);border-color:var(--red)">بدء جلسة جديدة (مسح الحضور والإجابات)</button></div></div>`;draw();
       ui.querySelectorAll('.qlist button').forEach(b=>b.onclick=()=>{overlay='';go(+b.dataset.i)});
       $('#ovX').onclick=()=>{overlay='';draw()};
       $('#ovR').onclick=async()=>{overlay='';try{const r=await api({a:'reset',pin});if(r.ok===false&&r.err==='pin'){askPin();return}snap=r;seen.clear();lastReveal='';ls('bb_scores',null);ls('bb_last',null);ls('bb_winner',null);ls('bb_rank',null);ls('bb_second',null);go(0)}catch(e){}if(DEMO)Sim.restart()}});
@@ -615,6 +686,9 @@ function Screen(){
     if(i<0||i>=FLOW.length)return;const back=i<step;step=i;stopTimer();try{sessionStorage.setItem('bb_step',String(i))}catch(e){}
     const f=FLOW[i];if(f.s){try{deck.contentWindow.postMessage({go:f.s,all:back},'*')}catch(e){}}
     draw();if(f.board){applause(2);setTimeout(chime,400);burst(['🏆','⭐','✨','👏'],24,$('#screenView'))}
+    if(f.wins){winsDone=false;winsAnim();setTimeout(()=>winsDone=true,2500)}
+    clearInterval(evT);if(f.fbres){loadEvals();evT=setInterval(loadEvals,4000)}
+    if(f.wins||f.fb||f.fbres){try{await api({a:'set',pin,qi:-1,ph:'idle',qid:''})}catch(e){}return}
     const q=curQ();
     if(f.winner&&jget('bb_winner').n)return;
     if(f.thx){if(THX[f.thx].special){applause(5);whistle();setTimeout(whistle,900);setTimeout(()=>applause(4),2500);setTimeout(whistle,2800);let k=0;const iv=setInterval(()=>{burst(['❤️','💖','💛','🧡','💕','👏'],18,$('#screenView'));if(++k>6)clearInterval(iv)},700)}else{applause(2.6);setTimeout(chime,300);burst(['✨','🌟','👏','💛','🎉'],40,$('#screenView'))}}
@@ -645,7 +719,7 @@ function Screen(){
       if(r.st.ph!=='reveal'&&lastReveal===rk)lastReveal='';
     }
   }
-  async function poll(){if(cur().s||cur().board||cur().winner||cur().thx)return;try{const r=await api({a:'state'});const sig=JSON.stringify(r);if(sig!==Screen._sig){Screen._sig=sig;apply(r)}}catch(e){}}
+  async function poll(){if(cur().s||cur().board||cur().winner||cur().thx||cur().wins||cur().fb||cur().fbres)return;try{const r=await api({a:'state'});const sig=JSON.stringify(r);if(sig!==Screen._sig){Screen._sig=sig;apply(r)}}catch(e){}}
   deck.addEventListener('load',()=>{const f=cur();try{deck.contentWindow.postMessage({go:f.s||1},'*')}catch(e){}});
   addEventListener('message',e=>{const d=e.data||{};if(d.bbkey==='next')go(step+1);if(d.bbkey==='prev')go(step-1)});
   addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if(['ArrowLeft','PageDown','ArrowDown',' ','Enter'].includes(e.key)){e.preventDefault();nav(1)}if(['ArrowRight','PageUp','ArrowUp'].includes(e.key)){e.preventDefault();nav(-1)}});
