@@ -140,7 +140,10 @@ $('#go').onclick=()=>{if(!chosen)return;chime();$('#stamp').classList.add('on');
   const p=document.createElement('div');p.className='bigplane';p.textContent='✈️';document.body.appendChild(p);requestAnimationFrame(()=>p.classList.add('go2'));setTimeout(()=>p.remove(),2600);
   burst();const first=chosen[0].split(' ')[0];const nm=PEOPLE.filter(x=>x[0].split(' ')[0]===first).length>1?chosen[0]:first;
   $('#done').innerHTML=`أهلًا بكِ على متن الرحلة يا ${nm} 🧡<br>نلتقي غدًا الاثنين، من الساعة 9:30 حتى 11:00 صباحًا… ولا تنسي جوالكِ!<div class="sent" id="sent">جارٍ إرسال تأكيدكِ…</div>`;$('#done').style.display='block';
-  fetch(API_URL+'?'+new URLSearchParams({a:'rsvp',n:chosen[0],d:chosen[1]})).then(r=>r.json()).then(r=>{const e=$('#sent');if(r&&r.ok){e.textContent='✓ وصل تأكيدكِ إلى قمرة القيادة'}else throw 0}).catch(()=>{const e=$('#sent');e.className='sent err';e.textContent='تعذّر إرسال التأكيد… اضغطي الزر مرة أخرى'})};
+  (VIEW?Promise.resolve({json:()=>({ok:true,view:1})}):fetch(API_URL+'?'+new URLSearchParams({a:'rsvp',n:chosen[0],d:chosen[1]}))).then(r=>r.json()).then(r=>{const e=$('#sent');if(r&&r.ok){e.textContent=r.view?'✓ هكذا وصل تأكيد كل قائدة… (عرض توضيحي: لم يُسجَّل شيء)':'✓ وصل تأكيدكِ إلى قمرة القيادة'}else throw 0}).catch(()=>{const e=$('#sent');e.className='sent err';e.textContent='تعذّر إرسال التأكيد… اضغطي الزر مرة أخرى'})};
+/* وضع العرض التوضيحي: invite.html?view (لا يسجّل شيئًا) */
+const VIEW=/[?&]view/.test(location.search);
+if(VIEW){const b=document.createElement('div');b.textContent='👁️ عرض توضيحي لآلية تأكيد الصعود كما استخدمتها القائدات · لا يُسجَّل أي اختيار';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99;text-align:center;font-family:var(--h);font-size:14px;padding:8px;background:linear-gradient(90deg,#F3893F,#E8681A);color:#fff';document.body.appendChild(b);document.body.style.paddingTop='44px'}
 /* صفحة المتابعة: invite.html#list */
 if(location.hash==='#list'){document.querySelector('.top').style.display='none';$('#pw').style.display='none';$('#pick').style.display='none';$('#list').style.display='block';
   async function load(){try{const r=await (await fetch(API_URL+'?a=rsvps')).json();const R=r.rsvp||{};const n=PEOPLE.filter(p=>R[p[0]]).length;
