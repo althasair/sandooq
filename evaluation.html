@@ -97,6 +97,8 @@ textarea{width:100%;min-height:70px;border:1.5px solid #e6d5bc;border-radius:14p
 <script>
 const API_URL = 'https://script.google.com/macros/s/AKfycbzBti9yPtnDO_VMbUR1dFwwF15EwbLps94AZ2B012lWreM_BHZ2ZROOK8FmaeKwHRI5Uw/exec';
 const PEOPLE=[['شيخة الرميحي','مديرة المدرسة'],['وداد الكربي','النائبة الإدارية'],['خولة المطوع','العلوم الشرعية'],['نجوى أبو ناهية','اللغة العربية'],['هيا الدوسري','اللغة الإنجليزية'],['فاطمة النعيمي','العلوم الاجتماعية'],['أريج أبو حاشية','الفيزياء'],['انتصار أحمد جامع','الكيمياء'],['سحر الرشيد','الرياضيات'],['يسرا عبده كمال','الأحياء'],['فاتن عبدالرحمن','تكنولوجيا المعلومات'],['شيخة القحطاني','التربية البدنية'],['إيمان يوسف','المشاريع'],['أحلام الخليفي','شؤون الطالبات']];
+const VIEW=/[?&]view/.test(location.search);
+if(VIEW){const b=document.createElement('div');b.textContent='👁️ عرض توضيحي لآلية تقييم الورشة كما استخدمتها القائدات · لا يُسجَّل أي تقييم';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99;text-align:center;font-family:var(--h);font-size:14px;padding:8px;background:linear-gradient(90deg,#F3893F,#E8681A);color:#fff';document.body.appendChild(b);document.body.style.paddingTop='48px'}
 const QS=['أهداف الورشة واضحة ومرتبطة بعملي كمنسقة','القصص والأمثلة والأنشطة كانت كافية ومفيدة','أستطيع تطبيق ما تعلّمته في تقريري القادم','أسلوب المدرّبة كان جميلًا وقريبًا منّا','كانت المدرّبة تفاعلية وتُشركنا في كل محطة','استمتعتُ بالورشة ولم تكن مملة'];
 const FACES=[['😞','ضعيف'],['🙁','مقبول'],['😐','جيد'],['🙂','جيد جدًا'],['😍','ممتاز']];
 const $=s=>document.querySelector(s);let who='',R={};
@@ -106,7 +108,7 @@ const qh=(q,i)=>`<div class="q"><p>${i+1}. ${q}</p><div class="rate" data-i="${i
 $('#qs0').innerHTML=QS.slice(0,3).map((q,i)=>qh(q,i)).join('');$('#qs1').innerHTML=QS.slice(3).map((q,i)=>qh(q,i+3)).join('');
 document.querySelectorAll('.rate').forEach(r=>r.querySelectorAll('button').forEach(b=>b.onclick=()=>{r.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');R[r.dataset.i]=+b.dataset.v;chk()}));
 function chk(){$('#go').disabled=!(who&&Object.keys(R).length===QS.length)}
-$('#go').onclick=async()=>{const b=$('#go');b.disabled=true;$('#msg').className='msg';$('#msg').textContent='جارٍ الإرسال…';
+$('#go').onclick=async()=>{const b=$('#go');b.disabled=true;if(VIEW){$('#form').style.display='none';$('#thanks').style.display='block';scrollTo(0,0);return}$('#msg').className='msg';$('#msg').textContent='جارٍ الإرسال…';
   const qs=new URLSearchParams({a:'eval',n:who,r:QS.map((_,i)=>R[i]).join(','),t1:$('#t1').value,t2:$('#t2').value,t3:$('#t3').value});
   try{const r=await fetch(API_URL+'?'+qs).then(x=>x.json());if(!r.ok)throw 0;$('#form').style.display='none';$('#thanks').style.display='block';scrollTo(0,0)}
   catch(e){$('#msg').className='msg err';$('#msg').textContent='تعذّر الإرسال… تأكدي من الاتصال وأعيدي المحاولة';b.disabled=false}};

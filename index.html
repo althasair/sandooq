@@ -428,7 +428,7 @@ function ding(){if(!soundOn)return;try{const c=ac(),t=c.currentTime,o=c.createOs
 
 /* ------------------- backend ------------------- */
 const DEMO=!API_URL||/[?&]view/.test(location.search);
-if(/[?&]view/.test(location.search))addEventListener('DOMContentLoaded',()=>{const b=document.createElement('div');b.textContent='👁️ عرض توضيحي لآلية تسجيل الحضور كما استخدمتها القائدات · لا يُسجَّل أي اختيار';b.style.cssText='position:fixed;bottom:0;left:0;right:0;z-index:999;text-align:center;font-family:Marhey,sans-serif;font-size:13px;padding:7px;background:linear-gradient(90deg,#F3893F,#E8681A);color:#fff';document.body.appendChild(b)});
+if(/[?&]view/.test(location.search))addEventListener('DOMContentLoaded',()=>{const b=document.createElement('div');b.textContent=location.hash==='#join'?'👁️ عرض توضيحي لآلية تسجيل الحضور كما استخدمتها القائدات · لا يُسجَّل أي اختيار':'👁️ عرض توضيحي للورشة التفاعلية كما ظهرت للقائدات · الإجابات هنا تجريبية ولا يُسجَّل شيء';b.style.cssText='position:fixed;bottom:0;left:0;right:0;z-index:999;text-align:center;font-family:Marhey,sans-serif;font-size:13px;padding:7px;background:linear-gradient(90deg,#F3893F,#E8681A);color:#fff';document.body.appendChild(b)});
 const Local={st:{qi:-1,ph:'idle',qid:''},att:{},A:{},
   handle(p){
     if(p.a==='join'){if(!this.att[p.n])this.att[p.n]=Date.now()}
@@ -534,6 +534,7 @@ function Screen(){
   const ui=$('#ui'),deckWrap=$('#deckWrap'),deck=$('#deck');
   let snap={st:{qi:-1,ph:'idle',qid:''},att:[],ans:{}}, seen=new Set(), lastReveal='', pin=ls('bb_pin')||'', overlay='';
   let step=0;try{step=Math.min(+(sessionStorage.getItem('bb_step')||0),FLOW.length-1)}catch(e){}
+  {const gq=new URLSearchParams(location.search).get('go');if(gq){const k=FLOW.findIndex(x=>x.q===gq||(gq==='end'&&x.wins)||(gq==='eval'&&x.fbres));if(k>=0)step=k}}
   let QSEC=20;let tEnd=0,tQ='',tRang=false;
   function timerHTML(){const q=curQ();if(!q||tQ!==q.id||!tEnd)return '';return `<div class="qTimer" id="qTimer"><svg viewBox="0 0 104 104"><circle class="bg" cx="52" cy="52" r="44"/><circle class="fg" cx="52" cy="52" r="44" stroke-dasharray="276.5" stroke-dashoffset="0"/></svg><div class="num"><span></span><small>ثانية</small></div></div>`}
   function tick(){const el=$('#qTimer');if(!el||!tEnd)return;const left=Math.max(0,(tEnd-Date.now())/1000);const n=Math.ceil(left);
